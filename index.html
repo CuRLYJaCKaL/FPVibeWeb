@@ -44,8 +44,9 @@
 
         let lastScrollY = 0;
         let scrollSpeed = 0;
+        let ticking = false;
 
-        window.addEventListener('scroll', function() {
+        function updateScroll() {
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
@@ -57,7 +58,7 @@
             const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
             const scale = 1.8 + (zoomProgress * 48.2); // 1.8'den 50'ye kadar
 
-            logo.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            logo.style.transform = `translate(-50%, -52%) scale(${scale})`;
 
             // Zoom hız efekti - scroll hızına göre
             if (scrollSpeed > 5 && zoomProgress > 0.1) {
@@ -75,13 +76,34 @@
                 zoomEffect.style.background = 'radial-gradient(circle, transparent 0%, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%)';
             }
 
-            // %75 scroll'dan sonra content'i göster
-            if (zoomProgress > 0.75) {
-                content.classList.add('visible');
+            // %50'den itibaren yavaş yavaş content opacity'sini artır
+            if (zoomProgress > 0.5) {
+                const contentProgress = (zoomProgress - 0.5) / 0.5; // 0.5'ten 1'e normalize et
+                const contentOpacity = Math.min(contentProgress * 1.5, 1); // Smooth fade-in
+                content.style.opacity = contentOpacity;
+                content.style.transform = `translateY(${30 - (contentProgress * 30)}px)`;
+
+                if (contentOpacity > 0.3) {
+                    content.classList.add('visible');
+                }
             } else {
+                content.style.opacity = '0';
+                content.style.transform = 'translateY(30px)';
                 content.classList.remove('visible');
             }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateScroll);
+                ticking = true;
+            }
         });
+
+        // Initial call
+        updateScroll();
     </script>
 
     <footer class="footer">

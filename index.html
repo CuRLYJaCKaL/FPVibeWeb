@@ -3,114 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FPVibe - The ultimate FPV drone community. Share flights, connect with pilots, discover events.">
-    <title>FPVibe - FPV Drone Community</title>
+    <title>FPVibe</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <nav>
-                <div class="logo">FPVibe</div>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#download">Download</a>
-                    <a href="#community">Community</a>
-                </div>
-            </nav>
-        </header>
+    <nav class="nav">
+        <span class="wordmark">FPVibe</span>
+        <a href="privacy.html" class="link">Privacy</a>
+    </nav>
 
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Experience FPV Like Never Before</h1>
-                <p>Join the ultimate FPV drone community. Share your flights, connect with pilots, and explore the world of FPV.</p>
-                <div class="cta-buttons">
-                    <a href="#download" class="btn btn-primary">Download App</a>
-                    <a href="#features" class="btn btn-secondary">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="drone-icon">🚁</div>
-            </div>
-        </section>
+    <div class="zoom-effect"></div>
+    <img src="logo.png" alt="FPVibe" class="logo">
 
-        <section id="features" class="features">
-            <h2>Features</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📹</div>
-                    <h3>Share Your Flights</h3>
-                    <p>Upload and share your FPV footage with the community</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Connect with Pilots</h3>
-                    <p>Find and connect with FPV pilots around the world</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📍</div>
-                    <h3>Discover Events</h3>
-                    <p>Find FPV events and meetups near you</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Live Chat</h3>
-                    <p>Real-time messaging with fellow pilots</p>
-                </div>
-            </div>
-        </section>
+    <main class="main">
+        <div class="content">
+            <h1 class="title">
+                The FPV social platform
+            </h1>
 
-        <section id="download" class="download">
-            <h2>Download FPVibe</h2>
-            <p>Available on iOS - Coming soon to Android</p>
-            <div class="download-buttons">
-                <a href="#" class="app-store-btn">
-                    <span>Download on the</span>
-                    <strong>App Store</strong>
-                </a>
-                <a href="#" class="play-store-btn disabled">
-                    <span>Coming soon on</span>
-                    <strong>Google Play</strong>
-                </a>
-            </div>
-        </section>
+            <p class="subtitle">
+                Share clips. Organize sessions. Connect with pilots.
+            </p>
 
-        <section id="community" class="community">
-            <h2>Join the Community</h2>
-            <div class="stats">
-                <div class="stat">
-                    <h3>10K+</h3>
-                    <p>Active Pilots</p>
-                </div>
-                <div class="stat">
-                    <h3>50K+</h3>
-                    <p>Videos Shared</p>
-                </div>
-                <div class="stat">
-                    <h3>100+</h3>
-                    <p>Events Monthly</p>
-                </div>
-            </div>
-        </section>
+            <a href="#" class="btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                Download for iOS
+            </a>
 
-        <footer>
-            <div class="footer-content">
-                <div class="footer-logo">FPVibe</div>
-                <div class="footer-links">
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="mailto:contact@fpvibe.app">Contact</a>
-                </div>
-                <div class="social-links">
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">YouTube</a>
-                </div>
-            </div>
-            <p class="copyright">&copy; 2025 FPVibe. All rights reserved.</p>
-        </footer>
-    </div>
+            <span class="note">Free • iOS 15+</span>
+        </div>
+    </main>
 
-    <script src="script.js"></script>
+    <script>
+        const logo = document.querySelector('.logo');
+        const content = document.querySelector('.content');
+        const body = document.body;
+        const zoomEffect = document.querySelector('.zoom-effect');
+
+        let lastScrollY = 0;
+        let scrollSpeed = 0;
+
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // Scroll hızını hesapla
+            scrollSpeed = Math.abs(scrollY - lastScrollY);
+            lastScrollY = scrollY;
+
+            // Logo zoom efekti - 1.8'den (başlangıç) 50'ye kadar büyüsün
+            const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
+            const scale = 1.8 + (zoomProgress * 48.2); // 1.8'den 50'ye kadar
+
+            logo.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+            // Zoom hız efekti - scroll hızına göre
+            if (scrollSpeed > 5 && zoomProgress > 0.1) {
+                zoomEffect.style.opacity = Math.min(scrollSpeed / 50, 0.8);
+            } else {
+                zoomEffect.style.opacity = '0';
+            }
+
+            // %70 scroll'dan sonra arka planı beyaza çevir
+            if (zoomProgress > 0.7) {
+                body.classList.add('inverted');
+                zoomEffect.style.background = 'radial-gradient(circle, transparent 0%, transparent 30%, rgba(0,0,0,0.02) 50%, transparent 70%)';
+            } else {
+                body.classList.remove('inverted');
+                zoomEffect.style.background = 'radial-gradient(circle, transparent 0%, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%)';
+            }
+
+            // %75 scroll'dan sonra content'i göster
+            if (zoomProgress > 0.75) {
+                content.classList.add('visible');
+            } else {
+                content.classList.remove('visible');
+            }
+        });
+    </script>
+
+    <footer class="footer">
+        <a href="mailto:contact@fpvibe.app">Contact</a>
+        <span>© 2025 FPVibe</span>
+    </footer>
 </body>
 </html>

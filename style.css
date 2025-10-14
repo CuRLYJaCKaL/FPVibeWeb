@@ -90,7 +90,7 @@ body.inverted .link:hover {
     display: block;
     box-shadow: none;
     position: fixed;
-    top: 58%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1.8);
     z-index: 1;

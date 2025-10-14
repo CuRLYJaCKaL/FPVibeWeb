@@ -59,8 +59,9 @@
             const scale = 1.8 + (zoomProgress * 56.2); // 1.8'den 58'e kadar
 
             // Play butonunun merkezine zoom yapmak için Y offset ayarla
-            // Başlangıç: -50%, Max zoom: -42% (play butonu ekran merkezinde)
-            const yOffset = -50 + (zoomProgress * 8); // -50'den -42'ye
+            // Play butonu logo merkezinin altında olduğu için aşağı kaydırmalıyız
+            // Başlangıç: -50%, Max zoom: -58% (play butonu ekran merkezinde)
+            const yOffset = -50 - (zoomProgress * 8); // -50'den -58'e (aşağı)
 
             logo.style.transform = `translate(-50%, ${yOffset}%) scale(${scale})`;
 

@@ -54,11 +54,11 @@
             scrollSpeed = Math.abs(scrollY - lastScrollY);
             lastScrollY = scrollY;
 
-            // Logo zoom efekti - 1.8'den (başlangıç) 50'ye kadar büyüsün
+            // Logo zoom efekti - 1.8'den (başlangıç) 58'e kadar büyüsün
             const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
-            const scale = 1.8 + (zoomProgress * 48.2); // 1.8'den 50'ye kadar
+            const scale = 1.8 + (zoomProgress * 56.2); // 1.8'den 58'e kadar
 
-            logo.style.transform = `translate(-50%, -55%) scale(${scale})`;
+            logo.style.transform = `translate(-50%, -58%) scale(${scale})`;
 
             // Zoom hız efekti - scroll hızına göre
             if (scrollSpeed > 5 && zoomProgress > 0.1) {

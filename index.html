@@ -46,6 +46,7 @@
         let momentumScrolling = false;
         let lastScrollTime = Date.now();
         let scrollVelocity = 0;
+        let scrollDirection = 0; // 1: aşağı, -1: yukarı
 
         function updateScroll() {
             const scrollY = window.scrollY;
@@ -55,9 +56,9 @@
             scrollSpeed = Math.abs(scrollY - lastScrollY);
             lastScrollY = scrollY;
 
-            // Logo zoom efekti - 2.0'dan (başlangıç - biraz yakın) 85'e kadar büyüsün (tam beyaz ekran)
+            // Logo zoom efekti - 2.0'dan (başlangıç - biraz yakın) 89.25'e kadar büyüsün (%5 daha fazla zoom)
             const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
-            const scale = 2.0 + (zoomProgress * 83); // 2.0'dan 85'e kadar
+            const scale = 2.0 + (zoomProgress * 87.25); // 2.0'dan 89.25'e kadar
 
             // Play butonunun merkezine zoom yapmak için Y offset ayarla
             // Play butonu logo merkezinin ALTINDA olduğu için logoyu YUKARI kaydırmalıyız
@@ -163,15 +164,27 @@
             }
         });
 
-        // Momentum scroll fonksiyonu - FPV drone hissiyatı
+        // Momentum scroll fonksiyonu - FPV drone hissiyatı (İKİ YÖNLÜ)
         function startMomentumScroll() {
             if (momentumScrolling || isAutoScrolling) return;
 
             const currentScroll = window.scrollY;
-            const targetScroll = window.innerHeight * 1.2;
+            const maxScroll = window.innerHeight * 1.2;
+            let targetScroll = 0;
+            let shouldStartMomentum = false;
 
-            // Eğer scroll hedefin altındaysa ve hızlıysa momentum başlat
-            if (scrollVelocity > 5 && currentScroll < targetScroll) {
+            // Scroll yönüne göre target belirle
+            if (scrollDirection > 0 && scrollVelocity > 5 && currentScroll < maxScroll) {
+                // Aşağı scroll - sona git
+                targetScroll = maxScroll;
+                shouldStartMomentum = true;
+            } else if (scrollDirection < 0 && scrollVelocity > 5 && currentScroll > 0) {
+                // Yukarı scroll - başa dön
+                targetScroll = 0;
+                shouldStartMomentum = true;
+            }
+
+            if (shouldStartMomentum) {
                 momentumScrolling = true;
                 const distance = targetScroll - currentScroll;
                 const duration = 1500; // 1.5 saniye - FPV drone acceleration hissi
@@ -215,12 +228,18 @@
                 ticking = true;
             }
 
-            // Velocity hesapla
+            // Velocity ve direction hesapla
             const now = Date.now();
             const timeDelta = now - lastScrollTime;
             const currentY = window.scrollY;
-            const scrollDelta = Math.abs(currentY - lastScrollY);
-            scrollVelocity = timeDelta > 0 ? (scrollDelta / timeDelta) * 16 : 0;
+            const scrollDelta = currentY - lastScrollY;
+
+            // Direction: pozitif = aşağı, negatif = yukarı
+            if (scrollDelta !== 0) {
+                scrollDirection = scrollDelta > 0 ? 1 : -1;
+            }
+
+            scrollVelocity = timeDelta > 0 ? (Math.abs(scrollDelta) / timeDelta) * 16 : 0;
             lastScrollTime = now;
 
             // Scroll durduğunda momentum başlat

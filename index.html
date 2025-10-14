@@ -112,7 +112,7 @@
             const targetScroll = window.innerHeight * 1.2;
             const startScroll = window.scrollY;
             const distance = targetScroll - startScroll;
-            const duration = 2000; // 2 saniye
+            const duration = 2500; // 2.5 saniye - uzun mesafe hissi
             let startTime = null;
 
             // Speed line efektini güçlendir
@@ -123,10 +123,10 @@
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
 
-                // Easing function (smooth acceleration)
-                const easeProgress = progress < 0.5
-                    ? 2 * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                // FPV drone acceleration - hızlı başlar, devam eder, yavaş biter
+                const easeProgress = progress < 0.6
+                    ? (progress / 0.6) * 0.85
+                    : 0.85 + ((progress - 0.6) / 0.4) * 0.15;
 
                 window.scrollTo(0, startScroll + (distance * easeProgress));
 
@@ -182,7 +182,7 @@
             if (shouldStartMomentum) {
                 momentumScrolling = true;
                 const distance = targetScroll - currentScroll;
-                const duration = 1500; // 1.5 saniye - FPV drone acceleration hissi
+                const duration = 2500; // 2.5 saniye - uzun mesafe hissi, hızlı ama devam eder
                 let startTime = null;
 
                 // Speed line efektini güçlendir
@@ -193,8 +193,11 @@
                     const elapsed = currentTime - startTime;
                     const progress = Math.min(elapsed / duration, 1);
 
-                    // FPV drone acceleration - exponential ease-in
-                    const easeProgress = Math.pow(progress, 2.5);
+                    // FPV drone acceleration - hızlı başlar, devam eder, yavaş biter
+                    // İlk %60'ta hızlı, son %40'ta yavaşlar
+                    const easeProgress = progress < 0.6
+                        ? (progress / 0.6) * 0.85 // İlk %60'ta %85'e kadar hızlı
+                        : 0.85 + ((progress - 0.6) / 0.4) * 0.15; // Son %40'ta %15 yavaş
 
                     window.scrollTo(0, currentScroll + (distance * easeProgress));
 

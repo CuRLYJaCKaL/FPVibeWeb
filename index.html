@@ -94,11 +94,31 @@
                 content.classList.remove('visible');
             }
 
-            // Final "COMING SOON" at max zoom
-            if (zoomProgress >= 0.95) {
-                finalComingSoon.classList.add('visible');
+            // Final "COMING SOON" - FPV drone target lock animasyonu
+            // 0.85'ten itibaren başla, 0.95'te tam odaklanmış olsun
+            if (zoomProgress >= 0.85) {
+                const textProgress = Math.min((zoomProgress - 0.85) / 0.10, 1); // 0.85-0.95 arası normalize
+
+                // FPV target lock efekti
+                const blur = (1 - textProgress) * 20; // 20px blur'dan 0'a
+                const scale = 0.3 + (textProgress * 0.7); // 0.3'ten 1'e (uzaktan yakına)
+                const letterSpacing = (1 - textProgress) * 30; // 30px'den 0'a (genişten dara)
+                const opacity = Math.pow(textProgress, 0.5); // Hızlı görünür, yavaş netleşir
+
+                finalComingSoon.style.filter = `blur(${blur}px)`;
+                finalComingSoon.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                finalComingSoon.style.letterSpacing = `${letterSpacing}px`;
+                finalComingSoon.style.opacity = opacity;
+
+                if (textProgress > 0) {
+                    finalComingSoon.classList.add('visible');
+                }
             } else {
                 finalComingSoon.classList.remove('visible');
+                finalComingSoon.style.filter = 'blur(20px)';
+                finalComingSoon.style.transform = 'translate(-50%, -50%) scale(0.3)';
+                finalComingSoon.style.letterSpacing = '30px';
+                finalComingSoon.style.opacity = '0';
             }
 
             ticking = false;
@@ -112,7 +132,7 @@
             const targetScroll = window.innerHeight * 1.2;
             const startScroll = window.scrollY;
             const distance = targetScroll - startScroll;
-            const duration = 2500; // 2.5 saniye - uzun mesafe hissi
+            const duration = 3200; // 3.2 saniye - yazı animasyonu için uzatıldı
             let startTime = null;
 
             // Speed line efektini güçlendir
@@ -182,7 +202,7 @@
             if (shouldStartMomentum) {
                 momentumScrolling = true;
                 const distance = targetScroll - currentScroll;
-                const duration = 2500; // 2.5 saniye - uzun mesafe hissi, hızlı ama devam eder
+                const duration = 3200; // 3.2 saniye - yazı animasyonu için uzatıldı
                 let startTime = null;
 
                 // Speed line efektini güçlendir

@@ -238,25 +238,27 @@ body.inverted .coming-soon-badge {
     }
 }
 
-/* Final Coming Soon - appears at max zoom */
+/* Final Coming Soon - FPV drone target lock animation */
 .final-coming-soon {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.3);
     z-index: 100;
     font-size: clamp(64px, 12vw, 120px);
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: 30px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.8s ease;
     text-align: center;
     color: #000;
+    filter: blur(20px);
+    will-change: transform, opacity, filter, letter-spacing;
+    /* JavaScript animates: blur 20→0, scale 0.3→1, letterSpacing 30→0, opacity 0→1 */
 }
 
 .final-coming-soon.visible {
-    opacity: 1;
+    /* Visible class only used as flag, animation handled by JS */
 }
 
 /* Footer */

@@ -40,7 +40,6 @@
         const finalComingSoon = document.querySelector('.final-coming-soon');
 
         let lastScrollY = 0;
-        let scrollSpeed = 0;
         let ticking = false;
         let isAutoScrolling = false;
         let momentumScrolling = false;
@@ -52,13 +51,9 @@
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
-            // Scroll hızını hesapla
-            scrollSpeed = Math.abs(scrollY - lastScrollY);
-            lastScrollY = scrollY;
-
-            // Logo zoom efekti - 2.0'dan (başlangıç - biraz yakın) 89.25'e kadar büyüsün (%5 daha fazla zoom)
+            // Logo zoom efekti - 2.0'dan (başlangıç) 93.7'e kadar büyüsün (%10 daha fazla zoom)
             const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
-            const scale = 2.0 + (zoomProgress * 87.25); // 2.0'dan 89.25'e kadar
+            const scale = 2.0 + (zoomProgress * 91.7); // 2.0'dan 93.7'e kadar
 
             // Play butonunun merkezine zoom yapmak için Y offset ayarla
             // Play butonu logo merkezinin ALTINDA olduğu için logoyu YUKARI kaydırmalıyız
@@ -68,8 +63,8 @@
             logo.style.transform = `translate(-50%, ${yOffset}%) scale(${scale})`;
 
             // Zoom hız efekti - scroll hızına göre
-            if (scrollSpeed > 5 && zoomProgress > 0.1) {
-                zoomEffect.style.opacity = Math.min(scrollSpeed / 50, 0.8);
+            if (scrollVelocity > 5 && zoomProgress > 0.1) {
+                zoomEffect.style.opacity = Math.min(scrollVelocity / 50, 0.8);
             } else {
                 zoomEffect.style.opacity = '0';
             }
@@ -241,6 +236,7 @@
 
             scrollVelocity = timeDelta > 0 ? (Math.abs(scrollDelta) / timeDelta) * 16 : 0;
             lastScrollTime = now;
+            lastScrollY = currentY; // lastScrollY'yi güncelle
 
             // Scroll durduğunda momentum başlat
             clearTimeout(scrollTimeout);

@@ -9,7 +9,12 @@
 <body>
     <nav class="nav">
         <span class="wordmark">FPVibe</span>
-        <a href="privacy.html" class="link">Privacy</a>
+        <div class="nav-right">
+            <a href="privacy.html" class="link" data-i18n="privacy">Privacy</a>
+            <button class="lang-switcher" id="langSwitcher">
+                <span id="currentLang">EN</span>
+            </button>
+        </div>
     </nav>
 
     <div class="zoom-effect"></div>
@@ -18,21 +23,77 @@
 
     <main class="main">
         <div class="content">
-            <h1 class="title">
+            <h1 class="title" data-i18n="title">
                 The FPV social platform
             </h1>
 
-            <p class="subtitle">
+            <p class="subtitle" data-i18n="subtitle">
                 Share clips. Organize sessions. Connect with pilots.
             </p>
 
-            <div class="coming-soon-badge">
+            <div class="coming-soon-badge" data-i18n="comingSoon">
                 Coming Soon
             </div>
         </div>
     </main>
 
     <script>
+        // i18n - Internationalization
+        const translations = {
+            en: {
+                privacy: 'Privacy',
+                title: 'The FPV social platform',
+                subtitle: 'Share clips. Organize sessions. Connect with pilots.',
+                comingSoon: 'Coming Soon',
+                finalComingSoon: 'COMING SOON',
+                contact: 'Contact'
+            },
+            tr: {
+                privacy: 'Gizlilik',
+                title: 'FPV sosyal platformu',
+                subtitle: 'Klip paylaş. Etkinlik düzenle. Pilotlarla bağlan.',
+                comingSoon: 'Çok Yakında',
+                finalComingSoon: 'ÇOK YAKINDA',
+                contact: 'İletişim'
+            }
+        };
+
+        // Get saved language or default to English
+        let currentLanguage = localStorage.getItem('fpvibe-lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('fpvibe-lang', lang);
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update final coming soon text
+            if (finalComingSoon) {
+                finalComingSoon.textContent = translations[lang].finalComingSoon;
+            }
+
+            // Update language switcher
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+        }
+
+        // Toggle language on button click
+        document.addEventListener('DOMContentLoaded', function() {
+            const langSwitcher = document.getElementById('langSwitcher');
+            langSwitcher.addEventListener('click', function() {
+                const newLang = currentLanguage === 'en' ? 'tr' : 'en';
+                setLanguage(newLang);
+            });
+
+            // Set initial language
+            setLanguage(currentLanguage);
+        });
+
         const logo = document.querySelector('.logo');
         const content = document.querySelector('.content');
         const body = document.body;
@@ -273,7 +334,7 @@
     </script>
 
     <footer class="footer">
-        <a href="mailto:contact@fpvibe.app">Contact</a>
+        <a href="mailto:contact@fpvibe.app" data-i18n="contact">Contact</a>
         <span>© 2025 FPVibe</span>
     </footer>
 </body>

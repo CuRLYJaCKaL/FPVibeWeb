@@ -107,6 +107,27 @@
         let lastScrollTime = Date.now();
         let scrollVelocity = 0;
         let scrollDirection = 0; // 1: aşağı, -1: yukarı
+        let currentAnimationFrame = null; // Animation frame ID
+        let scrollTimeout = null;
+
+        // Animation cleanup fonksiyonu
+        function stopCurrentAnimation() {
+            if (currentAnimationFrame) {
+                cancelAnimationFrame(currentAnimationFrame);
+                currentAnimationFrame = null;
+            }
+            isAutoScrolling = false;
+            momentumScrolling = false;
+            scrollVelocity = 0;
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = null;
+            }
+            // Speed lines temizle
+            setTimeout(() => {
+                zoomEffect.style.opacity = '0';
+            }, 100);
+        }
 
         function updateScroll() {
             ticking = false; // Her çağrıda reset et
@@ -184,23 +205,36 @@
             }
         }
 
-        // Otomatik zoom fonksiyonu - İleri/Geri akıllı geçiş
+        // Otomatik zoom fonksiyonu - İleri/Geri akıllı geçiş (BULLETPROOF)
         function autoZoom() {
-            if (isAutoScrolling || momentumScrolling) return;
+            // Eğer animasyon devam ediyorsa, önce durdur
+            if (isAutoScrolling || momentumScrolling) {
+                stopCurrentAnimation();
+            }
 
-            isAutoScrolling = true;
             const maxScroll = window.innerHeight * 1.2;
             const startScroll = window.scrollY;
 
             // Akıllı hedef belirleme: ortaya yakınsa ileri, yoksa geri
             const midPoint = maxScroll / 2;
             const targetScroll = startScroll < midPoint ? maxScroll : 0;
-
             const distance = targetScroll - startScroll;
+
+            // Distance çok küçükse (zaten hedef konumdaysa) animasyon yapma
+            if (Math.abs(distance) < 10) {
+                return;
+            }
+
+            isAutoScrolling = true;
             const duration = 3200; // 3.2 saniye
             let startTime = null;
 
             function animate(currentTime) {
+                // Animation yarıda iptal edildiyse dur
+                if (!isAutoScrolling) {
+                    return;
+                }
+
                 if (!startTime) startTime = currentTime;
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
@@ -212,7 +246,7 @@
 
                 window.scrollTo(0, startScroll + (distance * easeProgress));
 
-                // Zoom görüntüsünü güncelle (updateScroll'u manuel çağır)
+                // Zoom görüntüsünü güncelle
                 updateScroll();
 
                 // Speed line yoğunluğu hıza göre
@@ -220,9 +254,12 @@
                 zoomEffect.style.opacity = Math.min(0.6 + speedIntensity * 0.4, 0.95);
 
                 if (progress < 1) {
-                    requestAnimationFrame(animate);
+                    currentAnimationFrame = requestAnimationFrame(animate);
                 } else {
+                    // Animasyon tamamlandı - cleanup
                     isAutoScrolling = false;
+                    currentAnimationFrame = null;
+                    scrollVelocity = 0; // Velocity reset
                     updateScroll(); // Son kez güncelle
                     setTimeout(() => {
                         zoomEffect.style.opacity = '0';
@@ -230,7 +267,7 @@
                 }
             }
 
-            requestAnimationFrame(animate);
+            currentAnimationFrame = requestAnimationFrame(animate);
         }
 
         // Logo'ya veya ekrana tıklayınca otomatik zoom
@@ -242,8 +279,9 @@
             }
         });
 
-        // Momentum scroll fonksiyonu - FPV drone hissiyatı (İKİ YÖNLÜ)
+        // Momentum scroll fonksiyonu - FPV drone hissiyatı (İKİ YÖNLÜ - BULLETPROOF)
         function startMomentumScroll() {
+            // Zaten animasyon varsa başlatma
             if (momentumScrolling || isAutoScrolling) return;
 
             const currentScroll = window.scrollY;
@@ -252,29 +290,39 @@
             let shouldStartMomentum = false;
 
             // Scroll yönüne göre target belirle - daha hassas threshold
-            if (scrollDirection > 0 && scrollVelocity > 3 && currentScroll < maxScroll) {
-                // Aşağı scroll - sona git
+            if (scrollDirection > 0 && scrollVelocity > 3 && currentScroll < maxScroll - 10) {
+                // Aşağı scroll - sona git (10px threshold)
                 targetScroll = maxScroll;
                 shouldStartMomentum = true;
-            } else if (scrollDirection < 0 && scrollVelocity > 3 && currentScroll > 0) {
-                // Yukarı scroll - başa dön
+            } else if (scrollDirection < 0 && scrollVelocity > 3 && currentScroll > 10) {
+                // Yukarı scroll - başa dön (10px threshold)
                 targetScroll = 0;
                 shouldStartMomentum = true;
             }
 
             if (shouldStartMomentum) {
-                momentumScrolling = true;
                 const distance = targetScroll - currentScroll;
-                const duration = 3200; // 3.2 saniye - yazı animasyonu için uzatıldı
+
+                // Distance çok küçükse animasyon yapma
+                if (Math.abs(distance) < 10) {
+                    return;
+                }
+
+                momentumScrolling = true;
+                const duration = 3200; // 3.2 saniye
                 let startTime = null;
 
                 function animate(currentTime) {
+                    // Animation yarıda iptal edildiyse dur
+                    if (!momentumScrolling) {
+                        return;
+                    }
+
                     if (!startTime) startTime = currentTime;
                     const elapsed = currentTime - startTime;
                     const progress = Math.min(elapsed / duration, 1);
 
                     // FPV drone acceleration - hızlı başlar, devam eder, yavaş biter
-                    // İlk %60'ta hızlı, son %40'ta yavaşlar
                     const easeProgress = progress < 0.6
                         ? (progress / 0.6) * 0.85 // İlk %60'ta %85'e kadar hızlı
                         : 0.85 + ((progress - 0.6) / 0.4) * 0.15; // Son %40'ta %15 yavaş
@@ -289,9 +337,13 @@
                     zoomEffect.style.opacity = Math.min(0.6 + speedIntensity * 0.4, 0.95);
 
                     if (progress < 1) {
-                        requestAnimationFrame(animate);
+                        currentAnimationFrame = requestAnimationFrame(animate);
                     } else {
+                        // Animasyon tamamlandı - cleanup
                         momentumScrolling = false;
+                        currentAnimationFrame = null;
+                        scrollVelocity = 0; // Velocity reset
+                        scrollDirection = 0; // Direction reset
                         updateScroll(); // Son kez güncelle
                         setTimeout(() => {
                             zoomEffect.style.opacity = '0';
@@ -299,13 +351,12 @@
                     }
                 }
 
-                requestAnimationFrame(animate);
+                currentAnimationFrame = requestAnimationFrame(animate);
             }
         }
 
-        let scrollTimeout;
         window.addEventListener('scroll', function(e) {
-            // Manuel scroll ise animasyonları durdur
+            // Manuel scroll ise (animasyon yokken)
             if (!isAutoScrolling && !momentumScrolling) {
                 if (!ticking) {
                     window.requestAnimationFrame(updateScroll);
@@ -328,9 +379,14 @@
                 lastScrollY = currentY;
 
                 // Scroll durduğunda momentum başlat
-                clearTimeout(scrollTimeout);
+                if (scrollTimeout) {
+                    clearTimeout(scrollTimeout);
+                }
                 scrollTimeout = setTimeout(() => {
-                    startMomentumScroll();
+                    // Sadece hala manuel scroll modundaysak momentum başlat
+                    if (!isAutoScrolling && !momentumScrolling) {
+                        startMomentumScroll();
+                    }
                 }, 100); // 100ms bekleme
             }
         }, { passive: true });

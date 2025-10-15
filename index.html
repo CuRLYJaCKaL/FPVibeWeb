@@ -109,6 +109,7 @@
         let scrollDirection = 0; // 1: aşağı, -1: yukarı
 
         function updateScroll() {
+            ticking = false; // Her çağrıda reset et
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
@@ -181,8 +182,6 @@
                 finalComingSoon.style.letterSpacing = '30px';
                 finalComingSoon.style.opacity = '0';
             }
-
-            ticking = false;
         }
 
         // Otomatik zoom fonksiyonu - İleri/Geri akıllı geçiş
@@ -201,9 +200,6 @@
             const duration = 3200; // 3.2 saniye
             let startTime = null;
 
-            // Speed line efektini güçlendir
-            zoomEffect.style.opacity = '0.95';
-
             function animate(currentTime) {
                 if (!startTime) startTime = currentTime;
                 const elapsed = currentTime - startTime;
@@ -216,6 +212,9 @@
 
                 window.scrollTo(0, startScroll + (distance * easeProgress));
 
+                // Zoom görüntüsünü güncelle (updateScroll'u manuel çağır)
+                updateScroll();
+
                 // Speed line yoğunluğu hıza göre
                 const speedIntensity = progress < 0.7 ? progress * 1.3 : 1 - ((progress - 0.7) / 0.3);
                 zoomEffect.style.opacity = Math.min(0.6 + speedIntensity * 0.4, 0.95);
@@ -224,6 +223,7 @@
                     requestAnimationFrame(animate);
                 } else {
                     isAutoScrolling = false;
+                    updateScroll(); // Son kez güncelle
                     setTimeout(() => {
                         zoomEffect.style.opacity = '0';
                     }, 300);
@@ -268,9 +268,6 @@
                 const duration = 3200; // 3.2 saniye - yazı animasyonu için uzatıldı
                 let startTime = null;
 
-                // Speed line efektini güçlendir
-                zoomEffect.style.opacity = '0.95';
-
                 function animate(currentTime) {
                     if (!startTime) startTime = currentTime;
                     const elapsed = currentTime - startTime;
@@ -284,6 +281,9 @@
 
                     window.scrollTo(0, currentScroll + (distance * easeProgress));
 
+                    // Zoom görüntüsünü güncelle
+                    updateScroll();
+
                     // Speed line intensity - hızlanma hissiyatı
                     const speedIntensity = progress < 0.7 ? progress * 1.3 : 1 - ((progress - 0.7) / 0.3);
                     zoomEffect.style.opacity = Math.min(0.6 + speedIntensity * 0.4, 0.95);
@@ -292,6 +292,7 @@
                         requestAnimationFrame(animate);
                     } else {
                         momentumScrolling = false;
+                        updateScroll(); // Son kez güncelle
                         setTimeout(() => {
                             zoomEffect.style.opacity = '0';
                         }, 300);

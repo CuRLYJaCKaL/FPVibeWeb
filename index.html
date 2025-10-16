@@ -146,7 +146,7 @@
             // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
             // Zoom yaparken perspektif bozulması için non-linear offset
             // Yaklaşırken sanki uzaklaşıyor hissi (Hitchcock effect)
-            const vertigoIntensity = Math.sin(zoomProgress * Math.PI) * 60; // 0→60→0 sinüs eğrisi (daha güçlü)
+            const vertigoIntensity = Math.sin(zoomProgress * Math.PI) * 100; // 0→100→0 sinüs eğrisi (çok güçlü)
             const finalYOffset = yOffset + vertigoIntensity; // Vertigo eklendi
 
             logo.style.transform = `translate(-50%, ${finalYOffset}%) scale(${scale})`;
@@ -232,7 +232,9 @@
             }
 
             isAutoScrolling = true;
-            const duration = 3200; // 3.2 saniye
+            // İleri yön daha yavaş (5 saniye), geri yön normal (3.2 saniye)
+            const isForward = targetScroll > startScroll;
+            const duration = isForward ? 5000 : 3200; // İleri: 5s, Geri: 3.2s
             let startTime = null;
 
             function animate(currentTime) {
@@ -315,7 +317,9 @@
                 }
 
                 momentumScrolling = true;
-                const duration = 3200; // 3.2 saniye
+                // İleri yön daha yavaş (5 saniye), geri yön normal (3.2 saniye)
+                const isForward = targetScroll > currentScroll;
+                const duration = isForward ? 5000 : 3200; // İleri: 5s, Geri: 3.2s
                 let startTime = null;
 
                 function animate(currentTime) {

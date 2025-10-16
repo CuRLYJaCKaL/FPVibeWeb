@@ -143,7 +143,13 @@
             // Başlangıç: -50%, Max zoom: +35% (play butonu ekran merkezinde - daha yukarı)
             const yOffset = -50 + (zoomProgress * 85); // -50'den +35'e (daha çok yukarı)
 
-            logo.style.transform = `translate(-50%, ${yOffset}%) scale(${scale})`;
+            // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
+            // Zoom yaparken perspektif bozulması için non-linear offset
+            // Yaklaşırken sanki uzaklaşıyor hissi (Hitchcock effect)
+            const vertigoIntensity = Math.sin(zoomProgress * Math.PI) * 15; // 0→15→0 sinüs eğrisi
+            const finalYOffset = yOffset + vertigoIntensity; // Vertigo eklendi
+
+            logo.style.transform = `translate(-50%, ${finalYOffset}%) scale(${scale})`;
 
             // Zoom hız efekti - scroll hızına göre
             if (scrollVelocity > 5 && zoomProgress > 0.1) {

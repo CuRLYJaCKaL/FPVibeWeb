@@ -146,7 +146,7 @@
             // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
             // Zoom yaparken perspektif bozulması için non-linear offset
             // Yaklaşırken sanki uzaklaşıyor hissi (Hitchcock effect)
-            const vertigoIntensity = Math.sin(zoomProgress * Math.PI) * 15; // 0→15→0 sinüs eğrisi
+            const vertigoIntensity = Math.sin(zoomProgress * Math.PI) * 60; // 0→60→0 sinüs eğrisi (daha güçlü)
             const finalYOffset = yOffset + vertigoIntensity; // Vertigo eklendi
 
             logo.style.transform = `translate(-50%, ${finalYOffset}%) scale(${scale})`;

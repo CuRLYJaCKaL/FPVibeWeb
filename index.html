@@ -141,9 +141,9 @@
             const zoomProgress = Math.min(scrollY / (windowHeight * 1.2), 1);
             const scale = 2.0 + (zoomProgress * 91.7); // 2.0'dan 93.7'e kadar
 
-            // Logo her zaman ekran merkezinde kalmalı - SABİT
-            // Sadece vertigo efekti için salınım yapacak
-            const yOffset = -50; // SABİT -50% (ekran merkezi)
+            // Logo başlangıçta -50%, zoom anında 5 puan yukarı (-55%)
+            // Play butonunun tam ortasına odaklanmak için
+            const yOffset = -50 - (zoomProgress * 5); // -50'den -55'e
 
             // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
             // Zoom yaparken perspektif bozulması için non-linear offset

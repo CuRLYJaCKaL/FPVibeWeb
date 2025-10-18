@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git commit -m \"$(cat <<''EOF''\nfix: Adjust Y offset to +25% for proper play button centering\n\nCenter Alignment Fix:\n- Reduced max Y offset: +35% → +25% (10 units less upward)\n- Changed offset range from -50% to +25% (was -50% to +35%)\n- Play button now properly centered on screen during max zoom\n\nTechnical Change:\n- const yOffset = -50 + (zoomProgress * 75); // was 85\n- Start: -50% (bottom), End: +25% (slightly above center)\n- More balanced vertical positioning for play button focus\n\nUser Experience:\n- Play button appears at perfect center when fully zoomed\n- Less upward drift during zoom animation\n- Better visual balance with screen center\n- Inception vertigo effect still prominent with corrected alignment\n\n🤖 Generated with Claude Code (https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "WebFetch(domain:www.smarthost.az)"
+      "WebFetch(domain:www.smarthost.az)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

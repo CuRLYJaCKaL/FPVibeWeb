@@ -10,8 +10,8 @@
     <nav class="nav">
         <span class="wordmark">FPVibe</span>
         <div class="nav-right">
-            <a href="support.html" class="link" data-i18n="support">Support</a>
-            <a href="privacy.html" class="link" data-i18n="privacy">Privacy</a>
+            <a href="/support" class="link" data-i18n="support">Support</a>
+            <a href="/privacy" class="link" data-i18n="privacy">Privacy</a>
             <button class="lang-switcher" id="langSwitcher">
                 <span id="currentLang">EN</span>
             </button>
@@ -143,8 +143,8 @@
 
             // Play butonunun merkezine zoom yapmak için Y offset ayarla
             // Play butonu logo merkezinin ALTINDA olduğu için logoyu YUKARI kaydırmalıyız
-            // Başlangıç: -75%, Max zoom: 0% (play butonu tam ekran merkezinde)
-            const yOffset = -75 + (zoomProgress * 75); // -75'den 0'a
+            // Başlangıç: -50%, Max zoom: +15% (play butonu ekran merkezinde - dengeli)
+            const yOffset = -50 + (zoomProgress * 65); // -50'den +15'e
 
             // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
             // Zoom yaparken perspektif bozulması için non-linear offset

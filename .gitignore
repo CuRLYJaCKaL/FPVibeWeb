@@ -1,0 +1,10 @@
+# Claude Code settings
+.claude/
+
+# macOS
+.DS_Store
+
+# Backup files
+*-v1.*
+*-backup.*
+*.bak

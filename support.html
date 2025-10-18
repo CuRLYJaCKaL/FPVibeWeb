@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FPVibe Support - Get help with your FPV social network">
+    <title>FPVibe - Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+            background-color: #000;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 40px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .wordmark {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .link:hover {
+            color: #fff;
+        }
+
+        .lang-switcher {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 6px 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .lang-switcher:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        h2 {
+            color: #fff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .contact-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            margin: 48px 0;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .contact-box h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .email-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 32px;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.2s;
+        }
+
+        .email-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .response-time {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 16px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 24px;
+            margin: 16px 0;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .faq-item h3 {
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 12px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 24px;
+            font-size: 14px;
+            letter-spacing: 0.03em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 20px 24px;
+            }
+
+            .container {
+                padding: 100px 24px 60px;
+            }
+
+            .contact-box {
+                padding: 24px;
+            }
+
+            .email-link {
+                font-size: 16px;
+                padding: 14px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                padding: 16px 20px;
+            }
+
+            .container {
+                padding: 90px 20px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="wordmark">FPVibe</a>
+        <div class="nav-right">
+            <a href="index.html" class="link" data-i18n="home">Home</a>
+            <a href="privacy.html" class="link" data-i18n="privacy">Privacy</a>
+            <button class="lang-switcher" id="langSwitcher">
+                <span id="currentLang">EN</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container" id="content">
+        <!-- Content will be injected by JavaScript -->
+    </div>
+
+    <footer>
+        <p><strong>FPVibe</strong> - <span data-i18n="footerTagline">Social Network for FPV Drone Pilots</span></p>
+        <p>© 2025 FPVibe. <span data-i18n="footerRights">All rights reserved.</span></p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                home: 'Home',
+                privacy: 'Privacy',
+                footerTagline: 'Social Network for FPV Drone Pilots',
+                footerRights: 'All rights reserved.',
+                content: `
+                    <header>
+                        <h1>Support</h1>
+                        <p class="subtitle">We're here to help you get the most out of FPVibe</p>
+                    </header>
+
+                    <div class="contact-box">
+                        <h2>Get In Touch</h2>
+                        <p>Have a question, issue, or feedback? We'd love to hear from you.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">We typically respond within 24-48 hours</p>
+                        <div>
+                            <span class="badge">✉️ Email Support</span>
+                        </div>
+                    </div>
+
+                    <section>
+                        <h2>Frequently Asked Questions</h2>
+
+                        <div class="faq-item">
+                            <h3>How do I create an account?</h3>
+                            <p>Download the FPVibe app from the App Store, tap "Sign Up", and follow the registration process. You'll need a valid email address to get started.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>How do I upload FPV videos?</h3>
+                            <p>Once logged in, tap the "+" button, select your FPV flight video from your device, add a title and description, then tap "Share". Your video will be visible to the FPVibe community.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Can I delete my account?</h3>
+                            <p>Yes. Go to Settings > Account > Delete Account. All your personal data will be permanently deleted within 30 days as per our Privacy Policy.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>How do I find nearby flying spots?</h3>
+                            <p>Enable location permissions in your device settings, then tap the "Map" tab in the app. You'll see nearby FPV flying spots, other pilots, and upcoming events.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>I forgot my password. What should I do?</h3>
+                            <p>On the login screen, tap "Forgot Password?". Enter your email address and we'll send you a password reset link.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>How do I report inappropriate content?</h3>
+                            <p>Tap the three dots (⋯) on any post or comment, then select "Report". Choose the reason for reporting and submit. Our team will review it promptly.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Is FPVibe free to use?</h3>
+                            <p>Yes, FPVibe is completely free. We don't sell your data or show ads. Our mission is to connect the global FPV community.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Which video formats are supported?</h3>
+                            <p>FPVibe supports MP4, MOV, and most common video formats. For best results, we recommend H.264 encoded videos up to 4K resolution.</p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Technical Issues</h2>
+                        <div class="highlight-box">
+                            <p>If you're experiencing technical problems:</p>
+                            <ul>
+                                <li>Make sure you're running the latest version of the FPVibe app</li>
+                                <li>Try restarting the app</li>
+                                <li>Check your internet connection</li>
+                                <li>Restart your device</li>
+                                <li>If the problem persists, contact us at <strong>asd@Royal.Net</strong> with details about the issue</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Feature Requests</h2>
+                        <p>Have an idea for a new feature? We'd love to hear it! Send your suggestions to <strong>asd@Royal.Net</strong>. We read every message and consider all feedback when planning new features.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Still Need Help?</h2>
+                        <p>Don't hesitate to reach out. Our team is ready to assist you.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Contact Support</a>
+                    </div>
+                `
+            },
+            tr: {
+                home: 'Ana Sayfa',
+                privacy: 'Gizlilik',
+                footerTagline: 'FPV Drone Pilotları İçin Sosyal Ağ',
+                footerRights: 'Tüm hakları saklıdır.',
+                content: `
+                    <header>
+                        <h1>Destek</h1>
+                        <p class="subtitle">FPVibe'dan en iyi şekilde yararlanmanız için buradayız</p>
+                    </header>
+
+                    <div class="contact-box">
+                        <h2>İletişime Geçin</h2>
+                        <p>Sorunuz, probleminiz veya geri bildiriminiz mi var? Sizden haber almak isteriz.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Genellikle 24-48 saat içinde yanıt veriyoruz</p>
+                        <div>
+                            <span class="badge">✉️ E-posta Desteği</span>
+                        </div>
+                    </div>
+
+                    <section>
+                        <h2>Sıkça Sorulan Sorular</h2>
+
+                        <div class="faq-item">
+                            <h3>Nasıl hesap oluştururum?</h3>
+                            <p>FPVibe uygulamasını App Store'dan indirin, "Kayıt Ol" butonuna tıklayın ve kayıt sürecini takip edin. Başlamak için geçerli bir e-posta adresine ihtiyacınız olacak.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>FPV videolarımı nasıl yüklerim?</h3>
+                            <p>Giriş yaptıktan sonra "+" butonuna tıklayın, cihazınızdan FPV uçuş videonuzu seçin, bir başlık ve açıklama ekleyin, ardından "Paylaş" butonuna tıklayın. Videonuz FPVibe topluluğu tarafından görülebilir olacak.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Hesabımı silebilir miyim?</h3>
+                            <p>Evet. Ayarlar > Hesap > Hesabı Sil'e gidin. Gizlilik Politikamıza göre tüm kişisel verileriniz 30 gün içinde kalıcı olarak silinecektir.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Yakındaki uçuş alanlarını nasıl bulurum?</h3>
+                            <p>Cihaz ayarlarınızdan konum izinlerini etkinleştirin, ardından uygulamadaki "Harita" sekmesine tıklayın. Yakındaki FPV uçuş alanlarını, diğer pilotları ve yaklaşan etkinlikleri göreceksiniz.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Şifremi unuttum. Ne yapmalıyım?</h3>
+                            <p>Giriş ekranında "Şifremi Unuttum?" butonuna tıklayın. E-posta adresinizi girin, size şifre sıfırlama bağlantısı göndereceğiz.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Uygunsuz içeriği nasıl bildirebilirim?</h3>
+                            <p>Herhangi bir gönderi veya yorumdaki üç noktaya (⋯) tıklayın, ardından "Bildir" seçeneğini seçin. Bildirme nedenini seçin ve gönderin. Ekibimiz hızlıca inceleyecektir.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>FPVibe kullanımı ücretsiz mi?</h3>
+                            <p>Evet, FPVibe tamamen ücretsizdir. Verilerinizi satmıyoruz veya reklam göstermiyoruz. Misyonumuz küresel FPV topluluğunu birleştirmektir.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Hangi video formatları destekleniyor?</h3>
+                            <p>FPVibe MP4, MOV ve yaygın video formatlarını destekler. En iyi sonuçlar için 4K çözünürlüğe kadar H.264 kodlanmış videoları öneriyoruz.</p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Teknik Sorunlar</h2>
+                        <div class="highlight-box">
+                            <p>Teknik problemler yaşıyorsanız:</p>
+                            <ul>
+                                <li>FPVibe uygulamasının en son sürümünü çalıştırdığınızdan emin olun</li>
+                                <li>Uygulamayı yeniden başlatmayı deneyin</li>
+                                <li>İnternet bağlantınızı kontrol edin</li>
+                                <li>Cihazınızı yeniden başlatın</li>
+                                <li>Sorun devam ederse, <strong>asd@Royal.Net</strong> adresinden sorun hakkında detaylı bilgi ile bize ulaşın</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Özellik İstekleri</h2>
+                        <p>Yeni bir özellik fikriniz mi var? Duymak isteriz! Önerilerinizi <strong>asd@Royal.Net</strong> adresine gönderin. Her mesajı okuyoruz ve yeni özellikler planlarken tüm geri bildirimleri dikkate alıyoruz.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Hala Yardıma İhtiyacınız Var mı?</h2>
+                        <p>İletişime geçmekten çekinmeyin. Ekibimiz size yardımcı olmaya hazır.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Destek ile İletişime Geç</a>
+                    </div>
+                `
+            }
+        };
+
+        // Get saved language or default to English
+        let currentLanguage = localStorage.getItem('fpvibe-lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('fpvibe-lang', lang);
+
+            // Update content
+            document.getElementById('content').innerHTML = translations[lang].content;
+
+            // Update other i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update language switcher
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+
+        // Toggle language on button click
+        document.addEventListener('DOMContentLoaded', function() {
+            const langSwitcher = document.getElementById('langSwitcher');
+            langSwitcher.addEventListener('click', function() {
+                const newLang = currentLanguage === 'en' ? 'tr' : 'en';
+                setLanguage(newLang);
+            });
+
+            // Set initial language
+            setLanguage(currentLanguage);
+        });
+    </script>
+</body>
+</html>

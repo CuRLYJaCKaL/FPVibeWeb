@@ -143,8 +143,8 @@
 
             // Play butonunun merkezine zoom yapmak için Y offset ayarla
             // Play butonu logo merkezinin ALTINDA olduğu için logoyu YUKARI kaydırmalıyız
-            // Başlangıç: -50%, Max zoom: +10% (play butonu ekran merkezinde - 10 puan aşağı)
-            const yOffset = -50 + (zoomProgress * 60); // -50'den +10'a
+            // Başlangıç: -50%, Max zoom: 0% (tam ekran merkezi)
+            const yOffset = -50 + (zoomProgress * 50); // -50'den 0'a
 
             // INCEPTION DOLLY ZOOM EFFECT - Vertigo hissi
             // Zoom yaparken perspektif bozulması için non-linear offset

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Drone POV Immersive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Mono', 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* DVR recording aesthetic */
+        body::before {
+            content: 'REC';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff0000;
+            letter-spacing: 0.2em;
+            z-index: 200;
+            animation: recBlink 1s step-end infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 23px;
+            left: 60px;
+            width: 12px;
+            height: 12px;
+            background: #ff0000;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff0000;
+            z-index: 200;
+            animation: recBlink 1s step-end infinite;
+        }
+
+        @keyframes recBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* FPV goggles view frame */
+        .goggles-frame {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Binocular mask */
+        .goggles-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 45% 40% at 50% 50%,
+                transparent 0%,
+                transparent 85%,
+                rgba(0, 0, 0, 0.5) 90%,
+                #000 100%
+            );
+        }
+
+        /* Fish-eye lens distortion overlay */
+        .lens-distortion {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                transparent 0%,
+                transparent 60%,
+                rgba(139, 92, 246, 0.05) 80%,
+                rgba(139, 92, 246, 0.1) 100%
+            );
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        /* On-Screen Display (OSD) overlay */
+        .osd-overlay {
+            position: fixed;
+            inset: 0;
+            font-family: 'SF Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+            z-index: 150;
+            color: #fff;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Top OSD bar */
+        .osd-top {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            font-size: 12px;
+        }
+
+        .osd-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .osd-icon {
+            font-size: 14px;
+        }
+
+        /* Bottom OSD info */
+        .osd-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            font-size: 11px;
+        }
+
+        .osd-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .osd-right {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        /* Battery indicator */
+        .battery {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .battery-bar {
+            width: 40px;
+            height: 14px;
+            border: 2px solid #fff;
+            border-radius: 2px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .battery-bar::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 3px;
+            width: 3px;
+            height: 6px;
+            background: #fff;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .battery-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 80%;
+            background: #00ff00;
+            border-radius: 1px;
+        }
+
+        /* Signal strength */
+        .signal {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .signal-bar {
+            width: 4px;
+            background: #fff;
+        }
+
+        .signal-bar:nth-child(1) { height: 6px; }
+        .signal-bar:nth-child(2) { height: 9px; }
+        .signal-bar:nth-child(3) { height: 12px; }
+        .signal-bar:nth-child(4) { height: 15px; }
+        .signal-bar:nth-child(5) { height: 18px; }
+
+        /* Crosshair center */
+        .crosshair-center {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            z-index: 90;
+            pointer-events: none;
+        }
+
+        .crosshair-center::before,
+        .crosshair-center::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .crosshair-center::before {
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            transform: translateX(-50%);
+        }
+
+        .crosshair-center::after {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            transform: translateY(-50%);
+        }
+
+        .crosshair-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+        }
+
+        /* Main card with fish-eye effect */
+        .profile-card {
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            transform: perspective(1000px) translateZ(0);
+        }
+
+        /* POV container */
+        .pov-container {
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow:
+                0 40px 80px rgba(0, 0, 0, 0.9),
+                inset 0 0 100px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* Subtle scan line */
+        .scan-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Pilot info */
+        .pilot-pov {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .pilot-callsign {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .pilot-id {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .flight-mode {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+
+        /* QR in center */
+        .qr-pov {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .qr-frame-pov {
+            width: 260px;
+            height: 260px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow:
+                0 0 40px rgba(255, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        /* Focus brackets around QR */
+        .focus-bracket {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 0, 0, 0.6);
+        }
+
+        .focus-bracket.tl {
+            top: -10px;
+            left: -10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .focus-bracket.tr {
+            top: -10px;
+            right: -10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .focus-bracket.bl {
+            bottom: -10px;
+            left: -10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .focus-bracket.br {
+            bottom: -10px;
+            right: -10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        #qrcode {
+            width: 220px;
+            height: 220px;
+        }
+
+        .qr-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Telemetry grid */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .telem-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .telem-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .telem-label {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Flight info */
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* DVR timestamp */
+        .dvr-timestamp {
+            position: fixed;
+            bottom: 50px;
+            right: 30px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-variant-numeric: tabular-nums;
+            z-index: 150;
+            pointer-events: none;
+        }
+
+        /* Entry animation */
+        @keyframes povEntry {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .profile-card {
+            animation: povEntry 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pov-container {
+                padding: 32px 24px;
+            }
+
+            .pilot-callsign {
+                font-size: 36px;
+            }
+
+            .qr-frame-pov {
+                width: 220px;
+                height: 220px;
+            }
+
+            #qrcode {
+                width: 180px;
+                height: 180px;
+            }
+
+            .telemetry-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .osd-top,
+            .osd-bottom {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="goggles-frame"></div>
+    <div class="lens-distortion"></div>
+
+    <!-- OSD Overlay -->
+    <div class="osd-overlay">
+        <div class="osd-top">
+            <div class="osd-item">
+                <span class="osd-icon">🛰️</span>
+                <span>GPS: 18</span>
+            </div>
+            <div class="osd-item">
+                <span class="osd-icon">📡</span>
+                <span>5.8GHz CH:R2</span>
+            </div>
+            <div class="osd-item">
+                <span>HD 60FPS</span>
+            </div>
+        </div>
+
+        <div class="osd-bottom">
+            <div class="osd-left">
+                <div class="battery">
+                    <div class="battery-bar">
+                        <div class="battery-fill"></div>
+                    </div>
+                    <span>16.8V</span>
+                </div>
+                <div>ALT: 42m</div>
+                <div>DIST: 1.2km</div>
+            </div>
+
+            <div class="osd-right">
+                <div class="osd-item">
+                    <span>RSSI:</span>
+                    <div class="signal">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                </div>
+                <div>THR: 65%</div>
+                <div>MODE: ACRO</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Center crosshair -->
+    <div class="crosshair-center">
+        <div class="crosshair-dot"></div>
+    </div>
+
+    <!-- DVR timestamp -->
+    <div class="dvr-timestamp" id="dvrTime">00:00:00</div>
+
+    <div class="profile-card">
+        <div class="pov-container">
+            <div class="scan-line"></div>
+
+            <div class="pilot-pov">
+                <h1 class="pilot-callsign">RAPTOR</h1>
+                <div class="pilot-id">ID: @raptor_fpv_pro</div>
+                <div class="flight-mode">● ARMED</div>
+            </div>
+
+            <div class="qr-pov">
+                <div class="qr-frame-pov">
+                    <div class="focus-bracket tl"></div>
+                    <div class="focus-bracket tr"></div>
+                    <div class="focus-bracket bl"></div>
+                    <div class="focus-bracket br"></div>
+                    <div id="qrcode"></div>
+                </div>
+                <div class="qr-label">▶ Target Lock Scan</div>
+            </div>
+
+            <div class="telemetry-grid">
+                <div class="telem-box">
+                    <div class="telem-value">24.3K</div>
+                    <div class="telem-label">Followers</div>
+                </div>
+                <div class="telem-box">
+                    <div class="telem-value">3.2K</div>
+                    <div class="telem-label">Flights</div>
+                </div>
+                <div class="telem-box">
+                    <div class="telem-value">9.8M</div>
+                    <div class="telem-label">Views</div>
+                </div>
+                <div class="telem-box">
+                    <div class="telem-value">340</div>
+                    <div class="telem-label">km/h Max</div>
+                </div>
+            </div>
+
+            <div class="flight-info">
+                <span>PROFILE TYPE: RACING • FREESTYLE</span>
+                <span>EXP: 10+ YEARS</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@raptor_fpv_pro",
+            width: 220,
+            height: 220,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Live DVR timestamp
+        function updateDVRTime() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('dvrTime').textContent = `${h}:${m}:${s}`;
+        }
+        updateDVRTime();
+        setInterval(updateDVRTime, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Racing Telemetry Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Racing grid lines */
+        .racing-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridScroll {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                transform: translateX(50px) translateY(50px);
+            }
+        }
+
+        /* Speed streaks */
+        .speed-streaks {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .speed-streak {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 0, 0, 0.8),
+                transparent
+            );
+            animation: streakRush 1.5s linear infinite;
+        }
+
+        @keyframes streakRush {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateX(200vw);
+                opacity: 0;
+            }
+        }
+
+        .profile-card {
+            max-width: 950px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Racing dashboard */
+        .racing-dashboard {
+            background: linear-gradient(135deg,
+                rgba(15, 15, 15, 0.95) 0%,
+                rgba(20, 0, 0, 0.95) 100%
+            );
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 40px 80px rgba(0, 0, 0, 0.9),
+                0 0 60px rgba(255, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Top bar */
+        .racing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 28px;
+            background: rgba(255, 0, 0, 0.1);
+            border-bottom: 2px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .team-logo {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ff0000;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #ff0000;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff0000;
+            animation: livePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        /* Main grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 0;
+        }
+
+        /* Left panel - QR & Pilot info */
+        .left-panel {
+            background: linear-gradient(180deg,
+                rgba(255, 0, 0, 0.08) 0%,
+                rgba(255, 0, 0, 0.03) 100%
+            );
+            border-right: 2px solid rgba(255, 0, 0, 0.2);
+            padding: 32px 24px;
+        }
+
+        .pilot-info {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .pilot-number {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: #ff0000;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .pilot-name-racing {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .pilot-handle-racing {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.08em;
+        }
+
+        /* QR scanner */
+        .qr-racing {
+            margin-top: 28px;
+        }
+
+        .qr-frame-racing {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #fff;
+            border: 3px solid #ff0000;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow:
+                0 0 30px rgba(255, 0, 0, 0.5),
+                inset 0 0 20px rgba(255, 0, 0, 0.1);
+            margin-bottom: 12px;
+        }
+
+        #qrcode {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-scan-text {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 0, 0, 0.7);
+        }
+
+        /* Right panel - Telemetry */
+        .right-panel {
+            padding: 32px;
+        }
+
+        /* Speed gauge */
+        .speed-gauge {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .speed-display {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .speed-value {
+            font-size: 84px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            color: #ff0000;
+            text-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .speed-unit {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .speed-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Telemetry metrics */
+        .telemetry-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric {
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .metric-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff0000;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .metric-unit {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 4px;
+        }
+
+        /* Performance bars */
+        .performance-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 0, 0, 0.7);
+            margin-bottom: 16px;
+        }
+
+        .performance-bar {
+            margin-bottom: 12px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .bar-track {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6600);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            animation: barPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes barPulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            }
+        }
+
+        /* Stats grid */
+        .stats-racing {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .stat-racing {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-racing-num {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-racing-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Entry animation */
+        @keyframes racingEntry {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .profile-card {
+            animation: racingEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                border-right: none;
+                border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+            }
+
+            .speed-value {
+                font-size: 64px;
+            }
+
+            .pilot-number {
+                font-size: 56px;
+            }
+
+            .telemetry-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="racing-grid"></div>
+    <div class="speed-streaks" id="speedStreaks"></div>
+
+    <div class="profile-card">
+        <div class="racing-dashboard">
+            <!-- Header -->
+            <div class="racing-header">
+                <div class="team-logo">FPVIBE RACING</div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                </div>
+            </div>
+
+            <!-- Main grid -->
+            <div class="dashboard-grid">
+                <!-- Left Panel -->
+                <div class="left-panel">
+                    <div class="pilot-info">
+                        <div class="pilot-number">#88</div>
+                        <div class="pilot-name-racing">BLAZE</div>
+                        <div class="pilot-handle-racing">@blaze_racing</div>
+                    </div>
+
+                    <div class="qr-racing">
+                        <div class="qr-frame-racing">
+                            <div id="qrcode"></div>
+                        </div>
+                        <div class="qr-scan-text">▶ Driver Profile</div>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="right-panel">
+                    <!-- Speed gauge -->
+                    <div class="speed-gauge">
+                        <div>
+                            <div class="speed-display">
+                                <span class="speed-value">347</span>
+                                <span class="speed-unit">km/h</span>
+                            </div>
+                            <div class="speed-label">Top Speed</div>
+                        </div>
+                        <div>
+                            <div class="speed-label" style="text-align: right;">Current Lap</div>
+                            <div style="font-size: 32px; font-weight: 700; color: #ff0000; font-variant-numeric: tabular-nums;">
+                                00:42.8
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry -->
+                    <div class="telemetry-metrics">
+                        <div class="metric">
+                            <div class="metric-label">Races Won</div>
+                            <div class="metric-value">142</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Podiums</div>
+                            <div class="metric-value">289</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Best Lap</div>
+                            <div class="metric-value">38<span class="metric-unit">s</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Performance -->
+                    <div class="performance-section">
+                        <div class="section-title">Performance Metrics</div>
+                        <div class="performance-bar">
+                            <div class="bar-label">
+                                <span>Speed</span>
+                                <span>98%</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 98%;"></div>
+                            </div>
+                        </div>
+                        <div class="performance-bar">
+                            <div class="bar-label">
+                                <span>Control</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div class="performance-bar">
+                            <div class="bar-label">
+                                <span>Consistency</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-racing">
+                        <div class="stat-racing">
+                            <div class="stat-racing-num">32.5K</div>
+                            <div class="stat-racing-label">Fans</div>
+                        </div>
+                        <div class="stat-racing">
+                            <div class="stat-racing-num">4.2K</div>
+                            <div class="stat-racing-label">Races</div>
+                        </div>
+                        <div class="stat-racing">
+                            <div class="stat-racing-num">12M</div>
+                            <div class="stat-racing-label">Views</div>
+                        </div>
+                        <div class="stat-racing">
+                            <div class="stat-racing-num">96</div>
+                            <div class="stat-racing-label">Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        const qrSize = document.querySelector('.qr-frame-racing').offsetWidth - 32;
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@blaze_racing",
+            width: qrSize,
+            height: qrSize,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Generate speed streaks
+        const speedStreaks = document.getElementById('speedStreaks');
+        for (let i = 0; i < 25; i++) {
+            const streak = document.createElement('div');
+            streak.className = 'speed-streak';
+            streak.style.top = Math.random() * 100 + '%';
+            streak.style.width = (Math.random() * 300 + 150) + 'px';
+            streak.style.animationDelay = Math.random() * 1.5 + 's';
+            streak.style.animationDuration = (Math.random() * 1 + 1) + 's';
+            speedStreaks.appendChild(streak);
+        }
+    </script>
+</body>
+</html>

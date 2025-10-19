@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile QR Cards - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .variants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .variant-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .variant-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .variant-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .variant-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .variant-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .variant-link {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .variant-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .features h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .feature-text strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-text span {
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .variants {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚁 FPVibe Profile QR Cards</h1>
+            <p class="subtitle">Şık ve modern profil paylaşım kartları</p>
+        </header>
+
+        <div class="variants">
+            <div class="variant-card">
+                <div class="variant-icon">📱</div>
+                <h2 class="variant-title">V1: Vertical</h2>
+                <p class="variant-desc">
+                    Mobil paylaşım için compact dikey düzen.
+                    Instagram Stories, sosyal medya.
+                </p>
+                <a href="profile-card-v1.html" class="variant-link">Önizle →</a>
+            </div>
+
+            <div class="variant-card">
+                <div class="variant-icon">💻</div>
+                <h2 class="variant-title">V2: Horizontal</h2>
+                <p class="variant-desc">
+                    Desktop için split layout.
+                    Stats grid, badges showcase.
+                </p>
+                <a href="profile-card-v2-horizontal.html" class="variant-link">Önizle →</a>
+            </div>
+
+            <div class="variant-card">
+                <div class="variant-icon">✨</div>
+                <h2 class="variant-title">V3: Premium</h2>
+                <p class="variant-desc">
+                    Minimalist lüks tasarım.
+                    Subtle animations, elegant gradients.
+                </p>
+                <a href="profile-card-v3-premium.html" class="variant-link">Önizle →</a>
+            </div>
+
+            <div class="variant-card">
+                <div class="variant-icon">🎮</div>
+                <h2 class="variant-title">V4: Futuristic HUD</h2>
+                <p class="variant-desc">
+                    FPV drone cockpit temalı HUD.
+                    Grid background, scanline, monospace fonts.
+                </p>
+                <a href="profile-card-v4-futuristic.html" class="variant-link">Önizle →</a>
+            </div>
+
+            <div class="variant-card">
+                <div class="variant-icon">🏆</div>
+                <h2 class="variant-title">V5: Business Elegant</h2>
+                <p class="variant-desc">
+                    Profesyonel business card tarzı.
+                    Split layout, luxury feel, detailed info.
+                </p>
+                <a href="profile-card-v5-elegant.html" class="variant-link">Önizle →</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>✨ Özellikler</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🎨</span>
+                    <div class="feature-text">
+                        <strong>FPVibe Design System</strong>
+                        Web sitesiyle aynı tasarım dili: glassmorphism, dark theme, purple/cyan gradients
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <div class="feature-text">
+                        <strong>QR Kod Entegrasyonu</strong>
+                        Otomatik QR kod oluşturma, scan to follow özelliği
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <div class="feature-text">
+                        <strong>Responsive Tasarım</strong>
+                        Mobil ve desktop'ta mükemmel görünüm
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <div class="feature-text">
+                        <strong>Smooth Animations</strong>
+                        FadeIn, float, pulse efektleri
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <div class="feature-text">
+                        <strong>Özelleştirilebilir</strong>
+                        Profil bilgileri, stats, badges kolayca düzenlenebilir
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <div class="feature-text">
+                        <strong>Standalone</strong>
+                        Ana projeden bağımsız, CDN üzerinden çalışır
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="footer-text">
+                Designed with <span>FPVibe</span> Design System
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

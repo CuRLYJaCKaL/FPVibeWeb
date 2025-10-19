@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Business Elegance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        /* Subtle radial gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .profile-card {
+            max-width: 700px;
+            width: 100%;
+            background: linear-gradient(135deg,
+                rgba(20, 20, 20, 0.9) 0%,
+                rgba(15, 15, 15, 0.95) 100%
+            );
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            box-shadow:
+                0 32px 80px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        /* Elegant top border gradient */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(139, 92, 246, 0.8) 25%,
+                rgba(6, 182, 212, 0.8) 75%,
+                transparent
+            );
+        }
+
+        /* Split layout */
+        .card-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+        }
+
+        /* Left sidebar */
+        .sidebar {
+            background: linear-gradient(180deg,
+                rgba(139, 92, 246, 0.08) 0%,
+                rgba(6, 182, 212, 0.04) 100%
+            );
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .qr-section {
+            margin-bottom: 32px;
+        }
+
+        .qr-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 16px;
+        }
+
+        .qr-background {
+            position: absolute;
+            inset: 8px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .qr-decoration {
+            position: absolute;
+            inset: 0;
+            border: 1px solid;
+            border-image: linear-gradient(135deg,
+                rgba(139, 92, 246, 0.3),
+                rgba(6, 182, 212, 0.3)
+            ) 1;
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        #qrcode {
+            position: relative;
+            z-index: 1;
+            width: 164px;
+            height: 164px;
+        }
+
+        .qr-instruction {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent
+            );
+            margin: 24px 0;
+        }
+
+        .sidebar-stats {
+            width: 100%;
+        }
+
+        .sidebar-stat {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Right content */
+        .content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .brand-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .brand-logo {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .verified-mark {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .display-name {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.85) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .username-handle {
+            font-size: 18px;
+            color: rgba(139, 92, 246, 0.8);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .bio-section {
+            margin-bottom: 32px;
+        }
+
+        .bio-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 8px;
+        }
+
+        .bio-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.65);
+            font-weight: 400;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .detail-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .footer-meta {
+            margin-top: auto;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-dot {
+            width: 4px;
+            height: 4px;
+            background: currentColor;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-card {
+            animation: fadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                padding: 32px 24px;
+            }
+
+            .content {
+                padding: 32px 24px;
+            }
+
+            .qr-wrapper {
+                width: 160px;
+                height: 160px;
+            }
+
+            #qrcode {
+                width: 144px;
+                height: 144px;
+            }
+
+            .display-name {
+                font-size: 32px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-stat-value {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="card-layout">
+            <!-- Left Sidebar -->
+            <div class="sidebar">
+                <div class="qr-section">
+                    <div class="qr-wrapper">
+                        <div class="qr-background">
+                            <div id="qrcode"></div>
+                        </div>
+                        <div class="qr-decoration"></div>
+                    </div>
+                    <div class="qr-instruction">Scan to Connect</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="sidebar-stats">
+                    <div class="sidebar-stat">
+                        <div class="sidebar-stat-value">4.2K</div>
+                        <div class="sidebar-stat-label">Followers</div>
+                    </div>
+                    <div class="sidebar-stat">
+                        <div class="sidebar-stat-value">187</div>
+                        <div class="sidebar-stat-label">Content</div>
+                    </div>
+                    <div class="sidebar-stat">
+                        <div class="sidebar-stat-value">92K</div>
+                        <div class="sidebar-stat-label">Reach</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="content">
+                <div class="content-header">
+                    <div class="brand-line">
+                        <div class="brand-logo">FPVibe</div>
+                        <div class="verified-mark">✓</div>
+                    </div>
+
+                    <h1 class="display-name">Jordan Chen</h1>
+                    <div class="username-handle">@jordanfpv</div>
+                </div>
+
+                <div class="bio-section">
+                    <div class="bio-label">About</div>
+                    <p class="bio-text">
+                        Professional FPV cinematographer specializing in action sports and aerial storytelling.
+                        Featured in Red Bull Media House productions.
+                    </p>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Specialization</div>
+                        <div class="detail-value">Cinematic • Racing</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Location</div>
+                        <div class="detail-value">California, USA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Experience</div>
+                        <div class="detail-value">5+ Years</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Equipment</div>
+                        <div class="detail-value">DJI FPV • Analog</div>
+                    </div>
+                </div>
+
+                <div class="footer-meta">
+                    <div class="meta-item">
+                        <div class="meta-dot"></div>
+                        <span>Member since 2020</span>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-dot"></div>
+                        <span>Verified Pilot</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@jordanfpv",
+            width: 164,
+            height: 164,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

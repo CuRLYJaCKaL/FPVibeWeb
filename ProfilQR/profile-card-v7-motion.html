@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Motion Blur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Speed lines background */
+        .speed-lines {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .speed-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(139, 92, 246, 0.4),
+                transparent
+            );
+            animation: speedMove 2s linear infinite;
+        }
+
+        @keyframes speedMove {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateX(200vw);
+                opacity: 0;
+            }
+        }
+
+        /* Diagonal composition */
+        .profile-card {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: rotate(0deg);
+        }
+
+        .card-container {
+            background: rgba(8, 8, 8, 0.95);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Diagonal gradient overlay */
+        .card-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(135deg,
+                transparent 0%,
+                rgba(139, 92, 246, 0.1) 40%,
+                rgba(6, 182, 212, 0.08) 60%,
+                transparent 100%
+            );
+            animation: diagonalMove 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes diagonalMove {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-20%, -20%);
+            }
+        }
+
+        /* Header with motion trail */
+        .motion-header {
+            padding: 40px;
+            position: relative;
+        }
+
+        .pilot-name {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            margin-bottom: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .pilot-name::before,
+        .pilot-name::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .pilot-name::before {
+            color: rgba(139, 92, 246, 0.5);
+            animation: trailMove1 3s ease-in-out infinite;
+        }
+
+        .pilot-name::after {
+            color: rgba(6, 182, 212, 0.5);
+            animation: trailMove2 3s ease-in-out infinite;
+        }
+
+        @keyframes trailMove1 {
+            0%, 100% {
+                transform: translate(-3px, -2px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-6px, -4px);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes trailMove2 {
+            0%, 100% {
+                transform: translate(3px, 2px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(6px, 4px);
+                opacity: 0.6;
+            }
+        }
+
+        .pilot-tag {
+            font-size: 18px;
+            font-weight: 600;
+            color: #06b6d4;
+            letter-spacing: 0.05em;
+        }
+
+        /* Kinetic layout */
+        .kinetic-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 32px;
+            padding: 0 40px 40px;
+            align-items: center;
+        }
+
+        /* QR with velocity indicator */
+        .qr-velocity {
+            position: relative;
+        }
+
+        .qr-frame {
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .velocity-indicator {
+            position: absolute;
+            top: 50%;
+            left: -40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .velocity-bar {
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(139, 92, 246, 0.8)
+            );
+            animation: velocityPulse 1.5s ease-in-out infinite;
+        }
+
+        .velocity-bar:nth-child(2) { animation-delay: 0.2s; }
+        .velocity-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes velocityPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scaleX(0.7);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        #qrcode {
+            width: 168px;
+            height: 168px;
+        }
+
+        /* Dynamic info panel */
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-line {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid;
+            border-image: linear-gradient(180deg, #8b5cf6, #06b6d4) 1;
+            padding: 12px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, #8b5cf6, #06b6d4);
+            transform: translateY(-100%);
+            animation: lineScan 3s ease-in-out infinite;
+        }
+
+        @keyframes lineScan {
+            0%, 100% {
+                transform: translateY(-100%);
+            }
+            50% {
+                transform: translateY(100%);
+            }
+        }
+
+        .info-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 32px;
+            padding: 24px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(139, 92, 246, 0.03);
+        }
+
+        .stat-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-text {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Footer tag */
+        .motion-footer {
+            padding: 20px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fpvibe-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .speed-badge {
+            padding: 6px 16px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #22d3ee;
+            letter-spacing: 0.05em;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px) rotate(-2deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(-2deg);
+            }
+        }
+
+        .profile-card {
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .kinetic-grid {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+            }
+
+            .qr-velocity {
+                justify-self: center;
+            }
+
+            .velocity-indicator {
+                display: none;
+            }
+
+            .motion-header {
+                padding: 32px 24px;
+            }
+
+            .pilot-name {
+                font-size: 36px;
+            }
+
+            .stats-bar {
+                padding: 20px 24px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .motion-footer {
+                padding: 16px 24px;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="speed-lines" id="speedLines"></div>
+
+    <div class="profile-card">
+        <div class="card-container">
+            <div class="motion-header">
+                <h1 class="pilot-name" data-text="VELOCITY">VELOCITY</h1>
+                <div class="pilot-tag">@velocity_pilot</div>
+            </div>
+
+            <div class="kinetic-grid">
+                <div class="qr-velocity">
+                    <div class="velocity-indicator">
+                        <div class="velocity-bar"></div>
+                        <div class="velocity-bar"></div>
+                        <div class="velocity-bar"></div>
+                    </div>
+                    <div class="qr-frame">
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-line">
+                        <div class="info-label">Specialization</div>
+                        <div class="info-value">Racing • Freestyle</div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">Experience</div>
+                        <div class="info-value">6+ Years Flying</div>
+                    </div>
+                    <div class="info-line">
+                        <div class="info-label">Location</div>
+                        <div class="info-value">Dubai • Miami</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="stat-number">8.4K</div>
+                    <div class="stat-text">Followers</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">342</div>
+                    <div class="stat-text">Flights</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">256K</div>
+                    <div class="stat-text">Engagement</div>
+                </div>
+            </div>
+
+            <div class="motion-footer">
+                <div class="fpvibe-tag">FPVibe</div>
+                <div class="speed-badge">HIGH VELOCITY</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@velocity_pilot",
+            width: 168,
+            height: 168,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Generate speed lines
+        const speedLinesContainer = document.getElementById('speedLines');
+        for (let i = 0; i < 15; i++) {
+            const line = document.createElement('div');
+            line.className = 'speed-line';
+            line.style.top = Math.random() * 100 + '%';
+            line.style.width = (Math.random() * 200 + 100) + 'px';
+            line.style.animationDelay = Math.random() * 2 + 's';
+            line.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            speedLinesContainer.appendChild(line);
+        }
+    </script>
+</body>
+</html>

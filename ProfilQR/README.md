@@ -91,9 +91,115 @@ Kullanıcı profili paylaşımı için şık, modern profil kartları.
 
 ---
 
+### 6. **profile-card-v6-goggles.html** - Goggles Vision 👓
+**Stil:** Logo-inspired, FPV identity, immersive
+**Kullanım:** Brand-focused sharing, FPV community
+**Özellikler:**
+- Goggles-shaped frame (`border-radius: 48% 48% 45% 45%`)
+- Concentric ring animations (target lock aesthetic)
+- Rotating conic gradient QR border
+- Wing decorations on sides
+- HUD corner brackets
+- Particle float background
+- Circular QR lens with glow
+- 520px max, goggles-optimized
+
+**Ne zaman kullan:**
+- Brand identity showcase
+- FPV community engagement
+- Logo-inspired aesthetic
+- Immersive pilot experience
+
+---
+
+### 7. **profile-card-v7-motion.html** - Motion Blur ⚡
+**Stil:** Speed, kinetic energy, dynamic movement
+**Kullanım:** Racing pilots, action-focused profiles
+**Özellikler:**
+- Motion trail effect on text (::before/::after)
+- Horizontal speed lines background
+- Diagonal card composition (rotate -2deg)
+- Velocity indicator bars
+- Border scan line animation
+- Asymmetric grid layout
+- Speed badge footer
+- 600px max, kinetic-optimized
+
+**Ne zaman kullan:**
+- Racing community
+- Speed-focused branding
+- Dynamic personality showcase
+- High-energy profiles
+
+---
+
+### 8. **profile-card-v8-analog.html** - Analog Signal 📺
+**Stil:** VHS/FPV analog feed, retro CRT, OSD overlay
+**Kullanım:** Analog FPV enthusiasts, retro aesthetic lovers
+**Özellikler:**
+- Green phosphor CRT aesthetic
+- Scan line animations
+- Static noise overlay
+- RGB split glitch effect
+- OSD header/footer (REC, signal strength)
+- Telemetry bar display
+- Live timestamp
+- Courier monospace font
+- 600px max, analog-optimized
+
+**Ne zaman kullan:**
+- Analog FPV pilots
+- Retro/nostalgic branding
+- Technical OSD aesthetic
+- Unique vintage style
+
+---
+
+### 9. **profile-card-v9-bento.html** - Bento Grid 🎯
+**Stil:** Modern 2025 modular layout, organized cards
+**Kullanım:** Clean, organized profile showcase
+**Özellikler:**
+- Bento box grid system (4x4 responsive)
+- Modular card cells
+- Hero cell, QR cell, stat cells
+- Hover interactions per cell
+- Staggered fade-in animations
+- Tag system
+- Mini badge collection
+- 800px max, grid-optimized
+
+**Ne zaman kullan:**
+- Modern professional profiles
+- Organized information display
+- 2025 design trends
+- Clean, systematic aesthetic
+
+---
+
+### 10. **profile-card-v10-3d.html** - 3D Depth Layer 🌌
+**Stil:** Immersive 3D depth, parallax, layered perspective
+**Kullanım:** Premium showcase, interactive experience
+**Özellikler:**
+- Multi-layer 3D with `transform: translateZ()`
+- Mouse parallax effect (desktop)
+- Depth particle background
+- Floating elements at different Z-levels
+- Hover depth animations
+- QR floats forward on hover
+- Gradient depth layers
+- 650px max, depth-optimized
+
+**Ne zaman kulun:**
+- Premium interactive profiles
+- Immersive brand experience
+- Desktop-focused showcase
+- High-end presentation
+
+---
+
 ## 🎨 Tasarım DNA
 
-Her iki varyant da FPVibe web sitesinin tasarım dilini kullanıyor:
+Tüm 10 varyant FPVibe web sitesinin tasarım dilini kullanıyor:
 
 - **Dark Theme**: #000 background
 - **Glassmorphism**: blur(20px), rgba opacity
@@ -155,17 +261,24 @@ Avatar'daki placeholder'ı değiştir:
 
 ## 🎯 Use Cases
 
-**V1 (Vertical):**
-- [ ] Instagram Stories paylaşımı
-- [ ] Twitter/X profile card
-- [ ] Mobil wallpaper
+**V1-V2 (Basic Layouts):**
+- [ ] Instagram Stories, Twitter/X cards
+- [ ] Website embeds, LinkedIn banners
+- [ ] Mobil/Desktop wallpapers
 - [ ] QR kod kartı (basılabilir)
 
-**V2 (Horizontal):**
-- [ ] Website profile embed
-- [ ] LinkedIn banner
-- [ ] Desktop wallpaper
-- [ ] Presentation slides
+**V3-V5 (Premium Styles):**
+- [ ] Premium brand presentations
+- [ ] Professional networking
+- [ ] Business card replacements
+- [ ] High-quality screenshots
+
+**V6-V10 (Advanced Concepts):**
+- [ ] FPV community branding (V6 Goggles)
+- [ ] Racing/speed profiles (V7 Motion)
+- [ ] Analog/retro aesthetic (V8 Analog)
+- [ ] Modern organized layouts (V9 Bento)
+- [ ] Interactive experiences (V10 3D)
 
 ---
 
@@ -183,4 +296,4 @@ Avatar'daki placeholder'ı değiştir:
 
 **Tasarım:** FPVibe Design System
 **Geliştirme:** Claude Code
-**Versiyon:** 1.0
+**Versiyon:** 2.0 (10 Variants - Research-Driven)

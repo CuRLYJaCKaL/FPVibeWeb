@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Quantum Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            perspective: 2000px;
+            overflow: hidden;
+        }
+
+        /* Quantum particle field */
+        .quantum-field {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .quantum-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(139, 92, 246, 0.8) 0%,
+                rgba(6, 182, 212, 0.6) 50%,
+                transparent 70%
+            );
+            animation: quantumFloat 12s ease-in-out infinite;
+        }
+
+        @keyframes quantumFloat {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate3d(var(--tx1), var(--ty1), 50px) scale(1.2);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate3d(var(--tx2), var(--ty2), 100px) scale(1.5);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translate3d(var(--tx1), var(--ty1), 50px) scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Concentric quantum rings */
+        .quantum-rings {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+            height: 1200px;
+            z-index: 0;
+        }
+
+        .quantum-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            border-radius: 50%;
+            border: 1px solid;
+            opacity: 0;
+            animation: quantumRing 8s ease-in-out infinite;
+        }
+
+        .quantum-ring:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            border-color: rgba(139, 92, 246, 0.4);
+            animation-delay: 0s;
+        }
+
+        .quantum-ring:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            border-color: rgba(167, 139, 250, 0.3);
+            animation-delay: 1s;
+        }
+
+        .quantum-ring:nth-child(3) {
+            width: 800px;
+            height: 800px;
+            border-color: rgba(6, 182, 212, 0.25);
+            animation-delay: 2s;
+        }
+
+        .quantum-ring:nth-child(4) {
+            width: 1000px;
+            height: 1000px;
+            border-color: rgba(34, 211, 238, 0.2);
+            animation-delay: 3s;
+        }
+
+        @keyframes quantumRing {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotateX(75deg) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) rotateX(75deg) scale(1);
+            }
+        }
+
+        .profile-card {
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        /* 3D Card structure */
+        .quantum-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Depth layers */
+        .quantum-layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            pointer-events: none;
+        }
+
+        .q-layer-1 {
+            background: radial-gradient(ellipse at center,
+                rgba(139, 92, 246, 0.2) 0%,
+                transparent 70%
+            );
+            transform: translateZ(-80px);
+            filter: blur(40px);
+            animation: layerPulse 6s ease-in-out infinite;
+        }
+
+        .q-layer-2 {
+            background: radial-gradient(ellipse at center,
+                rgba(6, 182, 212, 0.15) 0%,
+                transparent 70%
+            );
+            transform: translateZ(-40px);
+            filter: blur(20px);
+            animation: layerPulse 6s ease-in-out infinite 3s;
+        }
+
+        @keyframes layerPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateZ(-80px) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateZ(-80px) scale(1.1);
+            }
+        }
+
+        /* Main portal card */
+        .portal-main {
+            position: relative;
+            background: linear-gradient(135deg,
+                rgba(10, 10, 15, 0.95) 0%,
+                rgba(5, 5, 10, 0.98) 100%
+            );
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 40px;
+            padding: 48px;
+            transform: translateZ(0);
+            box-shadow:
+                0 60px 120px rgba(0, 0, 0, 0.9),
+                0 0 80px rgba(139, 92, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            pointer-events: all;
+        }
+
+        /* Minimal luxury header */
+        .quantum-header {
+            text-align: center;
+            margin-bottom: 48px;
+            transform: translateZ(40px);
+        }
+
+        .quantum-title {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            line-height: 1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg,
+                #fff 0%,
+                rgba(167, 139, 250, 0.9) 50%,
+                rgba(34, 211, 238, 0.8) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .quantum-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: rgba(139, 92, 246, 0.7);
+            text-transform: uppercase;
+        }
+
+        /* Circular portal QR */
+        .portal-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 48px;
+            transform: translateZ(60px);
+        }
+
+        /* Portal rings rotating */
+        .portal-rings-outer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+        }
+
+        .portal-ring-outer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            border: 1px solid;
+            animation: portalRotate 12s linear infinite;
+        }
+
+        .portal-ring-outer:nth-child(1) {
+            width: 320px;
+            height: 320px;
+            transform: translate(-50%, -50%) rotate(0deg);
+            border-color: rgba(139, 92, 246, 0.3);
+            animation-duration: 12s;
+        }
+
+        .portal-ring-outer:nth-child(2) {
+            width: 280px;
+            height: 280px;
+            transform: translate(-50%, -50%) rotate(120deg);
+            border-color: rgba(167, 139, 250, 0.4);
+            animation-duration: 10s;
+        }
+
+        .portal-ring-outer:nth-child(3) {
+            width: 240px;
+            height: 240px;
+            transform: translate(-50%, -50%) rotate(240deg);
+            border-color: rgba(6, 182, 212, 0.5);
+            animation-duration: 8s;
+        }
+
+        @keyframes portalRotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* QR portal center */
+        .portal-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 16px;
+            box-shadow:
+                0 0 60px rgba(139, 92, 246, 0.6),
+                0 0 100px rgba(6, 182, 212, 0.4),
+                inset 0 0 40px rgba(139, 92, 246, 0.1);
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .portal-container:hover .portal-center {
+            transform: translate(-50%, -50%) scale(1.08) translateZ(20px);
+            box-shadow:
+                0 0 80px rgba(139, 92, 246, 0.8),
+                0 0 120px rgba(6, 182, 212, 0.6),
+                inset 0 0 60px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Portal glow effect */
+        .portal-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle,
+                rgba(139, 92, 246, 0.3) 0%,
+                rgba(6, 182, 212, 0.2) 40%,
+                transparent 70%
+            );
+            border-radius: 50%;
+            animation: portalGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes portalGlow {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        #qrcode {
+            width: 188px;
+            height: 188px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        /* Minimal info sections */
+        .quantum-info {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            transform: translateZ(30px);
+        }
+
+        .info-minimal {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s;
+        }
+
+        .info-minimal:first-child {
+            border-top: none;
+        }
+
+        .info-minimal:hover {
+            border-top-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .info-minimal-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(139, 92, 246, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .info-minimal-value {
+            font-size: 15px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Minimal stats */
+        .quantum-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            transform: translateZ(20px);
+        }
+
+        .stat-minimal {
+            text-align: center;
+        }
+
+        .stat-minimal-num {
+            font-size: 28px;
+            font-weight: 200;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg,
+                #fff 0%,
+                rgba(167, 139, 250, 0.8) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-minimal-label {
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Quantum badge */
+        .quantum-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 50px;
+            margin-top: 32px;
+            transform: translateZ(35px);
+            transition: all 0.4s;
+        }
+
+        .quantum-badge:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+            transform: translateZ(50px) scale(1.05);
+        }
+
+        .badge-quantum-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
+            animation: quantumPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes quantumPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.6;
+            }
+        }
+
+        .badge-quantum-text {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(139, 92, 246, 0.9);
+        }
+
+        /* Entry animation */
+        @keyframes quantumEntry {
+            from {
+                opacity: 0;
+                transform: translateZ(-400px) rotateX(30deg) scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: translateZ(0) rotateX(0deg) scale(1);
+            }
+        }
+
+        .profile-card {
+            animation: quantumEntry 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body {
+                perspective: 1000px;
+            }
+
+            .portal-main {
+                padding: 32px 24px;
+            }
+
+            .quantum-title {
+                font-size: 36px;
+            }
+
+            .portal-container {
+                width: 260px;
+                height: 260px;
+            }
+
+            .portal-center {
+                width: 180px;
+                height: 180px;
+            }
+
+            #qrcode {
+                width: 148px;
+                height: 148px;
+            }
+
+            .portal-ring-outer:nth-child(1) {
+                width: 260px;
+                height: 260px;
+            }
+
+            .portal-ring-outer:nth-child(2) {
+                width: 220px;
+                height: 220px;
+            }
+
+            .portal-ring-outer:nth-child(3) {
+                width: 180px;
+                height: 180px;
+            }
+
+            .quantum-stats {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+
+            .quantum-card {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-rings">
+        <div class="quantum-ring"></div>
+        <div class="quantum-ring"></div>
+        <div class="quantum-ring"></div>
+        <div class="quantum-ring"></div>
+    </div>
+
+    <div class="quantum-field" id="quantumField"></div>
+
+    <div class="profile-card">
+        <div class="quantum-card" id="quantumCard">
+            <div class="quantum-layer q-layer-1"></div>
+            <div class="quantum-layer q-layer-2"></div>
+
+            <div class="portal-main">
+                <div class="quantum-header">
+                    <h1 class="quantum-title">Quantum</h1>
+                    <div class="quantum-subtitle">@quantum_pilot</div>
+                </div>
+
+                <div class="portal-container">
+                    <div class="portal-glow"></div>
+                    <div class="portal-rings-outer">
+                        <div class="portal-ring-outer"></div>
+                        <div class="portal-ring-outer"></div>
+                        <div class="portal-ring-outer"></div>
+                    </div>
+                    <div class="portal-center">
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+
+                <div class="quantum-info">
+                    <div class="info-minimal">
+                        <div class="info-minimal-label">Specialization</div>
+                        <div class="info-minimal-value">Cinematic • Experimental</div>
+                    </div>
+
+                    <div class="info-minimal">
+                        <div class="info-minimal-label">Location</div>
+                        <div class="info-minimal-value">Quantum Realm</div>
+                    </div>
+
+                    <div class="info-minimal">
+                        <div class="info-minimal-label">Experience</div>
+                        <div class="info-minimal-value">Beyond Time</div>
+                    </div>
+                </div>
+
+                <div class="quantum-stats">
+                    <div class="stat-minimal">
+                        <div class="stat-minimal-num">∞</div>
+                        <div class="stat-minimal-label">Followers</div>
+                    </div>
+                    <div class="stat-minimal">
+                        <div class="stat-minimal-num">∞</div>
+                        <div class="stat-minimal-label">Flights</div>
+                    </div>
+                    <div class="stat-minimal">
+                        <div class="stat-minimal-num">∞</div>
+                        <div class="stat-minimal-label">Dimensions</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <div class="quantum-badge">
+                        <div class="badge-quantum-dot"></div>
+                        <span class="badge-quantum-text">Quantum Entangled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@quantum_pilot",
+            width: 188,
+            height: 188,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Generate quantum particles
+        const quantumField = document.getElementById('quantumField');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'quantum-particle';
+            const size = Math.random() * 8 + 3;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx1', (Math.random() - 0.5) * 300 + 'px');
+            particle.style.setProperty('--ty1', (Math.random() - 0.5) * 300 + 'px');
+            particle.style.setProperty('--tx2', (Math.random() - 0.5) * 500 + 'px');
+            particle.style.setProperty('--ty2', (Math.random() - 0.5) * 500 + 'px');
+            particle.style.animationDelay = Math.random() * 12 + 's';
+            particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            quantumField.appendChild(particle);
+        }
+
+        // Parallax effect
+        if (window.matchMedia("(hover: hover)").matches) {
+            const quantumCard = document.getElementById('quantumCard');
+            const profileCard = document.querySelector('.profile-card');
+
+            profileCard.addEventListener('mousemove', (e) => {
+                const rect = profileCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                quantumCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            profileCard.addEventListener('mouseleave', () => {
+                quantumCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
+    </script>
+</body>
+</html>

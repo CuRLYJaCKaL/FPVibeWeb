@@ -197,9 +197,105 @@ Kullanıcı profili paylaşımı için şık, modern profil kartları.
 
 ---
 
+### 11. **profile-card-v11-holographic.html** - Holographic Pilot 💫
+**Stil:** 3D hologram + motion trails + concentric rings fusion
+**Kullanım:** High-tech premium profiles, futuristic showcase
+**Hybrid Features:**
+- V10 3D depth layers with parallax (rotateX/Y)
+- V6 concentric holographic rings (4 rings, rotateX 60deg)
+- V7 motion trail effect on name (::before/::after blur)
+- Holographic particles (25 particles, 3D float)
+- Portal-style rotating QR rings (3 rings, 4-6s spin)
+- Floating panels with depth hover (30px → 50px translateZ)
+- Holographic scan line animation
+- Glassmorphic badge with glow pulse
+- 700px max, hologram-optimized
+
+**Fusion Formula:** V10 + V6 + V7 = Premium holographic experience
+
+---
+
+### 12. **profile-card-v12-tactical.html** - Tactical HUD Commander 🎯
+**Stil:** Military HUD + OSD overlay + 3D depth fusion
+**Kullanım:** Tactical ops aesthetic, military-inspired profiles
+**Hybrid Features:**
+- V4 HUD corner brackets (4 corners, pulse animation)
+- V8 OSD header/footer (status indicators, live timestamp)
+- V10 3D depth layers with parallax
+- Tactical grid background (40px grid, infinite scroll)
+- Green terminal aesthetic (#00ff88 monochrome)
+- Intel cards with scan effect (border glow animation)
+- QR scanner frame with scan line (2s linear sweep)
+- Telemetry metrics grid (4 stats, hover scale)
+- Threat level badges, classification tags
+- 750px max, tactical-optimized
+
+**Fusion Formula:** V4 + V8 + V10 = Military command center HUD
+
+---
+
+### 13. **profile-card-v13-neon.html** - Neon Velocity Grid 🌆
+**Stil:** Cyberpunk neon + bento grid + motion blur fusion
+**Kullanım:** Cyberpunk aesthetic, high-energy racing profiles
+**Hybrid Features:**
+- V7 motion trails on text (blur effect, animation)
+- V9 bento grid modular layout (4x4 responsive cells)
+- V8 scan lines overlay (cyberpunk CRT effect)
+- Neon magenta/cyan color scheme (#ff00ff, #00ffff)
+- Animated neon border (4s gradient shift)
+- Velocity streaks background (20 streaks, 2-4s)
+- QR with pulsing corner markers (1.5s pulse)
+- Hover glow effects on all cells
+- Staggered fade-in per cell (0.1-0.4s delays)
+- 850px max, neon-optimized
+
+**Fusion Formula:** V7 + V9 + V8 = Cyberpunk racing aesthetic
+
+---
+
+### 14. **profile-card-v14-quantum.html** - Quantum Profile Portal ⚛️
+**Stil:** Circular portal + 3D depth + premium minimal fusion
+**Kullanım:** Elegant scientific profiles, luxury presentation
+**Hybrid Features:**
+- V6 concentric quantum rings (4 rings, rotateX 75deg, 8s pulse)
+- V10 3D depth layers with parallax (rotateX/Y on hover)
+- V3 premium minimalist aesthetic (light fonts, spacing)
+- Quantum particle field (30 particles, multi-stage float)
+- Circular rotating portal rings around QR (3 rings, 8-12s)
+- Circular QR frame with glow (hover scale 1.08)
+- Minimal luxury typography (font-weight 200-300)
+- Infinite symbol stats (∞)
+- Pulse badge with quantum dot animation
+- 550px max, quantum-optimized
+
+**Fusion Formula:** V6 + V10 + V3 = Elegant quantum portal
+
+---
+
+### 15. **profile-card-v15-cinematic.html** - Cinematic Widescreen 🎬
+**Stil:** Ultra-wide format + split panel + motion + 3D fusion
+**Kullanım:** Film-grade profiles, director's portfolio
+**Hybrid Features:**
+- V5 elegant split layout (340px left + flexible right)
+- V7 subtle motion trail on title (blur 4px, gentle shift)
+- V10 3D depth layers with parallax
+- Letterbox bars (top/bottom 40px black bars)
+- Film grain overlay (SVG noise, 0.3s animation)
+- Cinematic vignette (radial gradient)
+- Motion particles drift (40 particles, horizontal flow)
+- Film reel corner markers on QR
+- Director's credits section (4 credit lines)
+- Box office stats grid (4 stats, 24px values)
+- Rating badge with gold star
+- Ultra-wide 900px, cinema-optimized
+
+**Fusion Formula:** V5 + V7 + V10 = Feature film presentation
+
+---
+
 ## 🎨 Tasarım DNA
 
-Tüm 10 varyant FPVibe web sitesinin tasarım dilini kullanıyor:
+Tüm 15 varyant FPVibe web sitesinin tasarım dilini kullanıyor:
 
 - **Dark Theme**: #000 background
 - **Glassmorphism**: blur(20px), rgba opacity
@@ -280,6 +376,13 @@ Avatar'daki placeholder'ı değiştir:
 - [ ] Modern organized layouts (V9 Bento)
 - [ ] Interactive experiences (V10 3D)
 
+**V11-V15 (Hybrid Fusion):**
+- [ ] High-tech holographic (V11 Holographic)
+- [ ] Military/tactical ops (V12 Tactical HUD)
+- [ ] Cyberpunk neon racing (V13 Neon Velocity)
+- [ ] Elegant quantum portal (V14 Quantum)
+- [ ] Film-grade cinematic (V15 Cinematic)
+
 ---
 
 ## 🔮 Gelecek Özellikler
@@ -296,4 +399,4 @@ Avatar'daki placeholder'ı değiştir:
 
 **Tasarım:** FPVibe Design System
 **Geliştirme:** Claude Code
-**Versiyon:** 2.0 (10 Variants - Research-Driven)
+**Versiyon:** 3.0 (15 Variants - 10 Research-Driven + 5 Hybrid Fusion)

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Neon Velocity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #0a0014;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyberpunk scan lines */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 0, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 0, 255, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 100;
+            animation: scanDrift 8s linear infinite;
+        }
+
+        @keyframes scanDrift {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(3px); }
+        }
+
+        /* Neon glow background */
+        .neon-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.12) 0%, transparent 50%);
+            animation: neonPulse 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% {
+                opacity: 0.6;
+                filter: blur(40px);
+            }
+            50% {
+                opacity: 1;
+                filter: blur(60px);
+            }
+        }
+
+        /* Velocity streaks */
+        .velocity-streaks {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .streak {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 0, 255, 0.6),
+                rgba(0, 255, 255, 0.6),
+                transparent
+            );
+            animation: streakMove 3s linear infinite;
+        }
+
+        @keyframes streakMove {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateX(200vw);
+                opacity: 0;
+            }
+        }
+
+        .profile-card {
+            max-width: 850px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Neon container */
+        .neon-container {
+            background: rgba(10, 0, 20, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow:
+                0 0 60px rgba(255, 0, 255, 0.4),
+                0 0 100px rgba(0, 255, 255, 0.2),
+                inset 0 0 60px rgba(255, 0, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated neon border */
+        .neon-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(
+                45deg,
+                #ff00ff,
+                #00ffff,
+                #ff00ff,
+                #00ffff
+            );
+            background-size: 300% 300%;
+            border-radius: 24px;
+            z-index: -1;
+            animation: neonBorder 4s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes neonBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Velocity header with motion blur */
+        .velocity-header {
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .velocity-name {
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg,
+                #ff00ff 0%,
+                #ff00ff 30%,
+                #00ffff 70%,
+                #00ffff 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+            position: relative;
+            display: inline-block;
+            animation: nameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes nameGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 0, 255, 1));
+            }
+        }
+
+        /* Motion trail effect */
+        .velocity-name::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(8px);
+            opacity: 0.5;
+            animation: trailShift 2s ease-in-out infinite;
+        }
+
+        @keyframes trailShift {
+            0%, 100% {
+                transform: translateX(-6px);
+            }
+            50% {
+                transform: translateX(-12px);
+            }
+        }
+
+        .velocity-handle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #00ffff;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        /* Neon bento grid */
+        .neon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 16px;
+        }
+
+        /* Neon cell base */
+        .neon-cell {
+            background: rgba(255, 0, 255, 0.05);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .neon-cell::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 0, 255, 0.2) 0%,
+                transparent 60%
+            );
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .neon-cell:hover {
+            border-color: rgba(255, 0, 255, 0.8);
+            box-shadow:
+                0 0 30px rgba(255, 0, 255, 0.6),
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .neon-cell:hover::before {
+            opacity: 1;
+        }
+
+        /* Grid positions */
+        .qr-cell {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-color: rgba(0, 255, 255, 0.3);
+        }
+
+        .qr-cell:hover {
+            border-color: rgba(0, 255, 255, 0.8);
+            box-shadow:
+                0 0 30px rgba(0, 255, 255, 0.6),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .info-cell {
+            grid-column: 3 / 5;
+            grid-row: 1 / 2;
+        }
+
+        .stats-cell {
+            grid-column: span 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .bio-cell {
+            grid-column: 1 / 5;
+            grid-row: 3;
+        }
+
+        /* QR neon frame */
+        .qr-neon {
+            width: 220px;
+            height: 220px;
+            background: #000;
+            border: 3px solid #00ffff;
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            box-shadow:
+                0 0 30px rgba(0, 255, 255, 0.6),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+            margin-bottom: 12px;
+        }
+
+        /* Pulsing corner markers */
+        .corner-marker {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            animation: cornerPulse 1.5s ease-in-out infinite;
+        }
+
+        .corner-marker.tl {
+            top: 5px;
+            left: 5px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.tr {
+            top: 5px;
+            right: 5px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.bl {
+            bottom: 5px;
+            left: 5px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-marker.br {
+            bottom: 5px;
+            right: 5px;
+            border-left: none;
+            border-top: none;
+        }
+
+        @keyframes cornerPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        #qrcode {
+            width: 188px;
+            height: 188px;
+        }
+
+        .qr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        /* Info content */
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-line {
+            border-left: 3px solid #ff00ff;
+            padding-left: 16px;
+            transition: all 0.2s;
+        }
+
+        .info-line:hover {
+            border-left-color: #00ffff;
+            padding-left: 20px;
+        }
+
+        .info-key {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 0, 255, 0.7);
+            margin-bottom: 4px;
+        }
+
+        .info-val {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Stats with neon glow */
+        .stat-neon-num {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+        }
+
+        .stat-neon-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Bio with glow */
+        .bio-neon {
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Velocity badges */
+        .velocity-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .neon-badge {
+            padding: 8px 16px;
+            background: rgba(255, 0, 255, 0.15);
+            border: 1px solid rgba(255, 0, 255, 0.5);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #ff00ff;
+            text-shadow: 0 0 8px rgba(255, 0, 255, 0.8);
+            transition: all 0.2s;
+        }
+
+        .neon-badge:hover {
+            background: rgba(255, 0, 255, 0.25);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .neon-badge.cyan {
+            background: rgba(0, 255, 255, 0.15);
+            border-color: rgba(0, 255, 255, 0.5);
+            color: #00ffff;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+        }
+
+        .neon-badge.cyan:hover {
+            background: rgba(0, 255, 255, 0.25);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Entry animation */
+        @keyframes neonEntry {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .profile-card {
+            animation: neonEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Staggered cell animations */
+        .neon-cell {
+            animation: cellFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+
+        @keyframes cellFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .qr-cell { animation-delay: 0.1s; }
+        .info-cell { animation-delay: 0.15s; }
+        .stats-cell:nth-of-type(3) { animation-delay: 0.2s; }
+        .stats-cell:nth-of-type(4) { animation-delay: 0.25s; }
+        .stats-cell:nth-of-type(5) { animation-delay: 0.3s; }
+        .stats-cell:nth-of-type(6) { animation-delay: 0.35s; }
+        .bio-cell { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .neon-container {
+                padding: 24px;
+            }
+
+            .neon-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+                gap: 12px;
+            }
+
+            .qr-cell {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .info-cell {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .stats-cell {
+                grid-column: span 1;
+            }
+
+            .bio-cell {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .velocity-name {
+                font-size: 40px;
+            }
+
+            .qr-neon {
+                width: 200px;
+                height: 200px;
+            }
+
+            #qrcode {
+                width: 168px;
+                height: 168px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="neon-bg"></div>
+    <div class="velocity-streaks" id="streaks"></div>
+
+    <div class="profile-card">
+        <div class="neon-container">
+            <div class="velocity-header">
+                <h1 class="velocity-name" data-text="NEON">NEON</h1>
+                <div class="velocity-handle">@neon_velocity</div>
+            </div>
+
+            <div class="neon-grid">
+                <!-- QR Cell -->
+                <div class="neon-cell qr-cell">
+                    <div class="qr-neon">
+                        <div class="corner-marker tl"></div>
+                        <div class="corner-marker tr"></div>
+                        <div class="corner-marker bl"></div>
+                        <div class="corner-marker br"></div>
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="qr-label">▶ SCAN VELOCITY</div>
+                </div>
+
+                <!-- Info Cell -->
+                <div class="neon-cell info-cell">
+                    <div class="info-list">
+                        <div class="info-line">
+                            <div class="info-key">Mode</div>
+                            <div class="info-val">Racing • Freestyle</div>
+                        </div>
+                        <div class="info-line">
+                            <div class="info-key">Zone</div>
+                            <div class="info-val">Neo Tokyo</div>
+                        </div>
+                        <div class="info-line">
+                            <div class="info-key">Years</div>
+                            <div class="info-val">6+ Experience</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cells -->
+                <div class="neon-cell stats-cell">
+                    <div class="stat-neon-num">22.8K</div>
+                    <div class="stat-neon-label">Followers</div>
+                </div>
+
+                <div class="neon-cell stats-cell">
+                    <div class="stat-neon-num">1.5K</div>
+                    <div class="stat-neon-label">Races</div>
+                </div>
+
+                <div class="neon-cell stats-cell">
+                    <div class="stat-neon-num">5.2M</div>
+                    <div class="stat-neon-label">Views</div>
+                </div>
+
+                <div class="neon-cell stats-cell">
+                    <div class="stat-neon-num">320</div>
+                    <div class="stat-neon-label">km/h Max</div>
+                </div>
+
+                <!-- Bio Cell -->
+                <div class="neon-cell bio-cell">
+                    <p class="bio-neon">
+                        Cyberpunk-inspired FPV racer pushing the boundaries of velocity.
+                        Specializing in high-speed cinematic runs through neon-lit urban landscapes.
+                    </p>
+                    <div class="velocity-badges">
+                        <span class="neon-badge">PRO RACER</span>
+                        <span class="neon-badge cyan">VERIFIED</span>
+                        <span class="neon-badge">FPVIBE ELITE</span>
+                        <span class="neon-badge cyan">VELOCITY KING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@neon_velocity",
+            width: 188,
+            height: 188,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Generate velocity streaks
+        const streaksContainer = document.getElementById('streaks');
+        for (let i = 0; i < 20; i++) {
+            const streak = document.createElement('div');
+            streak.className = 'streak';
+            streak.style.top = Math.random() * 100 + '%';
+            streak.style.width = (Math.random() * 300 + 150) + 'px';
+            streak.style.animationDelay = Math.random() * 3 + 's';
+            streak.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            streaksContainer.appendChild(streak);
+        }
+    </script>
+</body>
+</html>

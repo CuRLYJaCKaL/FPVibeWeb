@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Cinematic Widescreen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            perspective: 2500px;
+            overflow: hidden;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.08'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 200;
+            animation: grainMove 0.3s steps(2) infinite;
+        }
+
+        @keyframes grainMove {
+            0%, 100% { opacity: 0.08; }
+            50% { opacity: 0.12; }
+        }
+
+        /* Cinematic vignette */
+        .vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center,
+                transparent 0%,
+                transparent 40%,
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            pointer-events: none;
+            z-index: 150;
+        }
+
+        /* Motion particles */
+        .motion-particles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .motion-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(139, 92, 246, 0.4);
+            border-radius: 50%;
+            animation: motionDrift 15s linear infinite;
+        }
+
+        @keyframes motionDrift {
+            from {
+                transform: translateX(-100px) translateY(0);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateX(calc(100vw + 100px)) translateY(var(--drift));
+                opacity: 0;
+            }
+        }
+
+        .profile-card {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        /* Letterbox bars */
+        .letterbox {
+            position: absolute;
+            left: -20px;
+            right: -20px;
+            height: 40px;
+            background: #000;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .letterbox.top {
+            top: -40px;
+        }
+
+        .letterbox.bottom {
+            bottom: -40px;
+        }
+
+        /* 3D Card structure */
+        .cinematic-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Depth layers */
+        .depth-layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .depth-1 {
+            background: linear-gradient(90deg,
+                rgba(139, 92, 246, 0.15) 0%,
+                rgba(6, 182, 212, 0.1) 100%
+            );
+            transform: translateZ(-70px);
+            filter: blur(30px);
+        }
+
+        .depth-2 {
+            background: linear-gradient(90deg,
+                rgba(139, 92, 246, 0.1) 0%,
+                rgba(6, 182, 212, 0.08) 100%
+            );
+            transform: translateZ(-35px);
+            filter: blur(15px);
+        }
+
+        /* Main cinematic frame */
+        .cinematic-frame {
+            position: relative;
+            background: linear-gradient(90deg,
+                rgba(8, 8, 12, 0.98) 0%,
+                rgba(10, 10, 15, 0.95) 50%,
+                rgba(8, 8, 12, 0.98) 100%
+            );
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            transform: translateZ(0);
+            box-shadow:
+                0 60px 120px rgba(0, 0, 0, 0.95),
+                0 0 100px rgba(139, 92, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            pointer-events: all;
+        }
+
+        /* Ultra-wide layout */
+        .widescreen-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            min-height: 380px;
+        }
+
+        /* Left panel with depth */
+        .left-panel {
+            background: linear-gradient(135deg,
+                rgba(139, 92, 246, 0.08) 0%,
+                rgba(6, 182, 212, 0.05) 100%
+            );
+            border-right: 1px solid rgba(139, 92, 246, 0.15);
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform: translateZ(30px);
+        }
+
+        /* Director's title */
+        .director-title {
+            margin-bottom: 32px;
+        }
+
+        .title-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(139, 92, 246, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .pilot-cinematic {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg,
+                #fff 0%,
+                rgba(255, 255, 255, 0.85) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        /* Subtle motion trail */
+        .pilot-cinematic::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            color: rgba(139, 92, 246, 0.3);
+            filter: blur(4px);
+            animation: subtleTrail 4s ease-in-out infinite;
+        }
+
+        @keyframes subtleTrail {
+            0%, 100% {
+                transform: translateX(-2px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(-4px);
+                opacity: 0.5;
+            }
+        }
+
+        .pilot-handle {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: rgba(6, 182, 212, 0.8);
+        }
+
+        /* Credits section */
+        .credits {
+            font-size: 12px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .credit-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .credit-label {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 10px;
+            color: rgba(139, 92, 246, 0.6);
+        }
+
+        .credit-value {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Right content panel */
+        .right-panel {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform: translateZ(20px);
+        }
+
+        /* QR Scene */
+        .qr-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 32px;
+            transform: translateZ(50px);
+        }
+
+        .scene-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(139, 92, 246, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .qr-cinema-frame {
+            width: 240px;
+            height: 240px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 18px;
+            position: relative;
+            box-shadow:
+                0 40px 80px rgba(0, 0, 0, 0.8),
+                0 0 60px rgba(139, 92, 246, 0.3);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .qr-scene:hover .qr-cinema-frame {
+            transform: translateZ(30px) scale(1.05);
+            box-shadow:
+                0 60px 120px rgba(0, 0, 0, 0.9),
+                0 0 100px rgba(139, 92, 246, 0.5),
+                0 0 60px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Film reel corners */
+        .reel-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+
+        .reel-corner::before,
+        .reel-corner::after {
+            content: '';
+            position: absolute;
+            background: rgba(139, 92, 246, 0.6);
+        }
+
+        .reel-corner.tl {
+            top: 8px;
+            left: 8px;
+        }
+
+        .reel-corner.tl::before {
+            width: 12px;
+            height: 2px;
+            top: 0;
+            left: 0;
+        }
+
+        .reel-corner.tl::after {
+            width: 2px;
+            height: 12px;
+            top: 0;
+            left: 0;
+        }
+
+        .reel-corner.tr {
+            top: 8px;
+            right: 8px;
+        }
+
+        .reel-corner.tr::before {
+            width: 12px;
+            height: 2px;
+            top: 0;
+            right: 0;
+        }
+
+        .reel-corner.tr::after {
+            width: 2px;
+            height: 12px;
+            top: 0;
+            right: 0;
+        }
+
+        .reel-corner.bl {
+            bottom: 8px;
+            left: 8px;
+        }
+
+        .reel-corner.bl::before {
+            width: 12px;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+        }
+
+        .reel-corner.bl::after {
+            width: 2px;
+            height: 12px;
+            bottom: 0;
+            left: 0;
+        }
+
+        .reel-corner.br {
+            bottom: 8px;
+            right: 8px;
+        }
+
+        .reel-corner.br::before {
+            width: 12px;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+        }
+
+        .reel-corner.br::after {
+            width: 2px;
+            height: 12px;
+            bottom: 0;
+            right: 0;
+        }
+
+        #qrcode {
+            width: 204px;
+            height: 204px;
+        }
+
+        /* Synopsis */
+        .synopsis {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid rgba(139, 92, 246, 0.4);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .synopsis-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 16px;
+        }
+
+        /* Box office stats */
+        .box-office {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-cinema {
+            text-align: center;
+        }
+
+        .stat-cinema-value {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg,
+                #fff 0%,
+                rgba(167, 139, 250, 0.8) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-cinema-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Rating badge */
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            transform: translateZ(40px);
+            transition: all 0.3s;
+        }
+
+        .rating-badge:hover {
+            background: rgba(139, 92, 246, 0.2);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+            transform: translateZ(60px) scale(1.05);
+        }
+
+        .rating-star {
+            font-size: 16px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        .rating-text {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(139, 92, 246, 0.9);
+        }
+
+        /* Entry animation */
+        @keyframes cinematicEntry {
+            from {
+                opacity: 0;
+                transform: translateZ(-200px) scale(0.9);
+                filter: blur(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateZ(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .profile-card {
+            animation: cinematicEntry 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            body {
+                perspective: 1200px;
+            }
+
+            .widescreen-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+                padding: 32px 28px;
+            }
+
+            .right-panel {
+                padding: 32px 28px;
+            }
+
+            .pilot-cinematic {
+                font-size: 32px;
+            }
+
+            .qr-cinema-frame {
+                width: 200px;
+                height: 200px;
+            }
+
+            #qrcode {
+                width: 164px;
+                height: 164px;
+            }
+
+            .box-office {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cinematic-card {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="vignette"></div>
+    <div class="motion-particles" id="motionParticles"></div>
+
+    <div class="profile-card">
+        <div class="letterbox top"></div>
+        <div class="letterbox bottom"></div>
+
+        <div class="cinematic-card" id="cinematicCard">
+            <div class="depth-layer depth-1"></div>
+            <div class="depth-layer depth-2"></div>
+
+            <div class="cinematic-frame">
+                <div class="widescreen-layout">
+                    <!-- Left Panel -->
+                    <div class="left-panel">
+                        <div class="director-title">
+                            <div class="title-label">Feature Presentation</div>
+                            <h1 class="pilot-cinematic" data-text="MAVERICK">MAVERICK</h1>
+                            <div class="pilot-handle">@maverick_cinema</div>
+                        </div>
+
+                        <div class="credits">
+                            <div class="credit-line">
+                                <span class="credit-label">Genre</span>
+                                <span class="credit-value">Cinematic FPV</span>
+                            </div>
+                            <div class="credit-line">
+                                <span class="credit-label">Location</span>
+                                <span class="credit-value">Worldwide</span>
+                            </div>
+                            <div class="credit-line">
+                                <span class="credit-label">Runtime</span>
+                                <span class="credit-value">10+ Years</span>
+                            </div>
+                            <div class="credit-line">
+                                <span class="credit-label">Director</span>
+                                <span class="credit-value">Award Winner</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel -->
+                    <div class="right-panel">
+                        <div class="qr-scene">
+                            <div class="scene-label">▶ Scan to Watch</div>
+                            <div class="qr-cinema-frame">
+                                <div class="reel-corner tl"></div>
+                                <div class="reel-corner tr"></div>
+                                <div class="reel-corner bl"></div>
+                                <div class="reel-corner br"></div>
+                                <div id="qrcode"></div>
+                            </div>
+                        </div>
+
+                        <div class="synopsis">
+                            <p class="synopsis-text">
+                                An epic journey through breathtaking landscapes and impossible angles.
+                                Experience the world through the lens of a master FPV cinematographer.
+                            </p>
+                            <div class="rating-badge">
+                                <span class="rating-star">★</span>
+                                <span class="rating-text">Certified Fresh</span>
+                            </div>
+                        </div>
+
+                        <div class="box-office">
+                            <div class="stat-cinema">
+                                <div class="stat-cinema-value">28K</div>
+                                <div class="stat-cinema-label">Audience</div>
+                            </div>
+                            <div class="stat-cinema">
+                                <div class="stat-cinema-value">2.1K</div>
+                                <div class="stat-cinema-label">Productions</div>
+                            </div>
+                            <div class="stat-cinema">
+                                <div class="stat-cinema-value">8.5M</div>
+                                <div class="stat-cinema-label">Views</div>
+                            </div>
+                            <div class="stat-cinema">
+                                <div class="stat-cinema-value">98%</div>
+                                <div class="stat-cinema-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@maverick_cinema",
+            width: 204,
+            height: 204,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Generate motion particles
+        const motionParticles = document.getElementById('motionParticles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'motion-particle';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            motionParticles.appendChild(particle);
+        }
+
+        // Parallax effect
+        if (window.matchMedia("(hover: hover)").matches) {
+            const cinematicCard = document.getElementById('cinematicCard');
+            const profileCard = document.querySelector('.profile-card');
+
+            profileCard.addEventListener('mousemove', (e) => {
+                const rect = profileCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 40;
+                const rotateY = (centerX - x) / 40;
+
+                cinematicCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            profileCard.addEventListener('mouseleave', () => {
+                cinematicCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Metallic Luxury</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Didot', 'Bodoni MT', 'Cochin', Georgia, serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #d4af37;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .profile-card {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Gold metallic container */
+        .metal-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 3px solid;
+            border-image: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%) 1;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metal-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(255, 215, 0, 0.05) 50%,
+                transparent 100%
+            );
+            animation: metalSheen 3s ease-in-out infinite;
+        }
+
+        @keyframes metalSheen {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Embossed header */
+        .metal-header {
+            background: linear-gradient(135deg, #d4af37 0%, #f9d77e 50%, #d4af37 100%);
+            padding: 48px 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .metal-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                #fff 50%,
+                transparent 100%
+            );
+            opacity: 0.3;
+        }
+
+        .metal-name {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 50%, #1a1a1a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .metal-name::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            z-index: -1;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metal-handle {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: #1a1a1a;
+            opacity: 0.8;
+        }
+
+        /* Content grid */
+        .metal-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 0;
+        }
+
+        /* QR section with foil effect */
+        .metal-qr-section {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            padding: 40px;
+            border-right: 1px solid #d4af37;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metal-qr-frame {
+            width: 100%;
+            aspect-ratio: 1;
+            padding: 20px;
+            background: linear-gradient(135deg, #d4af37 0%, #f9d77e 50%, #d4af37 100%);
+            position: relative;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+        }
+
+        .metal-qr-frame::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            background: #000;
+        }
+
+        #qrcode {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-label {
+            margin-top: 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #d4af37;
+        }
+
+        /* Info section */
+        .metal-info {
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .info-metal-item {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .info-metal-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-metal-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(212, 175, 55, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .info-metal-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #d4af37;
+            letter-spacing: 0.02em;
+        }
+
+        /* Embossed stats */
+        .metal-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border-top: 1px solid #d4af37;
+        }
+
+        .stat-metal {
+            padding: 32px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border-right: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .stat-metal:last-child {
+            border-right: none;
+        }
+
+        .stat-metal:hover {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .stat-metal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                #d4af37 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-metal:hover::before {
+            opacity: 1;
+        }
+
+        .stat-metal-num {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-metal-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(212, 175, 55, 0.7);
+        }
+
+        /* Luxury badge */
+        .metal-footer {
+            background: linear-gradient(135deg, #d4af37 0%, #f9d77e 50%, #d4af37 100%);
+            padding: 28px 40px;
+            text-align: center;
+            border-top: 2px solid #ffd700;
+        }
+
+        .metal-badge {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #1a1a1a;
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            border: 2px solid #1a1a1a;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .metal-badge-text {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Entry animation */
+        @keyframes metalEntry {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-card {
+            animation: metalEntry 0.8s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .metal-name {
+                font-size: 40px;
+            }
+
+            .metal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metal-qr-section {
+                border-right: none;
+                border-bottom: 1px solid #d4af37;
+            }
+
+            .metal-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-metal {
+                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            }
+
+            .stat-metal:nth-child(2n) {
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="metal-container">
+            <div class="metal-header">
+                <h1 class="metal-name" data-text="BRICK">BRICK</h1>
+                <div class="metal-handle">@brick_pilot</div>
+            </div>
+
+            <div class="metal-grid">
+                <div class="metal-qr-section">
+                    <div class="metal-qr-frame">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="qr-label">Scan Profile</div>
+                </div>
+
+                <div class="metal-info">
+                    <div class="info-metal-item">
+                        <div class="info-metal-label">Specialization</div>
+                        <div class="info-metal-value">Freestyle Pilot</div>
+                    </div>
+
+                    <div class="info-metal-item">
+                        <div class="info-metal-label">Based In</div>
+                        <div class="info-metal-value">Berlin, Germany</div>
+                    </div>
+
+                    <div class="info-metal-item">
+                        <div class="info-metal-label">Flying Since</div>
+                        <div class="info-metal-value">2013 • 12+ Years</div>
+                    </div>
+
+                    <div class="info-metal-item">
+                        <div class="info-metal-label">Signature Move</div>
+                        <div class="info-metal-value">Power Loop Master</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metal-stats">
+                <div class="stat-metal">
+                    <div class="stat-metal-num">42K</div>
+                    <div class="stat-metal-label">Followers</div>
+                </div>
+                <div class="stat-metal">
+                    <div class="stat-metal-num">5.8K</div>
+                    <div class="stat-metal-label">Flights</div>
+                </div>
+                <div class="stat-metal">
+                    <div class="stat-metal-num">18M</div>
+                    <div class="stat-metal-label">Views</div>
+                </div>
+                <div class="stat-metal">
+                    <div class="stat-metal-num">99</div>
+                    <div class="stat-metal-label">Score</div>
+                </div>
+            </div>
+
+            <div class="metal-footer">
+                <div class="metal-badge">
+                    <span class="metal-badge-text">Elite Member • FPVibe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        const qrSize = document.getElementById('qrcode').offsetWidth;
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@brick_pilot",
+            width: qrSize,
+            height: qrSize,
+            colorDark: "#d4af37",
+            colorLight: "#000000",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

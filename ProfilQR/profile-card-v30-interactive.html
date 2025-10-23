@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Micro-Interactive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #0f172a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: default;
+        }
+
+        .profile-card {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Interactive container */
+        .interactive-container {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .interactive-container:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            transform: translateY(-4px);
+        }
+
+        /* Interactive header */
+        .interactive-header {
+            text-align: center;
+            margin-bottom: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-header:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-name {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-header:hover .interactive-name {
+            background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: scale(1.05);
+        }
+
+        .interactive-handle {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .interactive-header:hover .interactive-handle {
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.1em;
+        }
+
+        /* Interactive QR */
+        .interactive-qr-section {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 40px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .interactive-qr-section:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .qr-glow-ring {
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg at 50% 50%,
+                #8b5cf6, #ec4899, #06b6d4, #8b5cf6
+            );
+            opacity: 0;
+            animation: ringRotate 3s linear infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .interactive-qr-section:hover .qr-glow-ring {
+            opacity: 0.6;
+        }
+
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .interactive-qr-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .interactive-qr-section:hover .interactive-qr-inner {
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.5);
+        }
+
+        #qrcode {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Interactive info cards */
+        .interactive-info {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .info-interactive-card {
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-interactive-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                rgba(139, 92, 246, 0.2) 0%,
+                rgba(236, 72, 153, 0.2) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-interactive-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateX(8px) scale(1.02);
+            box-shadow: -8px 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .info-interactive-card:hover::before {
+            opacity: 1;
+        }
+
+        .info-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(139, 92, 246, 0.8);
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .info-interactive-card:hover .info-label {
+            color: rgba(236, 72, 153, 1);
+            letter-spacing: 0.15em;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .info-interactive-card:hover .info-value {
+            transform: translateX(4px);
+        }
+
+        /* Interactive stats */
+        .interactive-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-interactive {
+            padding: 28px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-interactive::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(139, 92, 246, 0.4) 0%,
+                transparent 70%
+            );
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .stat-interactive:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .stat-interactive:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.6);
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .stat-interactive:active {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .stat-num {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .stat-interactive:hover .stat-num {
+            color: #a78bfa;
+            transform: scale(1.1);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.6);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .stat-interactive:hover .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.1em;
+        }
+
+        /* Interactive footer */
+        .interactive-footer {
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .interactive-badge {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+        }
+
+        .interactive-badge:hover {
+            background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .interactive-badge:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Mouse follower effect */
+        .mouse-follower {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(139, 92, 246, 0.15) 0%,
+                transparent 70%
+            );
+            pointer-events: none;
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+
+        .interactive-container:hover .mouse-follower {
+            opacity: 1;
+        }
+
+        /* Entry animation */
+        @keyframes interactiveEntry {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .profile-card {
+            animation: interactiveEntry 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 650px) {
+            .interactive-container {
+                padding: 28px 24px;
+            }
+
+            .interactive-name {
+                font-size: 42px;
+            }
+
+            .interactive-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="interactive-container">
+            <div class="mouse-follower"></div>
+
+            <div class="interactive-header">
+                <h1 class="interactive-name">BRICK</h1>
+                <div class="interactive-handle">@brick_pilot</div>
+            </div>
+
+            <div class="interactive-qr-section">
+                <div class="qr-glow-ring"></div>
+                <div class="interactive-qr-inner">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+
+            <div class="interactive-info">
+                <div class="info-interactive-card">
+                    <div class="info-label">Type</div>
+                    <div class="info-value">Freestyle Pilot</div>
+                </div>
+
+                <div class="info-interactive-card">
+                    <div class="info-label">Location</div>
+                    <div class="info-value">Berlin, Germany</div>
+                </div>
+
+                <div class="info-interactive-card">
+                    <div class="info-label">Experience</div>
+                    <div class="info-value">12+ Years</div>
+                </div>
+            </div>
+
+            <div class="interactive-stats">
+                <div class="stat-interactive">
+                    <div class="stat-num">42K</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat-interactive">
+                    <div class="stat-num">5.8K</div>
+                    <div class="stat-label">Flights</div>
+                </div>
+                <div class="stat-interactive">
+                    <div class="stat-num">18M</div>
+                    <div class="stat-label">Views</div>
+                </div>
+                <div class="stat-interactive">
+                    <div class="stat-num">99</div>
+                    <div class="stat-label">Score</div>
+                </div>
+            </div>
+
+            <div class="interactive-footer">
+                <div class="interactive-badge">FPVibe Premium</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        const qrSize = document.getElementById('qrcode').offsetWidth;
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@brick_pilot",
+            width: qrSize,
+            height: qrSize,
+            colorDark: "#8b5cf6",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Mouse follower effect
+        const container = document.querySelector('.interactive-container');
+        const follower = document.querySelector('.mouse-follower');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - 100; // Center the follower
+            const y = e.clientY - rect.top - 100;
+
+            follower.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPVibe Profile - Retro Terminal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'Monaco', monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* CRT screen effect */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 65, 0.03) 0px,
+                rgba(0, 255, 65, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center,
+                transparent 0%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+            pointer-events: none;
+        }
+
+        .profile-card {
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Terminal window */
+        .terminal-container {
+            background: #000;
+            border: 3px solid #00ff41;
+            box-shadow:
+                0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 100px rgba(0, 255, 65, 0.05);
+            position: relative;
+        }
+
+        /* Terminal header */
+        .terminal-header {
+            background: #00ff41;
+            color: #000;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #00ff41;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #000;
+        }
+
+        .terminal-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Terminal content */
+        .terminal-content {
+            padding: 32px 24px;
+            background: #000;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            animation: textGlow 0.05s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+            50% { text-shadow: 0 0 8px rgba(0, 255, 65, 0.8); }
+        }
+
+        .prompt {
+            color: #00ff41;
+        }
+
+        .command {
+            color: #0099ff;
+            font-weight: 700;
+        }
+
+        .output {
+            color: #00ff41;
+            padding-left: 20px;
+        }
+
+        .output-key {
+            color: #ffaa00;
+        }
+
+        .output-value {
+            color: #00ff41;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #00ff41;
+            animation: cursorBlink 1s step-end infinite;
+            margin-left: 4px;
+        }
+
+        @keyframes cursorBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ASCII art name */
+        .ascii-art {
+            margin: 24px 0;
+            font-size: 10px;
+            line-height: 1;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+            overflow-x: auto;
+        }
+
+        /* QR section */
+        .terminal-qr-section {
+            margin: 32px 0;
+            padding: 20px;
+            border: 2px dashed #00ff41;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .qr-terminal-frame {
+            width: 200px;
+            height: 200px;
+            padding: 12px;
+            background: #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        #qrcode {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+        }
+
+        /* Stats table */
+        .terminal-table {
+            margin: 24px 0;
+            width: 100%;
+            border: 1px solid #00ff41;
+        }
+
+        .terminal-table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #00ff41;
+        }
+
+        .terminal-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .terminal-table-cell {
+            padding: 12px 16px;
+            border-right: 1px solid #00ff41;
+        }
+
+        .terminal-table-cell:last-child {
+            border-right: none;
+        }
+
+        .table-header {
+            background: rgba(0, 255, 65, 0.1);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .table-value {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Footer commands */
+        .terminal-footer {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px dashed #00ff41;
+        }
+
+        .footer-line {
+            margin-bottom: 4px;
+            font-size: 11px;
+            opacity: 0.6;
+        }
+
+        /* Typing animation */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .typing-line {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+        }
+
+        /* Boot sequence */
+        @keyframes bootSequence {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-card {
+            animation: bootSequence 1.5s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 750px) {
+            .terminal-content {
+                padding: 20px 16px;
+                font-size: 13px;
+            }
+
+            .ascii-art {
+                font-size: 8px;
+            }
+
+            .terminal-table-row {
+                grid-template-columns: 1fr;
+            }
+
+            .terminal-table-cell {
+                border-right: none;
+                border-bottom: 1px solid #00ff41;
+            }
+
+            .terminal-table-cell:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-title">FPVIBE TERMINAL v1.0</div>
+            </div>
+
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">root@fpvibe:~$</span> <span class="command">cat pilot.profile</span>
+                </div>
+
+                <div class="ascii-art">
+██████╗ ██████╗ ██╗ ██████╗██╗  ██╗
+██╔══██╗██╔══██╗██║██╔════╝██║ ██╔╝
+██████╔╝██████╔╝██║██║     █████╔╝
+██╔══██╗██╔══██╗██║██║     ██╔═██╗
+██████╔╝██║  ██║██║╚██████╗██║  ██╗
+╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝
+                </div>
+
+                <div class="output">
+                    <div class="terminal-line">
+                        <span class="output-key">NAME:</span> <span class="output-value">BRICK</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output-key">HANDLE:</span> <span class="output-value">@brick_pilot</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output-key">TYPE:</span> <span class="output-value">FREESTYLE_PILOT</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output-key">LOCATION:</span> <span class="output-value">BERLIN, GERMANY</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output-key">EXPERIENCE:</span> <span class="output-value">12+ YEARS</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output-key">STATUS:</span> <span class="output-value">ACTIVE</span>
+                    </div>
+                </div>
+
+                <div class="terminal-qr-section">
+                    <div class="qr-terminal-frame">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="qr-label">▶ SCAN TO CONNECT</div>
+                </div>
+
+                <div class="terminal-line">
+                    <span class="prompt">root@fpvibe:~$</span> <span class="command">stats --show</span>
+                </div>
+
+                <div class="terminal-table">
+                    <div class="terminal-table-row">
+                        <div class="terminal-table-cell table-header">FOLLOWERS</div>
+                        <div class="terminal-table-cell table-header">FLIGHTS</div>
+                    </div>
+                    <div class="terminal-table-row">
+                        <div class="terminal-table-cell table-value">42K</div>
+                        <div class="terminal-table-cell table-value">5.8K</div>
+                    </div>
+                    <div class="terminal-table-row">
+                        <div class="terminal-table-cell table-header">VIEWS</div>
+                        <div class="terminal-table-cell table-header">SCORE</div>
+                    </div>
+                    <div class="terminal-table-row">
+                        <div class="terminal-table-cell table-value">18M</div>
+                        <div class="terminal-table-cell table-value">99</div>
+                    </div>
+                </div>
+
+                <div class="terminal-footer">
+                    <div class="footer-line">[INFO] Profile loaded successfully</div>
+                    <div class="footer-line">[INFO] Connection: FPVIBE.APP/@BRICK_PILOT</div>
+                    <div class="footer-line">[SYS] All systems operational</div>
+                    <div class="terminal-line" style="margin-top: 16px;">
+                        <span class="prompt">root@fpvibe:~$</span><span class="cursor"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        const qrSize = document.getElementById('qrcode').offsetWidth;
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://fpvibe.app/@brick_pilot",
+            width: qrSize,
+            height: qrSize,
+            colorDark: "#000000",
+            colorLight: "#00ff41",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

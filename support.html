@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,9 +26,37 @@
     <meta name="twitter:description" content="Get help with FPVibe, the social network for FPV pilots.">
     <meta name="twitter:image" content="https://fpvibe.app/logo-400.png">
 
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="en" href="https://fpvibe.app/support?lang=en" />
+    <link rel="alternate" hreflang="tr" href="https://fpvibe.app/support?lang=tr" />
+    <link rel="alternate" hreflang="es" href="https://fpvibe.app/support?lang=es" />
+    <link rel="alternate" hreflang="de" href="https://fpvibe.app/support?lang=de" />
+    <link rel="alternate" hreflang="fr" href="https://fpvibe.app/support?lang=fr" />
+    <link rel="alternate" hreflang="pt" href="https://fpvibe.app/support?lang=pt" />
+    <link rel="alternate" hreflang="it" href="https://fpvibe.app/support?lang=it" />
+    <link rel="alternate" hreflang="ru" href="https://fpvibe.app/support?lang=ru" />
+    <link rel="alternate" hreflang="zh" href="https://fpvibe.app/support?lang=zh" />
+    <link rel="alternate" hreflang="ja" href="https://fpvibe.app/support?lang=ja" />
+    <link rel="alternate" hreflang="x-default" href="https://fpvibe.app/support" />
+
+    <!-- OG Locale Variants -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="tr_TR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="pt_PT">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="ja_JP">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logo-400.png">
     <meta name="theme-color" content="#000000">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -86,24 +114,7 @@
             color: #fff;
         }
 
-        .lang-switcher {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 6px 14px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .lang-switcher:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
+        /* Language dropdown styles imported from style.css */
 
         .container {
             max-width: 800px;
@@ -291,9 +302,27 @@
         <div class="nav-right">
             <a href="/" class="link" data-i18n="home">Home</a>
             <a href="/privacy" class="link" data-i18n="privacy">Privacy</a>
-            <button class="lang-switcher" id="langSwitcher">
-                <span id="currentLang">EN</span>
-            </button>
+            <div class="language-selector">
+                <button class="lang-button" id="langButton" aria-label="Select language" aria-haspopup="true" aria-expanded="false">
+                    <span class="lang-flag" id="currentFlag">🇬🇧</span>
+                    <span class="lang-name" id="currentLangName">English</span>
+                    <svg class="lang-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown" role="menu" aria-hidden="true">
+                    <button class="lang-option" data-lang="en" role="menuitem"><span class="lang-flag">🇬🇧</span><span class="lang-text">English</span></button>
+                    <button class="lang-option" data-lang="tr" role="menuitem"><span class="lang-flag">🇹🇷</span><span class="lang-text">Türkçe</span></button>
+                    <button class="lang-option" data-lang="es" role="menuitem"><span class="lang-flag">🇪🇸</span><span class="lang-text">Español</span></button>
+                    <button class="lang-option" data-lang="de" role="menuitem"><span class="lang-flag">🇩🇪</span><span class="lang-text">Deutsch</span></button>
+                    <button class="lang-option" data-lang="fr" role="menuitem"><span class="lang-flag">🇫🇷</span><span class="lang-text">Français</span></button>
+                    <button class="lang-option" data-lang="pt" role="menuitem"><span class="lang-flag">🇵🇹</span><span class="lang-text">Português</span></button>
+                    <button class="lang-option" data-lang="it" role="menuitem"><span class="lang-flag">🇮🇹</span><span class="lang-text">Italiano</span></button>
+                    <button class="lang-option" data-lang="ru" role="menuitem"><span class="lang-flag">🇷🇺</span><span class="lang-text">Русский</span></button>
+                    <button class="lang-option" data-lang="zh" role="menuitem"><span class="lang-flag">🇨🇳</span><span class="lang-text">中文</span></button>
+                    <button class="lang-option" data-lang="ja" role="menuitem"><span class="lang-flag">🇯🇵</span><span class="lang-text">日本語</span></button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -489,40 +518,410 @@
                         <a href="mailto:asd@Royal.Net" class="email-link">Destek ile İletişime Geç</a>
                     </div>
                 `
+            },
+            es: {
+                home: 'Inicio',
+                privacy: 'Privacidad',
+                footerTagline: 'Red Social para Pilotos de Drones FPV',
+                footerRights: 'Todos los derechos reservados.',
+                content: `
+                    <header>
+                        <h1>Soporte</h1>
+                        <p class="subtitle">Estamos aquí para ayudarte a aprovechar al máximo FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Contáctanos</h2>
+                        <p>¿Tienes alguna pregunta, problema o comentario? Nos encantaría saber de ti.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Respondemos en 24-48 horas</p>
+                        <div><span class="badge">✉️ Soporte por Email</span></div>
+                    </div>
+                    <section>
+                        <h2>Preguntas Frecuentes</h2>
+                        <div class="faq-item"><h3>¿Cómo creo una cuenta?</h3><p>Descarga la app FPVibe, toca "Registrarse" y sigue el proceso. Necesitarás un email válido.</p></div>
+                        <div class="faq-item"><h3>¿Cómo subo videos FPV?</h3><p>Inicia sesión, toca "+", selecciona tu video, añade título y descripción, y toca "Compartir".</p></div>
+                        <div class="faq-item"><h3>¿Puedo eliminar mi cuenta?</h3><p>Sí. Ve a Ajustes > Cuenta > Eliminar Cuenta. Tus datos se eliminarán permanentemente en 30 días.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>¿Todavía necesitas ayuda?</h2>
+                        <p>No dudes en contactarnos. Nuestro equipo está listo para ayudarte.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Contactar Soporte</a>
+                    </div>
+                `
+            },
+            de: {
+                home: 'Startseite',
+                privacy: 'Datenschutz',
+                footerTagline: 'Soziales Netzwerk für FPV-Drohnenpiloten',
+                footerRights: 'Alle Rechte vorbehalten.',
+                content: `
+                    <header>
+                        <h1>Support</h1>
+                        <p class="subtitle">Wir helfen dir, FPVibe optimal zu nutzen</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Kontaktiere uns</h2>
+                        <p>Hast du eine Frage, ein Problem oder Feedback? Wir freuen uns von dir zu hören.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Wir antworten innerhalb von 24-48 Stunden</p>
+                        <div><span class="badge">✉️ E-Mail-Support</span></div>
+                    </div>
+                    <section>
+                        <h2>Häufig gestellte Fragen</h2>
+                        <div class="faq-item"><h3>Wie erstelle ich ein Konto?</h3><p>Lade die FPVibe-App herunter, tippe auf "Registrieren" und folge dem Prozess. Du benötigst eine gültige E-Mail-Adresse.</p></div>
+                        <div class="faq-item"><h3>Wie lade ich FPV-Videos hoch?</h3><p>Melde dich an, tippe auf "+", wähle dein Video, füge Titel und Beschreibung hinzu und tippe auf "Teilen".</p></div>
+                        <div class="faq-item"><h3>Kann ich mein Konto löschen?</h3><p>Ja. Gehe zu Einstellungen > Konto > Konto löschen. Deine Daten werden innerhalb von 30 Tagen dauerhaft gelöscht.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>Brauchst du noch Hilfe?</h2>
+                        <p>Zögere nicht, uns zu kontaktieren. Unser Team ist bereit, dir zu helfen.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Support kontaktieren</a>
+                    </div>
+                `
+            },
+            fr: {
+                home: 'Accueil',
+                privacy: 'Confidentialité',
+                footerTagline: 'Réseau Social pour Pilotes de Drones FPV',
+                footerRights: 'Tous droits réservés.',
+                content: `
+                    <header>
+                        <h1>Support</h1>
+                        <p class="subtitle">Nous sommes là pour vous aider à tirer le meilleur parti de FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Contactez-nous</h2>
+                        <p>Une question, un problème ou un commentaire? Nous serions ravis de vous entendre.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Nous répondons sous 24-48 heures</p>
+                        <div><span class="badge">✉️ Support par Email</span></div>
+                    </div>
+                    <section>
+                        <h2>Questions Fréquentes</h2>
+                        <div class="faq-item"><h3>Comment créer un compte?</h3><p>Téléchargez l'app FPVibe, appuyez sur "S'inscrire" et suivez le processus. Vous aurez besoin d'une adresse email valide.</p></div>
+                        <div class="faq-item"><h3>Comment télécharger des vidéos FPV?</h3><p>Connectez-vous, appuyez sur "+", sélectionnez votre vidéo, ajoutez un titre et une description, puis appuyez sur "Partager".</p></div>
+                        <div class="faq-item"><h3>Puis-je supprimer mon compte?</h3><p>Oui. Allez dans Paramètres > Compte > Supprimer le compte. Vos données seront définitivement supprimées sous 30 jours.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>Besoin d'aide?</h2>
+                        <p>N'hésitez pas à nous contacter. Notre équipe est prête à vous aider.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Contacter le Support</a>
+                    </div>
+                `
+            },
+            pt: {
+                home: 'Início',
+                privacy: 'Privacidade',
+                footerTagline: 'Rede Social para Pilotos de Drones FPV',
+                footerRights: 'Todos os direitos reservados.',
+                content: `
+                    <header>
+                        <h1>Suporte</h1>
+                        <p class="subtitle">Estamos aqui para ajudá-lo a aproveitar ao máximo o FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Entre em Contato</h2>
+                        <p>Tem alguma dúvida, problema ou feedback? Adoraríamos ouvir de você.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Respondemos em 24-48 horas</p>
+                        <div><span class="badge">✉️ Suporte por Email</span></div>
+                    </div>
+                    <section>
+                        <h2>Perguntas Frequentes</h2>
+                        <div class="faq-item"><h3>Como criar uma conta?</h3><p>Baixe o app FPVibe, toque em "Cadastrar" e siga o processo. Você precisará de um endereço de email válido.</p></div>
+                        <div class="faq-item"><h3>Como enviar vídeos FPV?</h3><p>Faça login, toque em "+", selecione seu vídeo, adicione título e descrição, e toque em "Compartilhar".</p></div>
+                        <div class="faq-item"><h3>Posso excluir minha conta?</h3><p>Sim. Vá em Configurações > Conta > Excluir Conta. Seus dados serão permanentemente excluídos em 30 dias.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>Ainda precisa de ajuda?</h2>
+                        <p>Não hesite em nos contatar. Nossa equipe está pronta para ajudar.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Contatar Suporte</a>
+                    </div>
+                `
+            },
+            it: {
+                home: 'Home',
+                privacy: 'Privacy',
+                footerTagline: 'Social Network per Piloti di Droni FPV',
+                footerRights: 'Tutti i diritti riservati.',
+                content: `
+                    <header>
+                        <h1>Supporto</h1>
+                        <p class="subtitle">Siamo qui per aiutarti a ottenere il massimo da FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Contattaci</h2>
+                        <p>Hai una domanda, un problema o un feedback? Ci piacerebbe sentirti.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Rispondiamo entro 24-48 ore</p>
+                        <div><span class="badge">✉️ Supporto via Email</span></div>
+                    </div>
+                    <section>
+                        <h2>Domande Frequenti</h2>
+                        <div class="faq-item"><h3>Come creo un account?</h3><p>Scarica l'app FPVibe, tocca "Registrati" e segui il processo. Avrai bisogno di un indirizzo email valido.</p></div>
+                        <div class="faq-item"><h3>Come carico video FPV?</h3><p>Accedi, tocca "+", seleziona il tuo video, aggiungi titolo e descrizione, e tocca "Condividi".</p></div>
+                        <div class="faq-item"><h3>Posso eliminare il mio account?</h3><p>Sì. Vai su Impostazioni > Account > Elimina Account. I tuoi dati saranno eliminati permanentemente entro 30 giorni.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>Hai ancora bisogno di aiuto?</h2>
+                        <p>Non esitare a contattarci. Il nostro team è pronto ad aiutarti.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Contatta il Supporto</a>
+                    </div>
+                `
+            },
+            ru: {
+                home: 'Главная',
+                privacy: 'Конфиденциальность',
+                footerTagline: 'Социальная сеть для FPV-пилотов',
+                footerRights: 'Все права защищены.',
+                content: `
+                    <header>
+                        <h1>Поддержка</h1>
+                        <p class="subtitle">Мы здесь, чтобы помочь вам максимально использовать FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>Свяжитесь с нами</h2>
+                        <p>Есть вопрос, проблема или отзыв? Мы будем рады услышать от вас.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">Мы отвечаем в течение 24-48 часов</p>
+                        <div><span class="badge">✉️ Поддержка по Email</span></div>
+                    </div>
+                    <section>
+                        <h2>Часто задаваемые вопросы</h2>
+                        <div class="faq-item"><h3>Как создать аккаунт?</h3><p>Скачайте приложение FPVibe, нажмите "Зарегистрироваться" и следуйте процессу. Вам понадобится действительный адрес электронной почты.</p></div>
+                        <div class="faq-item"><h3>Как загрузить FPV видео?</h3><p>Войдите, нажмите "+", выберите ваше видео, добавьте название и описание, затем нажмите "Поделиться".</p></div>
+                        <div class="faq-item"><h3>Могу ли я удалить мой аккаунт?</h3><p>Да. Перейдите в Настройки > Аккаунт > Удалить аккаунт. Ваши данные будут навсегда удалены в течение 30 дней.</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>Нужна помощь?</h2>
+                        <p>Не стесняйтесь связаться с нами. Наша команда готова помочь.</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">Связаться с поддержкой</a>
+                    </div>
+                `
+            },
+            zh: {
+                home: '首页',
+                privacy: '隐私',
+                footerTagline: 'FPV无人机飞手社交网络',
+                footerRights: '版权所有。',
+                content: `
+                    <header>
+                        <h1>支持</h1>
+                        <p class="subtitle">我们在这里帮助您充分利用FPVibe</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>联系我们</h2>
+                        <p>有问题、意见或反馈？我们很乐意听到您的声音。</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">我们通常在24-48小时内回复</p>
+                        <div><span class="badge">✉️ 电子邮件支持</span></div>
+                    </div>
+                    <section>
+                        <h2>常见问题</h2>
+                        <div class="faq-item"><h3>如何创建账户？</h3><p>下载FPVibe应用，点击"注册"并按照流程操作。您需要一个有效的电子邮件地址。</p></div>
+                        <div class="faq-item"><h3>如何上传FPV视频？</h3><p>登录后，点击"+"，选择您的视频，添加标题和描述，然后点击"分享"。</p></div>
+                        <div class="faq-item"><h3>我可以删除我的账户吗？</h3><p>可以。前往设置 > 账户 > 删除账户。您的个人数据将在30天内永久删除。</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>还需要帮助？</h2>
+                        <p>请随时联系我们。我们的团队随时准备为您提供帮助。</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">联系支持</a>
+                    </div>
+                `
+            },
+            ja: {
+                home: 'ホーム',
+                privacy: 'プライバシー',
+                footerTagline: 'FPVドローンパイロットのためのソーシャルネットワーク',
+                footerRights: '全著作権所有。',
+                content: `
+                    <header>
+                        <h1>サポート</h1>
+                        <p class="subtitle">FPVibeを最大限に活用できるようサポートいたします</p>
+                    </header>
+                    <div class="contact-box">
+                        <h2>お問い合わせ</h2>
+                        <p>ご質問、問題、またはフィードバックはございますか？ぜひお聞かせください。</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">📧 asd@Royal.Net</a>
+                        <p class="response-time">通常24〜48時間以内に返信いたします</p>
+                        <div><span class="badge">✉️ メールサポート</span></div>
+                    </div>
+                    <section>
+                        <h2>よくある質問</h2>
+                        <div class="faq-item"><h3>アカウントの作成方法は？</h3><p>FPVibeアプリをダウンロードし、「サインアップ」をタップして登録手続きに従ってください。有効なメールアドレスが必要です。</p></div>
+                        <div class="faq-item"><h3>FPV動画のアップロード方法は？</h3><p>ログイン後、「+」をタップし、動画を選択、タイトルと説明を追加して「シェア」をタップします。</p></div>
+                        <div class="faq-item"><h3>アカウントを削除できますか？</h3><p>はい。設定 > アカウント > アカウント削除へ進んでください。個人データは30日以内に完全に削除されます。</p></div>
+                    </section>
+                    <div class="contact-box">
+                        <h2>まだサポートが必要ですか？</h2>
+                        <p>お気軽にお問い合わせください。私たちのチームがお手伝いいたします。</p>
+                        <a href="mailto:asd@Royal.Net" class="email-link">サポートに連絡</a>
+                    </div>
+                `
             }
         };
 
-        // Get saved language or default to English
-        let currentLanguage = localStorage.getItem('fpvibe-lang') || 'en';
+        // Language data with flags and native names
+        const languageData = {
+            en: { flag: '🇬🇧', name: 'English' },
+            tr: { flag: '🇹🇷', name: 'Türkçe' },
+            es: { flag: '🇪🇸', name: 'Español' },
+            de: { flag: '🇩🇪', name: 'Deutsch' },
+            fr: { flag: '🇫🇷', name: 'Français' },
+            pt: { flag: '🇵🇹', name: 'Português' },
+            it: { flag: '🇮🇹', name: 'Italiano' },
+            ru: { flag: '🇷🇺', name: 'Русский' },
+            zh: { flag: '🇨🇳', name: '中文' },
+            ja: { flag: '🇯🇵', name: '日本語' }
+        };
+
+        // Get saved language or detect from URL/browser
+        let currentLanguage = (function() {
+            // Check URL parameter first
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            if (urlLang && languageData[urlLang]) {
+                return urlLang;
+            }
+
+            // Check localStorage
+            const savedLang = localStorage.getItem('fpvibe-lang');
+            if (savedLang && languageData[savedLang]) {
+                return savedLang;
+            }
+
+            // Detect browser language
+            const browserLang = navigator.language.split('-')[0];
+            if (languageData[browserLang]) {
+                return browserLang;
+            }
+
+            // Default to English
+            return 'en';
+        })();
+
+        // Update language selector display
+        function updateLanguageSelector(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangName = document.getElementById('currentLangName');
+
+            if (currentFlag && currentLangName && languageData[lang]) {
+                currentFlag.textContent = languageData[lang].flag;
+                currentLangName.textContent = languageData[lang].name;
+            }
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                const optionLang = option.getAttribute('data-lang');
+                if (optionLang === lang) {
+                    option.setAttribute('data-active', 'true');
+                } else {
+                    option.removeAttribute('data-active');
+                }
+            });
+        }
 
         function setLanguage(lang) {
+            if (!languageData[lang]) {
+                console.warn(`Language ${lang} not supported`);
+                return;
+            }
+
             currentLanguage = lang;
             localStorage.setItem('fpvibe-lang', lang);
 
+            // Update HTML lang attribute (SEO critical)
+            const htmlRoot = document.getElementById('htmlRoot');
+            if (htmlRoot) {
+                htmlRoot.setAttribute('lang', lang);
+            }
+            document.documentElement.lang = lang;
+
             // Update content
-            document.getElementById('content').innerHTML = translations[lang].content;
+            const contentElement = document.getElementById('content');
+            if (contentElement && translations[lang]) {
+                contentElement.innerHTML = translations[lang].content;
+            }
 
             // Update other i18n elements
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
+                if (translations[lang] && translations[lang][key]) {
                     element.textContent = translations[lang][key];
                 }
             });
 
-            // Update language switcher
-            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            // Update language selector display
+            updateLanguageSelector(lang);
 
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
+            // Track language change (if analytics exists)
+            if (typeof FPVibeAnalytics !== 'undefined') {
+                FPVibeAnalytics.trackEvent('language_change', { language: lang });
+            }
         }
 
-        // Toggle language on button click
+        // Language dropdown functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const langSwitcher = document.getElementById('langSwitcher');
-            langSwitcher.addEventListener('click', function() {
-                const newLang = currentLanguage === 'en' ? 'tr' : 'en';
-                setLanguage(newLang);
+            const langButton = document.getElementById('langButton');
+            const langDropdown = document.getElementById('langDropdown');
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            if (!langButton || !langDropdown) {
+                console.error('Language selector elements not found');
+                return;
+            }
+
+            // Toggle dropdown
+            function toggleDropdown() {
+                const isOpen = langDropdown.classList.contains('active');
+                if (isOpen) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            }
+
+            function openDropdown() {
+                langDropdown.classList.add('active');
+                langDropdown.setAttribute('aria-hidden', 'false');
+                langButton.setAttribute('aria-expanded', 'true');
+            }
+
+            function closeDropdown() {
+                langDropdown.classList.remove('active');
+                langDropdown.setAttribute('aria-hidden', 'true');
+                langButton.setAttribute('aria-expanded', 'false');
+            }
+
+            // Button click handler
+            langButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleDropdown();
+            });
+
+            // Language option click handlers
+            langOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const selectedLang = this.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                    closeDropdown();
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // Close dropdown on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && langDropdown.classList.contains('active')) {
+                    closeDropdown();
+                    langButton.focus();
+                }
             });
 
             // Set initial language

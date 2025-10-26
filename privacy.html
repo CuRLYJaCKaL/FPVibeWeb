@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,19 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://fpvibe.app/privacy">
 
+    <!-- Hreflang Tags for Multi-Language SEO -->
+    <link rel="alternate" hreflang="en" href="https://fpvibe.app/privacy?lang=en">
+    <link rel="alternate" hreflang="tr" href="https://fpvibe.app/privacy?lang=tr">
+    <link rel="alternate" hreflang="es" href="https://fpvibe.app/privacy?lang=es">
+    <link rel="alternate" hreflang="de" href="https://fpvibe.app/privacy?lang=de">
+    <link rel="alternate" hreflang="fr" href="https://fpvibe.app/privacy?lang=fr">
+    <link rel="alternate" hreflang="pt" href="https://fpvibe.app/privacy?lang=pt">
+    <link rel="alternate" hreflang="it" href="https://fpvibe.app/privacy?lang=it">
+    <link rel="alternate" hreflang="ru" href="https://fpvibe.app/privacy?lang=ru">
+    <link rel="alternate" hreflang="zh" href="https://fpvibe.app/privacy?lang=zh">
+    <link rel="alternate" hreflang="ja" href="https://fpvibe.app/privacy?lang=ja">
+    <link rel="alternate" hreflang="x-default" href="https://fpvibe.app/privacy">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fpvibe.app/privacy">
@@ -18,6 +31,16 @@
     <meta property="og:description" content="Privacy-first social network for FPV pilots. GDPR compliant, no data selling, no tracking.">
     <meta property="og:image" content="https://fpvibe.app/logo-1200.png">
     <meta property="og:site_name" content="FPVibe">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="tr_TR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="pt_PT">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="ja_JP">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
@@ -29,7 +52,12 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logo-400.png">
     <meta name="theme-color" content="#000000">
+
+    <!-- External Stylesheet for Language Dropdown -->
+    <link rel="stylesheet" href="/style.css">
+
     <style>
+        /* Page-specific styles for privacy.html */
         * {
             margin: 0;
             padding: 0;
@@ -86,24 +114,7 @@
             color: #fff;
         }
 
-        .lang-switcher {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 6px 14px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .lang-switcher:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
+        /* Language dropdown styles moved to external style.css */
 
         .container {
             max-width: 800px;
@@ -304,9 +315,27 @@
         <div class="nav-right">
             <a href="/" class="link" data-i18n="home">Home</a>
             <a href="/support" class="link" data-i18n="support">Support</a>
-            <button class="lang-switcher" id="langSwitcher">
-                <span id="currentLang">EN</span>
-            </button>
+            <div class="language-selector">
+                <button class="lang-button" id="langButton" aria-label="Select language" aria-haspopup="true" aria-expanded="false">
+                    <span class="lang-flag" id="currentFlag">🇬🇧</span>
+                    <span class="lang-name" id="currentLangName">English</span>
+                    <svg class="lang-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown" role="menu" aria-hidden="true">
+                    <button class="lang-option" data-lang="en" role="menuitem"><span class="lang-flag">🇬🇧</span> <span class="lang-text">English</span></button>
+                    <button class="lang-option" data-lang="tr" role="menuitem"><span class="lang-flag">🇹🇷</span> <span class="lang-text">Türkçe</span></button>
+                    <button class="lang-option" data-lang="es" role="menuitem"><span class="lang-flag">🇪🇸</span> <span class="lang-text">Español</span></button>
+                    <button class="lang-option" data-lang="de" role="menuitem"><span class="lang-flag">🇩🇪</span> <span class="lang-text">Deutsch</span></button>
+                    <button class="lang-option" data-lang="fr" role="menuitem"><span class="lang-flag">🇫🇷</span> <span class="lang-text">Français</span></button>
+                    <button class="lang-option" data-lang="pt" role="menuitem"><span class="lang-flag">🇵🇹</span> <span class="lang-text">Português</span></button>
+                    <button class="lang-option" data-lang="it" role="menuitem"><span class="lang-flag">🇮🇹</span> <span class="lang-text">Italiano</span></button>
+                    <button class="lang-option" data-lang="ru" role="menuitem"><span class="lang-flag">🇷🇺</span> <span class="lang-text">Русский</span></button>
+                    <button class="lang-option" data-lang="zh" role="menuitem"><span class="lang-flag">🇨🇳</span> <span class="lang-text">中文</span></button>
+                    <button class="lang-option" data-lang="ja" role="menuitem"><span class="lang-flag">🇯🇵</span> <span class="lang-text">日本語</span></button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -572,40 +601,1178 @@
                         </div>
                     </div>
                 `
+            },
+            es: {
+                home: 'Inicio',
+                support: 'Soporte',
+                footerTagline: 'Red Social para Pilotos de Drones FPV',
+                footerRights: 'Todos los derechos reservados.',
+                content: `
+                    <header>
+                        <h1>Política de Privacidad</h1>
+                        <p class="last-updated">Última actualización: 12 de octubre de 2025</p>
+                    </header>
+
+                    <section>
+                        <h2>Introducción</h2>
+                        <p>FPVibe es una red social diseñada para pilotos de drones FPV. Tu privacidad es importante para nosotros. Esta política explica qué información recopilamos, cómo la utilizamos y cuáles son tus derechos.</p>
+                    </section>
+
+                    <section>
+                        <h2>Información que Recopilamos</h2>
+                        <div class="section-item">
+                            <strong>Información de Cuenta</strong>
+                            Dirección de correo electrónico, nombre de usuario, nombre completo, foto de perfil y biografía
+                        </div>
+                        <div class="section-item">
+                            <strong>Contenido del Usuario</strong>
+                            Videos de vuelos FPV que compartes, mensajes, comentarios e información de eventos
+                        </div>
+                        <div class="section-item">
+                            <strong>Información de Ubicación</strong>
+                            Con tu permiso, datos precisos de ubicación para mostrar zonas de vuelo y eventos cercanos
+                        </div>
+                        <div class="section-item">
+                            <strong>Información del Dispositivo</strong>
+                            Dirección IP, tipo de dispositivo, versión del sistema operativo
+                        </div>
+                        <div class="section-item">
+                            <strong>Datos de Uso</strong>
+                            Cómo utilizas la aplicación, qué funciones accedes
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Cómo Utilizamos tus Datos</h2>
+                        <ul>
+                            <li><strong>Funcionalidad de la App:</strong> Creación de cuenta, inicio de sesión, compartir contenido y funciones de mensajería</li>
+                            <li><strong>Funciones Comunitarias:</strong> Conectar con otros pilotos, sistema de seguimiento, canales de chat global</li>
+                            <li><strong>Servicios de Ubicación:</strong> Mostrar zonas de vuelo, pilotos y eventos cercanos</li>
+                            <li><strong>Notificaciones:</strong> Enviar notificaciones de mensajes, comentarios y eventos</li>
+                            <li><strong>Seguridad:</strong> Seguridad de la cuenta, prevención de spam y detección de abusos</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Compartir Datos</h2>
+                        <p><strong>NO VENDEMOS ni COMPARTIMOS tus datos con terceros.</strong> Los datos pueden compartirse en estas situaciones:</p>
+                        <ul>
+                            <li><strong>Dentro de la Comunidad:</strong> Tu información de perfil, videos y mensajes son visibles para otros usuarios de FPVibe</li>
+                            <li><strong>Proveedores de Servicios:</strong> Con proveedores de infraestructura como Supabase (alojamiento de datos), únicamente para proporcionar el servicio</li>
+                            <li><strong>Requisitos Legales:</strong> Con las autoridades cuando sea requerido por ley</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>Lo que NO Hacemos</h3>
+                        <ul>
+                            <li>No vendemos tus datos</li>
+                            <li>No compartimos con anunciantes externos</li>
+                            <li>No usamos cookies de seguimiento</li>
+                            <li>No hacemos segmentación comportamental</li>
+                            <li>No enviamos tus datos a empresas de análisis</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Almacenamiento de Datos</h2>
+                        <p>Todos tus datos se almacenan cifrados en <strong>servidores europeos (cumplimiento RGPD)</strong>. Cuando eliminas tu cuenta, todos los datos personales se borran permanentemente <strong>en 30 días</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h2>Tus Derechos</h2>
+                        <div class="section-item">
+                            <strong>Derecho de Acceso</strong>
+                            Puedes solicitar los datos que almacenamos sobre ti
+                        </div>
+                        <div class="section-item">
+                            <strong>Derecho de Rectificación</strong>
+                            Puedes corregir o actualizar información incorrecta
+                        </div>
+                        <div class="section-item">
+                            <strong>Derecho de Supresión</strong>
+                            Puedes eliminar completamente tu cuenta y datos
+                        </div>
+                        <div class="section-item">
+                            <strong>Derecho de Oposición</strong>
+                            Puedes oponerte a actividades de procesamiento de datos
+                        </div>
+                        <div class="section-item">
+                            <strong>Portabilidad de Datos</strong>
+                            Puedes solicitar tus datos en formato descargable
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Privacidad de Menores</h2>
+                        <p>FPVibe no está diseñado para <strong>menores de 13 años</strong>. No recopilamos intencionalmente información personal de menores de 13 años. Si descubrimos un usuario menor de 13, eliminaremos inmediatamente su cuenta.</p>
+                    </section>
+
+                    <section>
+                        <h2>Cambios en la Política</h2>
+                        <p>Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos de cambios significativos mediante notificaciones en la app o por correo electrónico.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Contáctanos</h2>
+                        <p>Si tienes preguntas sobre privacidad, contáctanos:</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ Cumplimiento RGPD</span>
+                        </div>
+                    </div>
+                `
+            },
+            de: {
+                home: 'Startseite',
+                support: 'Support',
+                footerTagline: 'Soziales Netzwerk für FPV-Drohnenpiloten',
+                footerRights: 'Alle Rechte vorbehalten.',
+                content: `
+                    <header>
+                        <h1>Datenschutzerklärung</h1>
+                        <p class="last-updated">Letzte Aktualisierung: 12. Oktober 2025</p>
+                    </header>
+
+                    <section>
+                        <h2>Einleitung</h2>
+                        <p>FPVibe ist ein soziales Netzwerk für FPV-Drohnenpiloten. Deine Privatsphäre ist uns wichtig. Diese Richtlinie erklärt, welche Informationen wir sammeln, wie wir sie verwenden und welche Rechte du hast.</p>
+                    </section>
+
+                    <section>
+                        <h2>Gesammelte Informationen</h2>
+                        <div class="section-item">
+                            <strong>Kontoinformationen</strong>
+                            E-Mail-Adresse, Benutzername, vollständiger Name, Profilfoto und Biografie
+                        </div>
+                        <div class="section-item">
+                            <strong>Nutzerinhalte</strong>
+                            FPV-Flugvideos, die du teilst, Nachrichten, Kommentare und Veranstaltungsinformationen
+                        </div>
+                        <div class="section-item">
+                            <strong>Standortinformationen</strong>
+                            Mit deiner Erlaubnis präzise Standortdaten zur Anzeige nahegelegener Flugplätze und Veranstaltungen
+                        </div>
+                        <div class="section-item">
+                            <strong>Geräteinformationen</strong>
+                            IP-Adresse, Gerätetyp, Betriebssystemversion
+                        </div>
+                        <div class="section-item">
+                            <strong>Nutzungsdaten</strong>
+                            Wie du die App nutzt, welche Funktionen du verwendest
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Verwendung deiner Daten</h2>
+                        <ul>
+                            <li><strong>App-Funktionalität:</strong> Kontoerstellung, Anmeldung, Inhaltsfreigabe und Messaging-Funktionen</li>
+                            <li><strong>Community-Funktionen:</strong> Verbindung mit anderen Piloten, Folgesystem, globale Chat-Kanäle</li>
+                            <li><strong>Standortdienste:</strong> Anzeige nahegelegener Flugplätze, Piloten und Veranstaltungen</li>
+                            <li><strong>Benachrichtigungen:</strong> Senden von Nachrichten-, Kommentar- und Veranstaltungsbenachrichtigungen</li>
+                            <li><strong>Sicherheit:</strong> Kontosicherheit, Spam-Prävention und Missbrauchserkennung</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Datenweitergabe</h2>
+                        <p><strong>Wir VERKAUFEN oder TEILEN deine Daten NICHT mit Dritten.</strong> Daten können in diesen Situationen geteilt werden:</p>
+                        <ul>
+                            <li><strong>Innerhalb der Community:</strong> Deine Profilinformationen, Videos und Nachrichten sind für andere FPVibe-Nutzer sichtbar</li>
+                            <li><strong>Dienstanbieter:</strong> Mit Infrastrukturanbietern wie Supabase (Daten-Hosting), ausschließlich zur Bereitstellung des Dienstes</li>
+                            <li><strong>Gesetzliche Anforderungen:</strong> Mit Behörden, wenn gesetzlich vorgeschrieben</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>Was wir NICHT tun</h3>
+                        <ul>
+                            <li>Wir verkaufen deine Daten nicht</li>
+                            <li>Wir teilen nicht mit Drittanbieter-Werbetreibenden</li>
+                            <li>Wir verwenden keine Tracking-Cookies</li>
+                            <li>Wir machen kein Verhaltens-Targeting</li>
+                            <li>Wir senden deine Daten nicht an Analytics-Unternehmen</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Datenspeicherung</h2>
+                        <p>Alle deine Daten werden verschlüsselt auf <strong>europäischen Servern (DSGVO-konform)</strong> gespeichert. Wenn du dein Konto löschst, werden alle persönlichen Daten <strong>innerhalb von 30 Tagen</strong> dauerhaft gelöscht.</p>
+                    </section>
+
+                    <section>
+                        <h2>Deine Rechte</h2>
+                        <div class="section-item">
+                            <strong>Auskunftsrecht</strong>
+                            Du kannst die über dich gespeicherten Daten anfordern
+                        </div>
+                        <div class="section-item">
+                            <strong>Recht auf Berichtigung</strong>
+                            Du kannst falsche Informationen korrigieren oder aktualisieren
+                        </div>
+                        <div class="section-item">
+                            <strong>Recht auf Löschung</strong>
+                            Du kannst dein Konto und deine Daten vollständig löschen
+                        </div>
+                        <div class="section-item">
+                            <strong>Widerspruchsrecht</strong>
+                            Du kannst Datenverarbeitungsaktivitäten widersprechen
+                        </div>
+                        <div class="section-item">
+                            <strong>Datenübertragbarkeit</strong>
+                            Du kannst deine Daten in einem herunterladbaren Format anfordern
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Datenschutz für Kinder</h2>
+                        <p>FPVibe ist nicht für <strong>Kinder unter 13 Jahren</strong> konzipiert. Wir sammeln wissentlich keine persönlichen Informationen von Kindern unter 13. Wenn wir einen Nutzer unter 13 entdecken, löschen wir sein Konto sofort.</p>
+                    </section>
+
+                    <section>
+                        <h2>Richtlinienänderungen</h2>
+                        <p>Wir können diese Datenschutzerklärung gelegentlich aktualisieren. Wir werden dich über wesentliche Änderungen durch In-App-Benachrichtigungen oder E-Mail informieren.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Kontakt</h2>
+                        <p>Bei Fragen zum Datenschutz kontaktiere uns:</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ DSGVO-konform</span>
+                        </div>
+                    </div>
+                `
+            },
+            fr: {
+                home: 'Accueil',
+                support: 'Support',
+                footerTagline: 'Réseau Social pour Pilotes de Drones FPV',
+                footerRights: 'Tous droits réservés.',
+                content: `
+                    <header>
+                        <h1>Politique de Confidentialité</h1>
+                        <p class="last-updated">Dernière mise à jour : 12 octobre 2025</p>
+                    </header>
+
+                    <section>
+                        <h2>Introduction</h2>
+                        <p>FPVibe est un réseau social conçu pour les pilotes de drones FPV. Votre vie privée est importante pour nous. Cette politique explique quelles informations nous collectons, comment nous les utilisons et quels sont vos droits.</p>
+                    </section>
+
+                    <section>
+                        <h2>Informations Collectées</h2>
+                        <div class="section-item">
+                            <strong>Informations de Compte</strong>
+                            Adresse e-mail, nom d'utilisateur, nom complet, photo de profil et biographie
+                        </div>
+                        <div class="section-item">
+                            <strong>Contenu Utilisateur</strong>
+                            Vidéos de vols FPV que vous partagez, messages, commentaires et informations d'événements
+                        </div>
+                        <div class="section-item">
+                            <strong>Informations de Localisation</strong>
+                            Avec votre permission, données de localisation précises pour afficher les spots de vol et événements à proximité
+                        </div>
+                        <div class="section-item">
+                            <strong>Informations sur l'Appareil</strong>
+                            Adresse IP, type d'appareil, version du système d'exploitation
+                        </div>
+                        <div class="section-item">
+                            <strong>Données d'Utilisation</strong>
+                            Comment vous utilisez l'application, quelles fonctionnalités vous accédez
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Utilisation de vos Données</h2>
+                        <ul>
+                            <li><strong>Fonctionnalité de l'App :</strong> Création de compte, connexion, partage de contenu et fonctions de messagerie</li>
+                            <li><strong>Fonctionnalités Communautaires :</strong> Connexion avec d'autres pilotes, système de suivi, canaux de chat globaux</li>
+                            <li><strong>Services de Localisation :</strong> Affichage des spots de vol, pilotes et événements à proximité</li>
+                            <li><strong>Notifications :</strong> Envoi de notifications de messages, commentaires et événements</li>
+                            <li><strong>Sécurité :</strong> Sécurité du compte, prévention du spam et détection des abus</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Partage de Données</h2>
+                        <p><strong>Nous ne VENDONS ni ne PARTAGEONS vos données avec des tiers.</strong> Les données peuvent être partagées dans ces situations :</p>
+                        <ul>
+                            <li><strong>Au sein de la Communauté :</strong> Vos informations de profil, vidéos et messages sont visibles par les autres utilisateurs FPVibe</li>
+                            <li><strong>Fournisseurs de Services :</strong> Avec des fournisseurs d'infrastructure comme Supabase (hébergement de données), uniquement pour fournir le service</li>
+                            <li><strong>Exigences Légales :</strong> Avec les autorités lorsque requis par la loi</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>Ce que nous ne faisons PAS</h3>
+                        <ul>
+                            <li>Nous ne vendons pas vos données</li>
+                            <li>Nous ne partageons pas avec des annonceurs tiers</li>
+                            <li>Nous n'utilisons pas de cookies de suivi</li>
+                            <li>Nous ne faisons pas de ciblage comportemental</li>
+                            <li>Nous n'envoyons pas vos données à des sociétés d'analyse</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Stockage des Données</h2>
+                        <p>Toutes vos données sont stockées chiffrées sur des <strong>serveurs européens (conformité RGPD)</strong>. Lorsque vous supprimez votre compte, toutes les données personnelles sont définitivement supprimées <strong>dans les 30 jours</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h2>Vos Droits</h2>
+                        <div class="section-item">
+                            <strong>Droit d'Accès</strong>
+                            Vous pouvez demander les données que nous stockons sur vous
+                        </div>
+                        <div class="section-item">
+                            <strong>Droit de Rectification</strong>
+                            Vous pouvez corriger ou mettre à jour des informations incorrectes
+                        </div>
+                        <div class="section-item">
+                            <strong>Droit à l'Effacement</strong>
+                            Vous pouvez supprimer complètement votre compte et vos données
+                        </div>
+                        <div class="section-item">
+                            <strong>Droit d'Opposition</strong>
+                            Vous pouvez vous opposer aux activités de traitement des données
+                        </div>
+                        <div class="section-item">
+                            <strong>Portabilité des Données</strong>
+                            Vous pouvez demander vos données dans un format téléchargeable
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Confidentialité des Enfants</h2>
+                        <p>FPVibe n'est pas conçu pour les <strong>enfants de moins de 13 ans</strong>. Nous ne collectons pas sciemment d'informations personnelles auprès d'enfants de moins de 13 ans. Si nous découvrons un utilisateur de moins de 13 ans, nous supprimerons immédiatement son compte.</p>
+                    </section>
+
+                    <section>
+                        <h2>Modifications de la Politique</h2>
+                        <p>Nous pouvons mettre à jour cette politique de confidentialité occasionnellement. Nous vous informerons des modifications importantes via des notifications dans l'application ou par e-mail.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Nous Contacter</h2>
+                        <p>Si vous avez des questions sur la confidentialité, contactez-nous :</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ Conformité RGPD</span>
+                        </div>
+                    </div>
+                `
+            },
+            pt: {
+                home: 'Início',
+                support: 'Suporte',
+                footerTagline: 'Rede Social para Pilotos de Drones FPV',
+                footerRights: 'Todos os direitos reservados.',
+                content: `
+                    <header>
+                        <h1>Política de Privacidade</h1>
+                        <p class="last-updated">Última atualização: 12 de outubro de 2025</p>
+                    </header>
+
+                    <section>
+                        <h2>Introdução</h2>
+                        <p>FPVibe é uma rede social projetada para pilotos de drones FPV. Sua privacidade é importante para nós. Esta política explica quais informações coletamos, como as usamos e quais são seus direitos.</p>
+                    </section>
+
+                    <section>
+                        <h2>Informações que Coletamos</h2>
+                        <div class="section-item">
+                            <strong>Informações da Conta</strong>
+                            Endereço de e-mail, nome de usuário, nome completo, foto de perfil e biografia
+                        </div>
+                        <div class="section-item">
+                            <strong>Conteúdo do Usuário</strong>
+                            Vídeos de voos FPV que você compartilha, mensagens, comentários e informações de eventos
+                        </div>
+                        <div class="section-item">
+                            <strong>Informações de Localização</strong>
+                            Com sua permissão, dados precisos de localização para mostrar locais de voo e eventos próximos
+                        </div>
+                        <div class="section-item">
+                            <strong>Informações do Dispositivo</strong>
+                            Endereço IP, tipo de dispositivo, versão do sistema operacional
+                        </div>
+                        <div class="section-item">
+                            <strong>Dados de Uso</strong>
+                            Como você usa o aplicativo, quais recursos você acessa
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Como Usamos seus Dados</h2>
+                        <ul>
+                            <li><strong>Funcionalidade do App:</strong> Criação de conta, login, compartilhamento de conteúdo e recursos de mensagens</li>
+                            <li><strong>Recursos Comunitários:</strong> Conectar com outros pilotos, sistema de seguir, canais de chat global</li>
+                            <li><strong>Serviços de Localização:</strong> Exibir locais de voo, pilotos e eventos próximos</li>
+                            <li><strong>Notificações:</strong> Enviar notificações de mensagens, comentários e eventos</li>
+                            <li><strong>Segurança:</strong> Segurança da conta, prevenção de spam e detecção de abuso</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Compartilhamento de Dados</h2>
+                        <p><strong>NÃO VENDEMOS nem COMPARTILHAMOS seus dados com terceiros.</strong> Os dados podem ser compartilhados nestas situações:</p>
+                        <ul>
+                            <li><strong>Dentro da Comunidade:</strong> Suas informações de perfil, vídeos e mensagens são visíveis para outros usuários FPVibe</li>
+                            <li><strong>Provedores de Serviços:</strong> Com provedores de infraestrutura como Supabase (hospedagem de dados), apenas para fornecer o serviço</li>
+                            <li><strong>Requisitos Legais:</strong> Com autoridades quando exigido por lei</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>O que NÃO Fazemos</h3>
+                        <ul>
+                            <li>Não vendemos seus dados</li>
+                            <li>Não compartilhamos com anunciantes terceiros</li>
+                            <li>Não usamos cookies de rastreamento</li>
+                            <li>Não fazemos segmentação comportamental</li>
+                            <li>Não enviamos seus dados para empresas de análise</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Armazenamento de Dados</h2>
+                        <p>Todos os seus dados são armazenados criptografados em <strong>servidores europeus (conformidade RGPD)</strong>. Quando você exclui sua conta, todos os dados pessoais são permanentemente excluídos <strong>em 30 dias</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h2>Seus Direitos</h2>
+                        <div class="section-item">
+                            <strong>Direito de Acesso</strong>
+                            Você pode solicitar os dados que armazenamos sobre você
+                        </div>
+                        <div class="section-item">
+                            <strong>Direito de Retificação</strong>
+                            Você pode corrigir ou atualizar informações incorretas
+                        </div>
+                        <div class="section-item">
+                            <strong>Direito de Exclusão</strong>
+                            Você pode excluir completamente sua conta e dados
+                        </div>
+                        <div class="section-item">
+                            <strong>Direito de Oposição</strong>
+                            Você pode se opor a atividades de processamento de dados
+                        </div>
+                        <div class="section-item">
+                            <strong>Portabilidade de Dados</strong>
+                            Você pode solicitar seus dados em formato para download
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Privacidade de Crianças</h2>
+                        <p>FPVibe não é projetado para <strong>crianças menores de 13 anos</strong>. Não coletamos intencionalmente informações pessoais de crianças menores de 13 anos. Se descobrirmos um usuário menor de 13 anos, excluiremos imediatamente sua conta.</p>
+                    </section>
+
+                    <section>
+                        <h2>Alterações na Política</h2>
+                        <p>Podemos atualizar esta política de privacidade ocasionalmente. Notificaremos você sobre alterações significativas através de notificações no aplicativo ou por e-mail.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Fale Conosco</h2>
+                        <p>Se você tiver dúvidas sobre privacidade, entre em contato:</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ Conformidade RGPD</span>
+                        </div>
+                    </div>
+                `
+            },
+            it: {
+                home: 'Home',
+                support: 'Supporto',
+                footerTagline: 'Social Network per Piloti di Droni FPV',
+                footerRights: 'Tutti i diritti riservati.',
+                content: `
+                    <header>
+                        <h1>Informativa sulla Privacy</h1>
+                        <p class="last-updated">Ultimo aggiornamento: 12 ottobre 2025</p>
+                    </header>
+
+                    <section>
+                        <h2>Introduzione</h2>
+                        <p>FPVibe è un social network progettato per piloti di droni FPV. La tua privacy è importante per noi. Questa informativa spiega quali informazioni raccogliamo, come le utilizziamo e quali sono i tuoi diritti.</p>
+                    </section>
+
+                    <section>
+                        <h2>Informazioni Raccolte</h2>
+                        <div class="section-item">
+                            <strong>Informazioni Account</strong>
+                            Indirizzo email, nome utente, nome completo, foto profilo e biografia
+                        </div>
+                        <div class="section-item">
+                            <strong>Contenuti Utente</strong>
+                            Video di volo FPV che condividi, messaggi, commenti e informazioni su eventi
+                        </div>
+                        <div class="section-item">
+                            <strong>Informazioni di Posizione</strong>
+                            Con il tuo permesso, dati precisi di posizione per mostrare zone di volo ed eventi vicini
+                        </div>
+                        <div class="section-item">
+                            <strong>Informazioni Dispositivo</strong>
+                            Indirizzo IP, tipo di dispositivo, versione sistema operativo
+                        </div>
+                        <div class="section-item">
+                            <strong>Dati di Utilizzo</strong>
+                            Come usi l'app, quali funzionalità accedi
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Come Utilizziamo i tuoi Dati</h2>
+                        <ul>
+                            <li><strong>Funzionalità App:</strong> Creazione account, accesso, condivisione contenuti e funzioni messaggistica</li>
+                            <li><strong>Funzionalità Community:</strong> Connessione con altri piloti, sistema di follow, canali chat globali</li>
+                            <li><strong>Servizi di Posizione:</strong> Visualizzazione zone di volo, piloti ed eventi vicini</li>
+                            <li><strong>Notifiche:</strong> Invio notifiche messaggi, commenti ed eventi</li>
+                            <li><strong>Sicurezza:</strong> Sicurezza account, prevenzione spam e rilevamento abusi</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Condivisione Dati</h2>
+                        <p><strong>NON VENDIAMO né CONDIVIDIAMO i tuoi dati con terze parti.</strong> I dati possono essere condivisi in queste situazioni:</p>
+                        <ul>
+                            <li><strong>All'interno della Community:</strong> Le tue informazioni profilo, video e messaggi sono visibili agli altri utenti FPVibe</li>
+                            <li><strong>Fornitori di Servizi:</strong> Con fornitori di infrastruttura come Supabase (hosting dati), esclusivamente per fornire il servizio</li>
+                            <li><strong>Requisiti Legali:</strong> Con le autorità quando richiesto dalla legge</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>Cosa NON Facciamo</h3>
+                        <ul>
+                            <li>Non vendiamo i tuoi dati</li>
+                            <li>Non condividiamo con inserzionisti terzi</li>
+                            <li>Non usiamo cookie di tracciamento</li>
+                            <li>Non facciamo targeting comportamentale</li>
+                            <li>Non inviamo i tuoi dati a società di analisi</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Archiviazione Dati</h2>
+                        <p>Tutti i tuoi dati sono archiviati crittografati su <strong>server europei (conformità GDPR)</strong>. Quando elimini il tuo account, tutti i dati personali vengono eliminati permanentemente <strong>entro 30 giorni</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h2>I tuoi Diritti</h2>
+                        <div class="section-item">
+                            <strong>Diritto di Accesso</strong>
+                            Puoi richiedere i dati che conserviamo su di te
+                        </div>
+                        <div class="section-item">
+                            <strong>Diritto di Rettifica</strong>
+                            Puoi correggere o aggiornare informazioni errate
+                        </div>
+                        <div class="section-item">
+                            <strong>Diritto alla Cancellazione</strong>
+                            Puoi eliminare completamente il tuo account e i dati
+                        </div>
+                        <div class="section-item">
+                            <strong>Diritto di Opposizione</strong>
+                            Puoi opporti alle attività di trattamento dei dati
+                        </div>
+                        <div class="section-item">
+                            <strong>Portabilità dei Dati</strong>
+                            Puoi richiedere i tuoi dati in formato scaricabile
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Privacy dei Minori</h2>
+                        <p>FPVibe non è progettato per <strong>bambini sotto i 13 anni</strong>. Non raccogliamo intenzionalmente informazioni personali da bambini sotto i 13 anni. Se scopriamo un utente sotto i 13 anni, elimineremo immediatamente il suo account.</p>
+                    </section>
+
+                    <section>
+                        <h2>Modifiche alla Politica</h2>
+                        <p>Potremmo aggiornare questa informativa sulla privacy occasionalmente. Ti informeremo di modifiche significative tramite notifiche in-app o email.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Contattaci</h2>
+                        <p>Se hai domande sulla privacy, contattaci:</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ Conformità GDPR</span>
+                        </div>
+                    </div>
+                `
+            },
+            ru: {
+                home: 'Главная',
+                support: 'Поддержка',
+                footerTagline: 'Социальная Сеть для Пилотов FPV-Дронов',
+                footerRights: 'Все права защищены.',
+                content: `
+                    <header>
+                        <h1>Политика Конфиденциальности</h1>
+                        <p class="last-updated">Последнее обновление: 12 октября 2025 г.</p>
+                    </header>
+
+                    <section>
+                        <h2>Введение</h2>
+                        <p>FPVibe — это социальная сеть, разработанная для пилотов FPV-дронов. Ваша конфиденциальность важна для нас. Эта политика объясняет, какую информацию мы собираем, как мы её используем, и каковы ваши права.</p>
+                    </section>
+
+                    <section>
+                        <h2>Собираемая Информация</h2>
+                        <div class="section-item">
+                            <strong>Информация об Аккаунте</strong>
+                            Адрес электронной почты, имя пользователя, полное имя, фото профиля и биография
+                        </div>
+                        <div class="section-item">
+                            <strong>Пользовательский Контент</strong>
+                            Видео FPV-полётов, которые вы публикуете, сообщения, комментарии и информация о мероприятиях
+                        </div>
+                        <div class="section-item">
+                            <strong>Информация о Местоположении</strong>
+                            С вашего разрешения точные данные о местоположении для отображения ближайших площадок и мероприятий
+                        </div>
+                        <div class="section-item">
+                            <strong>Информация об Устройстве</strong>
+                            IP-адрес, тип устройства, версия операционной системы
+                        </div>
+                        <div class="section-item">
+                            <strong>Данные об Использовании</strong>
+                            Как вы используете приложение, к каким функциям обращаетесь
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Как Мы Используем Ваши Данные</h2>
+                        <ul>
+                            <li><strong>Функциональность Приложения:</strong> Создание аккаунта, вход, публикация контента и функции обмена сообщениями</li>
+                            <li><strong>Функции Сообщества:</strong> Связь с другими пилотами, система подписок, глобальные чат-каналы</li>
+                            <li><strong>Сервисы Геолокации:</strong> Отображение ближайших площадок для полётов, пилотов и мероприятий</li>
+                            <li><strong>Уведомления:</strong> Отправка уведомлений о сообщениях, комментариях и мероприятиях</li>
+                            <li><strong>Безопасность:</strong> Безопасность аккаунта, предотвращение спама и выявление злоупотреблений</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Обмен Данными</h2>
+                        <p><strong>Мы НЕ ПРОДАЁМ и НЕ ПЕРЕДАЁМ ваши данные третьим лицам.</strong> Данные могут быть переданы в следующих ситуациях:</p>
+                        <ul>
+                            <li><strong>Внутри Сообщества:</strong> Ваша информация профиля, видео и сообщения видны другим пользователям FPVibe</li>
+                            <li><strong>Поставщики Услуг:</strong> С инфраструктурными провайдерами, такими как Supabase (хостинг данных), исключительно для предоставления сервиса</li>
+                            <li><strong>Правовые Требования:</strong> С органами власти при требовании закона</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>Что Мы НЕ Делаем</h3>
+                        <ul>
+                            <li>Мы не продаём ваши данные</li>
+                            <li>Мы не передаём данные сторонним рекламодателям</li>
+                            <li>Мы не используем трекинг-куки</li>
+                            <li>Мы не занимаемся поведенческим таргетингом</li>
+                            <li>Мы не отправляем ваши данные аналитическим компаниям</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>Хранение Данных</h2>
+                        <p>Все ваши данные хранятся в зашифрованном виде на <strong>европейских серверах (соответствие GDPR)</strong>. При удалении аккаунта все персональные данные безвозвратно удаляются <strong>в течение 30 дней</strong>.</p>
+                    </section>
+
+                    <section>
+                        <h2>Ваши Права</h2>
+                        <div class="section-item">
+                            <strong>Право на Доступ</strong>
+                            Вы можете запросить данные, которые мы храним о вас
+                        </div>
+                        <div class="section-item">
+                            <strong>Право на Исправление</strong>
+                            Вы можете исправить или обновить неверную информацию
+                        </div>
+                        <div class="section-item">
+                            <strong>Право на Удаление</strong>
+                            Вы можете полностью удалить свой аккаунт и данные
+                        </div>
+                        <div class="section-item">
+                            <strong>Право на Возражение</strong>
+                            Вы можете возразить против действий по обработке данных
+                        </div>
+                        <div class="section-item">
+                            <strong>Переносимость Данных</strong>
+                            Вы можете запросить свои данные в загружаемом формате
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Конфиденциальность Детей</h2>
+                        <p>FPVibe не предназначен для <strong>детей младше 13 лет</strong>. Мы сознательно не собираем личную информацию детей младше 13 лет. Если мы обнаружим пользователя младше 13 лет, мы немедленно удалим его аккаунт.</p>
+                    </section>
+
+                    <section>
+                        <h2>Изменения Политики</h2>
+                        <p>Мы можем периодически обновлять эту политику конфиденциальности. Мы уведомим вас о значительных изменениях через уведомления в приложении или по электронной почте.</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>Свяжитесь с Нами</h2>
+                        <p>Если у вас есть вопросы о конфиденциальности, свяжитесь с нами:</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ Соответствие GDPR</span>
+                        </div>
+                    </div>
+                `
+            },
+            zh: {
+                home: '主页',
+                support: '支持',
+                footerTagline: 'FPV无人机飞手社交网络',
+                footerRights: '版权所有。',
+                content: `
+                    <header>
+                        <h1>隐私政策</h1>
+                        <p class="last-updated">最后更新：2025年10月12日</p>
+                    </header>
+
+                    <section>
+                        <h2>简介</h2>
+                        <p>FPVibe 是一个专为 FPV 无人机飞手设计的社交网络。您的隐私对我们很重要。本政策说明我们收集哪些信息、如何使用以及您的权利。</p>
+                    </section>
+
+                    <section>
+                        <h2>收集的信息</h2>
+                        <div class="section-item">
+                            <strong>账户信息</strong>
+                            电子邮件地址、用户名、全名、头像和简介
+                        </div>
+                        <div class="section-item">
+                            <strong>用户内容</strong>
+                            您分享的 FPV 飞行视频、消息、评论和活动信息
+                        </div>
+                        <div class="section-item">
+                            <strong>位置信息</strong>
+                            经您许可，精确的位置数据用于显示附近的飞行地点和活动
+                        </div>
+                        <div class="section-item">
+                            <strong>设备信息</strong>
+                            IP 地址、设备类型、操作系统版本
+                        </div>
+                        <div class="section-item">
+                            <strong>使用数据</strong>
+                            您如何使用应用程序、访问哪些功能
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>如何使用您的数据</h2>
+                        <ul>
+                            <li><strong>应用功能：</strong>账户创建、登录、内容分享和消息功能</li>
+                            <li><strong>社区功能：</strong>与其他飞手连接、关注系统、全球聊天频道</li>
+                            <li><strong>位置服务：</strong>显示附近的飞行地点、飞手和活动</li>
+                            <li><strong>通知：</strong>发送消息、评论和活动通知</li>
+                            <li><strong>安全：</strong>账户安全、防垃圾信息和滥用检测</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>数据共享</h2>
+                        <p><strong>我们不出售或与第三方共享您的数据。</strong>在以下情况下可能共享数据：</p>
+                        <ul>
+                            <li><strong>社区内：</strong>您的个人资料信息、视频和消息对其他 FPVibe 用户可见</li>
+                            <li><strong>服务提供商：</strong>与基础设施提供商（如 Supabase 数据托管）仅为提供服务</li>
+                            <li><strong>法律要求：</strong>在法律要求时与当局共享</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>我们不做的事</h3>
+                        <ul>
+                            <li>不出售您的数据</li>
+                            <li>不与第三方广告商共享</li>
+                            <li>不使用跟踪 Cookie</li>
+                            <li>不进行行为定向</li>
+                            <li>不将您的数据发送给分析公司</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>数据存储</h2>
+                        <p>您的所有数据都加密存储在<strong>欧洲服务器上（符合 GDPR）</strong>。当您删除账户时，所有个人数据将在 <strong>30 天内</strong>永久删除。</p>
+                    </section>
+
+                    <section>
+                        <h2>您的权利</h2>
+                        <div class="section-item">
+                            <strong>访问权</strong>
+                            您可以请求我们存储的关于您的数据
+                        </div>
+                        <div class="section-item">
+                            <strong>更正权</strong>
+                            您可以更正或更新不正确的信息
+                        </div>
+                        <div class="section-item">
+                            <strong>删除权</strong>
+                            您可以完全删除您的账户和数据
+                        </div>
+                        <div class="section-item">
+                            <strong>反对权</strong>
+                            您可以反对数据处理活动
+                        </div>
+                        <div class="section-item">
+                            <strong>数据可携性</strong>
+                            您可以请求以可下载格式获取您的数据
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>儿童隐私</h2>
+                        <p>FPVibe 不适用于<strong> 13 岁以下的儿童</strong>。我们不会有意收集 13 岁以下儿童的个人信息。如果我们发现 13 岁以下的用户，将立即删除其账户。</p>
+                    </section>
+
+                    <section>
+                        <h2>政策变更</h2>
+                        <p>我们可能会不时更新此隐私政策。我们将通过应用内通知或电子邮件通知您重大变更。</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>联系我们</h2>
+                        <p>如果您对隐私有疑问，请联系我们：</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ 符合 GDPR</span>
+                        </div>
+                    </div>
+                `
+            },
+            ja: {
+                home: 'ホーム',
+                support: 'サポート',
+                footerTagline: 'FPVドローンパイロット向けソーシャルネットワーク',
+                footerRights: '全著作権所有。',
+                content: `
+                    <header>
+                        <h1>プライバシーポリシー</h1>
+                        <p class="last-updated">最終更新：2025年10月12日</p>
+                    </header>
+
+                    <section>
+                        <h2>はじめに</h2>
+                        <p>FPVibeは、FPVドローンパイロット向けに設計されたソーシャルネットワークです。あなたのプライバシーは私たちにとって重要です。このポリシーでは、収集する情報、使用方法、およびあなたの権利について説明します。</p>
+                    </section>
+
+                    <section>
+                        <h2>収集する情報</h2>
+                        <div class="section-item">
+                            <strong>アカウント情報</strong>
+                            メールアドレス、ユーザー名、フルネーム、プロフィール写真、自己紹介
+                        </div>
+                        <div class="section-item">
+                            <strong>ユーザーコンテンツ</strong>
+                            共有するFPVフライト動画、メッセージ、コメント、イベント情報
+                        </div>
+                        <div class="section-item">
+                            <strong>位置情報</strong>
+                            許可を得た上で、近くの飛行スポットやイベントを表示するための正確な位置データ
+                        </div>
+                        <div class="section-item">
+                            <strong>デバイス情報</strong>
+                            IPアドレス、デバイスタイプ、OSバージョン
+                        </div>
+                        <div class="section-item">
+                            <strong>使用データ</strong>
+                            アプリの使用方法、アクセスする機能
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>データの使用方法</h2>
+                        <ul>
+                            <li><strong>アプリ機能：</strong>アカウント作成、ログイン、コンテンツ共有、メッセージング機能</li>
+                            <li><strong>コミュニティ機能：</strong>他のパイロットとの接続、フォローシステム、グローバルチャットチャンネル</li>
+                            <li><strong>位置情報サービス：</strong>近くの飛行スポット、パイロット、イベントの表示</li>
+                            <li><strong>通知：</strong>メッセージ、コメント、イベントの通知送信</li>
+                            <li><strong>セキュリティ：</strong>アカウントセキュリティ、スパム防止、不正使用検出</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>データ共有</h2>
+                        <p><strong>第三者へのデータの販売や共有は行いません。</strong>以下の状況でデータが共有される場合があります：</p>
+                        <ul>
+                            <li><strong>コミュニティ内：</strong>プロフィール情報、動画、メッセージは他のFPVibeユーザーに表示されます</li>
+                            <li><strong>サービスプロバイダー：</strong>Supabase（データホスティング）などのインフラプロバイダーとサービス提供のためのみ</li>
+                            <li><strong>法的要件：</strong>法律で要求される場合、当局と共有</li>
+                        </ul>
+                    </section>
+
+                    <div class="highlight-box">
+                        <h3>私たちが行わないこと</h3>
+                        <ul>
+                            <li>データを販売しません</li>
+                            <li>第三者の広告主と共有しません</li>
+                            <li>トラッキングCookieを使用しません</li>
+                            <li>行動ターゲティングを行いません</li>
+                            <li>分析会社にデータを送信しません</li>
+                        </ul>
+                    </div>
+
+                    <section>
+                        <h2>データストレージ</h2>
+                        <p>すべてのデータは<strong>ヨーロッパのサーバー（GDPR準拠）</strong>に暗号化されて保存されます。アカウントを削除すると、すべての個人データは<strong>30日以内</strong>に完全に削除されます。</p>
+                    </section>
+
+                    <section>
+                        <h2>あなたの権利</h2>
+                        <div class="section-item">
+                            <strong>アクセス権</strong>
+                            保存されているデータをリクエストできます
+                        </div>
+                        <div class="section-item">
+                            <strong>訂正権</strong>
+                            誤った情報を訂正または更新できます
+                        </div>
+                        <div class="section-item">
+                            <strong>削除権</strong>
+                            アカウントとデータを完全に削除できます
+                        </div>
+                        <div class="section-item">
+                            <strong>異議権</strong>
+                            データ処理活動に異議を唱えることができます
+                        </div>
+                        <div class="section-item">
+                            <strong>データポータビリティ</strong>
+                            ダウンロード可能な形式でデータをリクエストできます
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>児童のプライバシー</h2>
+                        <p>FPVibeは<strong>13歳未満の児童</strong>向けに設計されていません。13歳未満の児童から意図的に個人情報を収集することはありません。13歳未満のユーザーを発見した場合、すぐにアカウントを削除します。</p>
+                    </section>
+
+                    <section>
+                        <h2>ポリシーの変更</h2>
+                        <p>このプライバシーポリシーは随時更新される場合があります。重要な変更については、アプリ内通知またはメールで通知します。</p>
+                    </section>
+
+                    <div class="contact-box">
+                        <h2>お問い合わせ</h2>
+                        <p>プライバシーに関する質問がある場合は、お問い合わせください：</p>
+                        <div class="contact-item">
+                            <a href="mailto:asd@Royal.Net">asd@Royal.Net</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://fpvibe.app/privacy">fpvibe.app/privacy</a>
+                        </div>
+                        <div>
+                            <span class="badge">🛡️ GDPR準拠</span>
+                        </div>
+                    </div>
+                `
             }
         };
 
-        // Get saved language or default to English
-        let currentLanguage = localStorage.getItem('fpvibe-lang') || 'en';
+        // Language data with flags and native names
+        const languageData = {
+            en: { flag: '🇬🇧', name: 'English' },
+            tr: { flag: '🇹🇷', name: 'Türkçe' },
+            es: { flag: '🇪🇸', name: 'Español' },
+            de: { flag: '🇩🇪', name: 'Deutsch' },
+            fr: { flag: '🇫🇷', name: 'Français' },
+            pt: { flag: '🇵🇹', name: 'Português' },
+            it: { flag: '🇮🇹', name: 'Italiano' },
+            ru: { flag: '🇷🇺', name: 'Русский' },
+            zh: { flag: '🇨🇳', name: '中文' },
+            ja: { flag: '🇯🇵', name: '日本語' }
+        };
+
+        // Get saved language or detect from URL/browser
+        let currentLanguage = (function() {
+            // Check URL parameter first
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            if (urlLang && languageData[urlLang]) {
+                return urlLang;
+            }
+
+            // Check localStorage
+            const savedLang = localStorage.getItem('fpvibe-lang');
+            if (savedLang && languageData[savedLang]) {
+                return savedLang;
+            }
+
+            // Detect browser language
+            const browserLang = navigator.language.split('-')[0];
+            if (languageData[browserLang]) {
+                return browserLang;
+            }
+
+            // Default to English
+            return 'en';
+        })();
+
+        // Update language selector display
+        function updateLanguageSelector(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangName = document.getElementById('currentLangName');
+
+            if (currentFlag && currentLangName && languageData[lang]) {
+                currentFlag.textContent = languageData[lang].flag;
+                currentLangName.textContent = languageData[lang].name;
+            }
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                const optionLang = option.getAttribute('data-lang');
+                if (optionLang === lang) {
+                    option.setAttribute('data-active', 'true');
+                } else {
+                    option.removeAttribute('data-active');
+                }
+            });
+        }
 
         function setLanguage(lang) {
+            if (!languageData[lang]) {
+                console.warn(`Language ${lang} not supported`);
+                return;
+            }
+
             currentLanguage = lang;
             localStorage.setItem('fpvibe-lang', lang);
 
+            // Update HTML lang attribute (SEO critical)
+            const htmlRoot = document.getElementById('htmlRoot');
+            if (htmlRoot) {
+                htmlRoot.setAttribute('lang', lang);
+            }
+            document.documentElement.lang = lang;
+
             // Update content
-            document.getElementById('content').innerHTML = translations[lang].content;
+            const contentElement = document.getElementById('content');
+            if (contentElement && translations[lang]) {
+                contentElement.innerHTML = translations[lang].content;
+            }
 
             // Update other i18n elements
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
+                if (translations[lang] && translations[lang][key]) {
                     element.textContent = translations[lang][key];
                 }
             });
 
-            // Update language switcher
-            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            // Update language selector display
+            updateLanguageSelector(lang);
 
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
+            // Track language change (if analytics exists)
+            if (typeof FPVibeAnalytics !== 'undefined') {
+                FPVibeAnalytics.trackEvent('language_change', { language: lang });
+            }
         }
 
-        // Toggle language on button click
+        // Language dropdown functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const langSwitcher = document.getElementById('langSwitcher');
-            langSwitcher.addEventListener('click', function() {
-                const newLang = currentLanguage === 'en' ? 'tr' : 'en';
-                setLanguage(newLang);
+            const langButton = document.getElementById('langButton');
+            const langDropdown = document.getElementById('langDropdown');
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            if (!langButton || !langDropdown) {
+                console.error('Language selector elements not found');
+                return;
+            }
+
+            // Toggle dropdown
+            function toggleDropdown() {
+                const isOpen = langDropdown.classList.contains('active');
+                if (isOpen) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            }
+
+            function openDropdown() {
+                langDropdown.classList.add('active');
+                langDropdown.setAttribute('aria-hidden', 'false');
+                langButton.setAttribute('aria-expanded', 'true');
+            }
+
+            function closeDropdown() {
+                langDropdown.classList.remove('active');
+                langDropdown.setAttribute('aria-hidden', 'true');
+                langButton.setAttribute('aria-expanded', 'false');
+            }
+
+            // Button click handler
+            langButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleDropdown();
+            });
+
+            // Language option click handlers
+            langOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const selectedLang = this.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                    closeDropdown();
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // Close dropdown on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && langDropdown.classList.contains('active')) {
+                    closeDropdown();
+                    langButton.focus();
+                }
             });
 
             // Set initial language

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,19 @@
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="zu4isbCuK_aoB38Qta1aqqzLILHIgd7728g8eT-4MRc" />
 
+    <!-- Hreflang Tags - Multilingual SEO (10 Languages) -->
+    <link rel="alternate" hreflang="en" href="https://fpvibe.app/?lang=en" />
+    <link rel="alternate" hreflang="tr" href="https://fpvibe.app/?lang=tr" />
+    <link rel="alternate" hreflang="es" href="https://fpvibe.app/?lang=es" />
+    <link rel="alternate" hreflang="de" href="https://fpvibe.app/?lang=de" />
+    <link rel="alternate" hreflang="fr" href="https://fpvibe.app/?lang=fr" />
+    <link rel="alternate" hreflang="pt" href="https://fpvibe.app/?lang=pt" />
+    <link rel="alternate" hreflang="it" href="https://fpvibe.app/?lang=it" />
+    <link rel="alternate" hreflang="ru" href="https://fpvibe.app/?lang=ru" />
+    <link rel="alternate" hreflang="zh" href="https://fpvibe.app/?lang=zh" />
+    <link rel="alternate" hreflang="ja" href="https://fpvibe.app/?lang=ja" />
+    <link rel="alternate" hreflang="x-default" href="https://fpvibe.app/" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fpvibe.app/">
@@ -27,6 +40,15 @@
     <meta property="og:image:alt" content="FPVibe - FPV Drone Social Platform Logo">
     <meta property="og:site_name" content="FPVibe">
     <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="tr_TR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="pt_PT">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="ja_JP">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -39,9 +61,37 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logo-400.png">
     <link rel="apple-touch-icon" href="/logo-400.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#000000">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#000000">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FPVibe">
+    <meta name="application-name" content="FPVibe">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="/logo-400.png">
+
+    <!-- Security Headers (Meta Tag Equivalents) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -69,7 +119,7 @@
       "url": "https://fpvibe.app",
       "description": "Social platform for FPV drone pilots to share videos, connect, and discover flying spots",
       "keywords": "FPV, drone, pilots, community, videos, racing, freestyle",
-      "inLanguage": ["en", "tr"],
+      "inLanguage": ["en", "tr", "es", "de", "fr", "pt", "it", "ru", "zh", "ja"],
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://fpvibe.app/search?q={search_term_string}",
@@ -78,7 +128,12 @@
     }
     </script>
 
+    <!-- CSS Preload for Performance -->
+    <link rel="preload" href="style.css" as="style">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Critical Images Preload -->
+    <link rel="preload" href="logo-400.png" as="image" type="image/png">
 
     <!-- Privacy-Friendly Analytics (no cookies, localStorage only) -->
     <script src="analytics.js" defer></script>
@@ -90,9 +145,57 @@
             <div class="nav-right">
                 <a href="/support" class="link" data-i18n="support" aria-label="Support and help center">Support</a>
                 <a href="/privacy" class="link" data-i18n="privacy" aria-label="Privacy policy">Privacy</a>
-                <button class="lang-switcher" id="langSwitcher" aria-label="Switch language">
-                    <span id="currentLang">EN</span>
-                </button>
+                <div class="language-selector">
+                    <button class="lang-button" id="langButton" aria-label="Select language" aria-haspopup="true" aria-expanded="false">
+                        <span class="lang-flag" id="currentFlag">🇬🇧</span>
+                        <span class="lang-name" id="currentLangName">English</span>
+                        <svg class="lang-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown" role="menu" aria-hidden="true">
+                        <button class="lang-option" data-lang="en" role="menuitem">
+                            <span class="lang-flag">🇬🇧</span>
+                            <span class="lang-text">English</span>
+                        </button>
+                        <button class="lang-option" data-lang="tr" role="menuitem">
+                            <span class="lang-flag">🇹🇷</span>
+                            <span class="lang-text">Türkçe</span>
+                        </button>
+                        <button class="lang-option" data-lang="es" role="menuitem">
+                            <span class="lang-flag">🇪🇸</span>
+                            <span class="lang-text">Español</span>
+                        </button>
+                        <button class="lang-option" data-lang="de" role="menuitem">
+                            <span class="lang-flag">🇩🇪</span>
+                            <span class="lang-text">Deutsch</span>
+                        </button>
+                        <button class="lang-option" data-lang="fr" role="menuitem">
+                            <span class="lang-flag">🇫🇷</span>
+                            <span class="lang-text">Français</span>
+                        </button>
+                        <button class="lang-option" data-lang="pt" role="menuitem">
+                            <span class="lang-flag">🇵🇹</span>
+                            <span class="lang-text">Português</span>
+                        </button>
+                        <button class="lang-option" data-lang="it" role="menuitem">
+                            <span class="lang-flag">🇮🇹</span>
+                            <span class="lang-text">Italiano</span>
+                        </button>
+                        <button class="lang-option" data-lang="ru" role="menuitem">
+                            <span class="lang-flag">🇷🇺</span>
+                            <span class="lang-text">Русский</span>
+                        </button>
+                        <button class="lang-option" data-lang="zh" role="menuitem">
+                            <span class="lang-flag">🇨🇳</span>
+                            <span class="lang-text">中文</span>
+                        </button>
+                        <button class="lang-option" data-lang="ja" role="menuitem">
+                            <span class="lang-flag">🇯🇵</span>
+                            <span class="lang-text">日本語</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -124,7 +227,7 @@
     </main>
 
     <script>
-        // i18n - Internationalization
+        // i18n - Internationalization (10 Languages)
         const translations = {
             en: {
                 support: 'Support',
@@ -143,15 +246,115 @@
                 comingSoon: 'Çok Yakında',
                 finalComingSoon: 'ÇOK YAKINDA',
                 contact: 'İletişim'
+            },
+            es: {
+                support: 'Soporte',
+                privacy: 'Privacidad',
+                title: 'La plataforma social <abbr title="First Person View">FPV</abbr>',
+                subtitle: 'Comparte clips. Organiza sesiones. Conecta con pilotos.',
+                comingSoon: 'Próximamente',
+                finalComingSoon: 'PRÓXIMAMENTE',
+                contact: 'Contacto'
+            },
+            de: {
+                support: 'Unterstützung',
+                privacy: 'Datenschutz',
+                title: 'Die <abbr title="First Person View">FPV</abbr> Social-Plattform',
+                subtitle: 'Teile Clips. Organisiere Sessions. Verbinde dich mit Piloten.',
+                comingSoon: 'Demnächst',
+                finalComingSoon: 'DEMNÄCHST',
+                contact: 'Kontakt'
+            },
+            fr: {
+                support: 'Support',
+                privacy: 'Confidentialité',
+                title: 'La plateforme sociale <abbr title="First Person View">FPV</abbr>',
+                subtitle: 'Partagez des clips. Organisez des sessions. Connectez avec des pilotes.',
+                comingSoon: 'Bientôt disponible',
+                finalComingSoon: 'BIENTÔT DISPONIBLE',
+                contact: 'Contact'
+            },
+            pt: {
+                support: 'Suporte',
+                privacy: 'Privacidade',
+                title: 'A plataforma social <abbr title="First Person View">FPV</abbr>',
+                subtitle: 'Compartilhe clipes. Organize sessões. Conecte-se com pilotos.',
+                comingSoon: 'Em breve',
+                finalComingSoon: 'EM BREVE',
+                contact: 'Contato'
+            },
+            it: {
+                support: 'Supporto',
+                privacy: 'Privacy',
+                title: 'La piattaforma sociale <abbr title="First Person View">FPV</abbr>',
+                subtitle: 'Condividi clip. Organizza sessioni. Connettiti con i piloti.',
+                comingSoon: 'Prossimamente',
+                finalComingSoon: 'PROSSIMAMENTE',
+                contact: 'Contatto'
+            },
+            ru: {
+                support: 'Поддержка',
+                privacy: 'Конфиденциальность',
+                title: 'Социальная платформа <abbr title="First Person View">FPV</abbr>',
+                subtitle: 'Делитесь клипами. Организуйте сессии. Связывайтесь с пилотами.',
+                comingSoon: 'Скоро',
+                finalComingSoon: 'СКОРО',
+                contact: 'Контакт'
+            },
+            zh: {
+                support: '支持',
+                privacy: '隐私',
+                title: '<abbr title="First Person View">FPV</abbr> 社交平台',
+                subtitle: '分享视频。组织活动。连接飞手。',
+                comingSoon: '即将推出',
+                finalComingSoon: '即将推出',
+                contact: '联系'
+            },
+            ja: {
+                support: 'サポート',
+                privacy: 'プライバシー',
+                title: '<abbr title="First Person View">FPV</abbr> ソーシャルプラットフォーム',
+                subtitle: 'クリップを共有。セッションを企画。パイロットと繋がる。',
+                comingSoon: '近日公開',
+                finalComingSoon: '近日公開',
+                contact: '連絡先'
             }
         };
 
-        // Get saved language or default to English
-        let currentLanguage = localStorage.getItem('fpvibe-lang') || 'en';
+        // Language detection: URL param > localStorage > browser language > default (en)
+        function detectLanguage() {
+            // Check URL parameter first (?lang=tr)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            if (urlLang && translations[urlLang]) {
+                return urlLang;
+            }
+
+            // Check localStorage
+            const savedLang = localStorage.getItem('fpvibe-lang');
+            if (savedLang && translations[savedLang]) {
+                return savedLang;
+            }
+
+            // Check browser language
+            const browserLang = navigator.language.split('-')[0]; // en-US -> en
+            if (translations[browserLang]) {
+                return browserLang;
+            }
+
+            // Default to English
+            return 'en';
+        }
+
+        let currentLanguage = detectLanguage();
 
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('fpvibe-lang', lang);
+
+            // Update HTML lang attribute (SEO critical)
+            document.getElementById('htmlRoot').setAttribute('lang', lang);
+            document.documentElement.lang = lang;
 
             // Update all elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(element => {
@@ -171,16 +374,104 @@
                 finalComingSoon.textContent = translations[lang].finalComingSoon;
             }
 
-            // Update language switcher
-            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            // Update language selector display
+            updateLanguageSelector(lang);
         }
 
-        // Toggle language on button click
+        // Language data with flags and native names
+        const languageData = {
+            en: { flag: '🇬🇧', name: 'English' },
+            tr: { flag: '🇹🇷', name: 'Türkçe' },
+            es: { flag: '🇪🇸', name: 'Español' },
+            de: { flag: '🇩🇪', name: 'Deutsch' },
+            fr: { flag: '🇫🇷', name: 'Français' },
+            pt: { flag: '🇵🇹', name: 'Português' },
+            it: { flag: '🇮🇹', name: 'Italiano' },
+            ru: { flag: '🇷🇺', name: 'Русский' },
+            zh: { flag: '🇨🇳', name: '中文' },
+            ja: { flag: '🇯🇵', name: '日本語' }
+        };
+
+        // Update language selector display
+        function updateLanguageSelector(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangName = document.getElementById('currentLangName');
+
+            if (currentFlag && currentLangName && languageData[lang]) {
+                currentFlag.textContent = languageData[lang].flag;
+                currentLangName.textContent = languageData[lang].name;
+            }
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                const optionLang = option.getAttribute('data-lang');
+                if (optionLang === lang) {
+                    option.setAttribute('data-active', 'true');
+                } else {
+                    option.removeAttribute('data-active');
+                }
+            });
+        }
+
+        // Language dropdown functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const langSwitcher = document.getElementById('langSwitcher');
-            langSwitcher.addEventListener('click', function() {
-                const newLang = currentLanguage === 'en' ? 'tr' : 'en';
-                setLanguage(newLang);
+            const langButton = document.getElementById('langButton');
+            const langDropdown = document.getElementById('langDropdown');
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            // Toggle dropdown
+            langButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isExpanded = langButton.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            });
+
+            function openDropdown() {
+                langButton.setAttribute('aria-expanded', 'true');
+                langDropdown.setAttribute('aria-hidden', 'false');
+                langDropdown.classList.add('active');
+            }
+
+            function closeDropdown() {
+                langButton.setAttribute('aria-expanded', 'false');
+                langDropdown.setAttribute('aria-hidden', 'true');
+                langDropdown.classList.remove('active');
+            }
+
+            // Language option click
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                    closeDropdown();
+
+                    // Track language change
+                    if (window.FPVibeAnalytics) {
+                        FPVibeAnalytics.trackEvent('language_change', {
+                            from: currentLanguage,
+                            to: selectedLang
+                        });
+                    }
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // Close dropdown on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeDropdown();
+                }
             });
 
             // Set initial language

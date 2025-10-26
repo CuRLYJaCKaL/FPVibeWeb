@@ -1,0 +1,7 @@
+# FPVibe - Robots.txt
+# Social Network for FPV Drone Pilots
+
+User-agent: *
+Allow: /
+
+Sitemap: https://fpvibe.app/sitemap.xml

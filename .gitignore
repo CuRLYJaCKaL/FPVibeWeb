@@ -8,3 +8,14 @@
 *-v1.*
 *-backup.*
 *.bak
+
+# Profile QR Cards (development only)
+ProfilQR/
+
+# Analytics (not ready)
+analytics.html
+analytics.js
+
+# SEO files (not ready)
+robots.txt
+sitemap.xml

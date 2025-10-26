@@ -3,44 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPVibe</title>
+
+    <!-- Primary Meta Tags -->
+    <title>FPVibe - The Social Platform for FPV Drone Pilots</title>
+    <meta name="title" content="FPVibe - The Social Platform for FPV Drone Pilots">
+    <meta name="description" content="Join FPVibe, the premier social network for FPV drone pilots. Share flight videos, connect with pilots worldwide, discover flying spots, and join the global FPV community.">
+    <meta name="keywords" content="FPV, FPV drone, FPV pilots, FPV community, FPV videos, drone racing, FPV freestyle, FPV goggles, FPV social network, drone pilots, FPV flying spots, FPV sessions, quadcopter, drone community">
+    <meta name="author" content="FPVibe">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://fpvibe.app/">
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="zu4isbCuK_aoB38Qta1aqqzLILHIgd7728g8eT-4MRc" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fpvibe.app/">
+    <meta property="og:title" content="FPVibe - The Social Platform for FPV Drone Pilots">
+    <meta property="og:description" content="Join FPVibe, the premier social network for FPV drone pilots. Share flight videos, connect with pilots worldwide, and discover flying spots.">
+    <meta property="og:image" content="https://fpvibe.app/logo-1200.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="FPVibe - FPV Drone Social Platform Logo">
+    <meta property="og:site_name" content="FPVibe">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://fpvibe.app/">
+    <meta name="twitter:title" content="FPVibe - The Social Platform for FPV Drone Pilots">
+    <meta name="twitter:description" content="Join the premier social network for FPV drone pilots. Share videos, connect globally, discover flying spots.">
+    <meta name="twitter:image" content="https://fpvibe.app/logo-1200.png">
+    <meta name="twitter:image:alt" content="FPVibe Logo">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logo-400.png">
+    <link rel="apple-touch-icon" href="/logo-400.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FPVibe",
+      "url": "https://fpvibe.app",
+      "logo": "https://fpvibe.app/logo-1200.png",
+      "description": "The premier social network for FPV drone pilots worldwide",
+      "sameAs": [],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "asd@Royal.Net",
+        "contactType": "Customer Support"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FPVibe",
+      "url": "https://fpvibe.app",
+      "description": "Social platform for FPV drone pilots to share videos, connect, and discover flying spots",
+      "keywords": "FPV, drone, pilots, community, videos, racing, freestyle",
+      "inLanguage": ["en", "tr"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://fpvibe.app/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Privacy-Friendly Analytics (no cookies, localStorage only) -->
+    <script src="analytics.js" defer></script>
 </head>
 <body>
-    <nav class="nav">
-        <span class="wordmark">FPVibe</span>
-        <div class="nav-right">
-            <a href="/support" class="link" data-i18n="support">Support</a>
-            <a href="/privacy" class="link" data-i18n="privacy">Privacy</a>
-            <button class="lang-switcher" id="langSwitcher">
-                <span id="currentLang">EN</span>
-            </button>
-        </div>
-    </nav>
+    <header>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <span class="wordmark" aria-label="FPVibe Home">FPVibe</span>
+            <div class="nav-right">
+                <a href="/support" class="link" data-i18n="support" aria-label="Support and help center">Support</a>
+                <a href="/privacy" class="link" data-i18n="privacy" aria-label="Privacy policy">Privacy</a>
+                <button class="lang-switcher" id="langSwitcher" aria-label="Switch language">
+                    <span id="currentLang">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-    <div class="zoom-effect"></div>
+    <div class="zoom-effect" aria-hidden="true"></div>
     <img src="logo-400.png"
          srcset="logo-400.png 400w, logo-800.png 800w, logo-1200.png 1200w"
          sizes="400px"
-         alt="FPVibe"
+         alt="FPVibe - Social Platform for FPV Drone Pilots Logo"
          class="logo"
-         loading="eager">
-    <div class="final-coming-soon">COMING SOON</div>
+         loading="eager"
+         role="img">
+    <div class="final-coming-soon" aria-hidden="true">COMING SOON</div>
 
-    <main class="main">
-        <div class="content">
+    <main class="main" role="main">
+        <article class="content">
             <h1 class="title" data-i18n="title">
-                The FPV social platform
+                The <abbr title="First Person View">FPV</abbr> social platform
             </h1>
 
             <p class="subtitle" data-i18n="subtitle">
                 Share clips. Organize sessions. Connect with pilots.
             </p>
 
-            <div class="coming-soon-badge" data-i18n="comingSoon">
+            <div class="coming-soon-badge" data-i18n="comingSoon" role="status" aria-live="polite">
                 Coming Soon
             </div>
-        </div>
+        </article>
     </main>
 
     <script>
@@ -49,7 +129,7 @@
             en: {
                 support: 'Support',
                 privacy: 'Privacy',
-                title: 'The FPV social platform',
+                title: 'The <abbr title="First Person View">FPV</abbr> social platform',
                 subtitle: 'Share clips. Organize sessions. Connect with pilots.',
                 comingSoon: 'Coming Soon',
                 finalComingSoon: 'COMING SOON',
@@ -58,7 +138,7 @@
             tr: {
                 support: 'Destek',
                 privacy: 'Gizlilik',
-                title: 'FPV sosyal platformu',
+                title: '<abbr title="First Person View">FPV</abbr> sosyal platformu',
                 subtitle: 'Klip paylaş. Etkinlik düzenle. Pilotlarla bağlan.',
                 comingSoon: 'Çok Yakında',
                 finalComingSoon: 'ÇOK YAKINDA',
@@ -77,7 +157,12 @@
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                    // Use innerHTML for title to support <abbr> tag, textContent for others
+                    if (key === 'title') {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
                 }
             });
 
@@ -412,8 +497,8 @@
         updateScroll();
     </script>
 
-    <footer class="footer">
-        <a href="mailto:asd@Royal.Net" data-i18n="contact">Contact</a>
+    <footer class="footer" role="contentinfo">
+        <a href="mailto:asd@Royal.Net" data-i18n="contact" aria-label="Contact FPVibe via email">Contact</a>
         <span>© 2025 FPVibe</span>
     </footer>
 </body>

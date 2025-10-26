@@ -181,6 +181,12 @@ body.inverted .lang-switcher:hover {
     transition: color 0.6s ease;
 }
 
+.title abbr {
+    text-decoration: none;
+    border: none;
+    cursor: help;
+}
+
 body.inverted .title {
     color: #000;
 }

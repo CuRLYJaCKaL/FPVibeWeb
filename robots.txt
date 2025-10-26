@@ -3,5 +3,6 @@
 
 User-agent: *
 Allow: /
+Disallow: /analytics.html
 
 Sitemap: https://fpvibe.app/sitemap.xml

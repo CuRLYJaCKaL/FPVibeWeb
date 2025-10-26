@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>FPVibe - Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-unit {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 8px;
+        }
+
+        .events-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .events-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .event-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .event-name {
+            font-weight: 600;
+            color: #fff;
+            text-transform: capitalize;
+        }
+
+        .event-count {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(139, 92, 246, 1);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: rgba(139, 92, 246, 1);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: rgba(139, 92, 246, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 32px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-state p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .stat-value {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <h1>Analytics Dashboard</h1>
+        <p class="subtitle">Privacy-friendly analytics (stored locally, no tracking)</p>
+
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be injected here -->
+        </div>
+
+        <div class="events-section">
+            <h2>Events by Type</h2>
+            <div id="eventsList">
+                <!-- Events will be injected here -->
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="exportData()">📥 Export Data (JSON)</button>
+            <button class="btn btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+            <button class="btn btn-danger" onclick="clearData()">🗑️ Clear All Data</button>
+        </div>
+    </div>
+
+    <script src="analytics.js"></script>
+    <script>
+        function loadDashboard() {
+            const summary = FPVibeAnalytics.getSummary();
+
+            // Render stats cards
+            const statsGrid = document.getElementById('statsGrid');
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-label">Total Page Views</div>
+                    <div class="stat-value">${summary.totalPageViews}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Events</div>
+                    <div class="stat-value">${summary.totalEvents}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Time on Page</div>
+                    <div class="stat-value">${summary.averageTimeOnPage}<span class="stat-unit">sec</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Max Scroll Depth</div>
+                    <div class="stat-value">${summary.maxScrollDepth}<span class="stat-unit">%</span></div>
+                </div>
+            `;
+
+            // Render events list
+            const eventsList = document.getElementById('eventsList');
+            const eventsByType = summary.eventsByType;
+
+            if (Object.keys(eventsByType).length === 0) {
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <p>No events tracked yet.</p>
+                        <p style="font-size: 14px;">Visit the homepage to generate analytics data.</p>
+                    </div>
+                `;
+            } else {
+                eventsList.innerHTML = Object.entries(eventsByType)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([name, count]) => `
+                        <div class="event-item">
+                            <div class="event-name">${name.replace(/_/g, ' ')}</div>
+                            <div class="event-count">${count}</div>
+                        </div>
+                    `).join('');
+            }
+        }
+
+        function exportData() {
+            FPVibeAnalytics.exportData();
+        }
+
+        function clearData() {
+            FPVibeAnalytics.clearData();
+        }
+
+        function refreshData() {
+            loadDashboard();
+        }
+
+        // Load dashboard on page load
+        window.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+</html>

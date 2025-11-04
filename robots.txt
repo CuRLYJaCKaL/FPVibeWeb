@@ -4,5 +4,10 @@
 User-agent: *
 Allow: /
 Disallow: /analytics.html
+Disallow: /cdn-cgi/
+
+# Block CloudFlare email protection links from indexing
+User-agent: Googlebot
+Disallow: /cdn-cgi/
 
 Sitemap: https://fpvibe.app/sitemap.xml

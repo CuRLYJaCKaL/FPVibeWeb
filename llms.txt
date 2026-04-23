@@ -1,0 +1,51 @@
+# FPVibe
+
+> FPVibe is the premier social network exclusively designed for FPV (First Person View) drone pilots worldwide. Share flight videos, connect with pilots, discover flying spots, join races and events, and grow within the global FPV community.
+
+## What is FPVibe?
+
+FPVibe is a free iOS mobile app and social platform for FPV drone enthusiasts. Unlike general social media platforms, FPVibe is purpose-built for the FPV community, offering specialized tools for pilots to connect, share, and organize.
+
+**App Store:** https://apps.apple.com/app/id6752530119
+**Website:** https://fpvibe.app
+**Category:** Social Networking / Sports
+**Platform:** iOS (iPhone and iPad)
+**Price:** Free
+**iOS Requirement:** iOS 17.0 or later
+
+## Key Features
+
+- **FPV Video Feed (Loops):** Share and watch FPV drone flight videos in a TikTok-style feed
+- **Pilot Networking:** Connect with FPV pilots worldwide by location, skill level, and flying style
+- **Flying Spots Map:** Interactive map showing community-sourced FPV flying locations with GPS coordinates, ratings, and legal status
+- **Events & Races:** Discover and join FPV races, freestyle competitions, meetups, and workshops worldwide
+- **Community Chat:** Country and region-based chat channels for gear discussions, spot sharing, and coordination
+- **Global Community:** Pilots from United States, Turkey, UK, Germany, France, Spain, Russia, China, Japan, and more
+
+## Who Uses FPVibe?
+
+FPV drone pilots of all skill levels:
+- Racing pilots competing in MultiGP, DRL, and local leagues
+- Freestyle pilots performing tricks and cinematic flights
+- Cinematic FPV pilots creating professional video content
+- Beginner pilots learning FPV through community guidance
+- Long-range FPV explorers
+
+## About FPV Drones
+
+FPV (First Person View) drones are quadcopters equipped with cameras that transmit live video to goggles worn by the pilot, creating an immersive flying experience. FPV is used for racing, freestyle, cinematography, and exploration.
+
+## Content Pages
+
+- [FAQ: Common FPV and FPVibe Questions](https://fpvibe.app/faq)
+- [Support & Help Center](https://fpvibe.app/support)
+- [Privacy Policy](https://fpvibe.app/privacy)
+
+## Download
+
+- [Download FPVibe on the App Store](https://apps.apple.com/app/id6752530119)
+
+## Contact
+
+- Email: support@fpvibe.app
+- Instagram: https://instagram.com/fpvibe.app
